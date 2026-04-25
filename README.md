@@ -81,8 +81,8 @@ SortlyScan_ExpoTech/
 └── README.md
 ```
 # 👥 Organización del Equipo
-🎤 Pitch
-Daniel
+# 🎤 Pitch
+- Daniel  
 Emily
 Fabio
 Samuel A.
