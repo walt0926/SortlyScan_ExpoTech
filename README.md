@@ -2,62 +2,51 @@
 
 > Innovación tecnológica aplicada a la educación ambiental.
 
-SortlyScan es una plataforma educativa e interactiva diseñada para fomentar el reciclaje en estudiantes de educación básica mediante inteligencia artificial, gamificación y métricas institucionales.
+SortlyScan es una plataforma educativa e interactiva creada para fomentar el reciclaje en estudiantes de educación básica mediante inteligencia artificial, gamificación y métricas institucionales.
 
-El proyecto busca transformar la forma en que niños y escuelas aprenden sobre sostenibilidad, convirtiendo el reciclaje en una experiencia dinámica, medible y motivadora.
-
----
-
-# 🌍 Nuestra Misión
-
-Fomentar en la niñez la conciencia ambiental y la práctica del reciclaje a través de herramientas digitales accesibles, modernas e innovadoras.
+Nuestro propósito es transformar la educación ambiental en una experiencia dinámica, práctica y motivadora dentro de las instituciones educativas.
 
 ---
 
-# 🚀 Nuestra Visión
+# 🌍 Descripción del Proyecto
 
-Convertirnos en una referencia nacional en educación ambiental digital, integrando tecnología y aprendizaje para construir generaciones comprometidas con el planeta.
+Muchas escuelas desean impulsar la conciencia ecológica, pero no cuentan con herramientas modernas para enseñar reciclaje de forma efectiva.
 
----
+SortlyScan ofrece una solución tecnológica capaz de:
 
-# 💡 Problema que Resolvemos
-
-Muchas instituciones educativas desean impulsar el reciclaje, pero no cuentan con herramientas prácticas para:
-
-- Enseñar clasificación correcta de residuos.
-- Medir participación estudiantil.
-- Motivar a los alumnos constantemente.
-- Obtener datos reales sobre impacto ambiental.
-
-SortlyScan responde a estas necesidades mediante una solución moderna y fácil de implementar.
+- Detectar residuos mediante cámara.
+- Clasificar materiales reciclables automáticamente.
+- Registrar participación estudiantil.
+- Motivar mediante puntos y rankings.
+- Mostrar métricas reales de impacto ambiental.
 
 ---
 
-# ⚙️ Funcionalidades Principales
+# 🚀 Funcionalidades Principales
 
 ## 🧠 Inteligencia Artificial
-- Detección de residuos mediante cámara.
-- Clasificación automática de materiales reciclables.
-- Escaneo rápido e intuitivo.
+- Escaneo por cámara.
+- Reconocimiento de residuos.
+- Clasificación automática.
 
 ## 🎮 Gamificación
 - Sistema de puntos.
 - Rankings por estudiantes y secciones.
-- Incentivos y participación activa.
+- Retos ecológicos.
 
-## 📊 Métricas Institucionales
-- Cantidad de residuos reciclados.
-- Participación por grado o sección.
-- Reportes para docentes.
+## 📊 Métricas
+- Cantidad reciclada.
+- Participación por grado.
+- Reportes institucionales.
 
 ## 💻 Plataforma Web
-- Acceso desde computadora, tablet o celular.
-- Interfaz amigable para niños y docentes.
+- Interfaz amigable.
+- Acceso desde computadora, tablet y celular.
 - Panel administrativo.
 
 ---
 
-# 🛠️ Tecnologías del Proyecto
+# 🛠️ Tecnologías Utilizadas
 
 ## Frontend
 - HTML5
@@ -75,23 +64,18 @@ SortlyScan responde a estas necesidades mediante una solución moderna y fácil 
 ## Base de Datos
 - MySQL / SQLite
 
-## Diseño y Branding
-- Canva
-- Adobe tools
-- Edición audiovisual
-
 ---
 
-# 📁 Estructura del Repositorio
+# 📁 Estructura del Proyecto
 
 ```bash
 SortlyScan_ExpoTech/
-│── docs/
-│── frontend/
-│── backend/
-│── ai/
-│── database/
-│── assets/
-│── branding/
-│── tests/
-└── deployment/
+├── database/
+├── deployment/
+├── docs/
+├── media/
+├── src/
+├── tests/
+├── .gitattributes
+├── .gitignore
+└── README.md
