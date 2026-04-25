@@ -81,39 +81,44 @@ SortlyScan_ExpoTech/
 └── README.md
 ```
 # 👥 Organización del Equipo
-# 🎤 Pitch
+## 🎤 Pitch
 - Daniel  
-Emily
-Fabio
-Samuel A.
-# 🎨 Branding y Video
-Pamela
-Abdul
-Walter
-Christopher
-# 💻 Frontend
-Tati
-Hugo
-Katherine
-Andy P.
-# ⚙️ Backend
-Daniel
-Andrea M.
-Joel
-# 📈 Estado Actual
+- Emily  
+- Fabio  
+- Samuel A.  
+## 🎨 Branding y Video
+- Pamela  
+- Abdul  
+- Walter  
+- Christopher  
+## 💻 Frontend
+- Tati  
+- Hugo  
+- Katherine  
+- Andy P.  
+## ⚙️ Backend
+- Daniel  
+- Andrea M.  
+- Joel  
+## 📈 Estado Actual
 
-# 🚧 Proyecto en fase inicial de desarrollo:
+--
+## 🚧 Proyecto en fase inicial de desarrollo:
 
 Organización del repositorio
 Diseño de plataforma
 Planificación técnica
 Desarrollo web
 Implementación IA
+
+--
 # 🌱 Impacto Esperado
 Fomentar hábitos sostenibles en niños.
 Incrementar interés en reciclaje escolar.
 Facilitar métricas ecológicas reales.
 Integrar educación + tecnología + medio ambiente.
+
+--
 # 📚 Proyecto Académico
 
 Desarrollado para ExpoTech 2026.
