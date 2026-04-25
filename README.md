@@ -80,6 +80,8 @@ SortlyScan_ExpoTech/
 ├── .gitignore
 └── README.md
 ```
+---
+
 # 👥 Organización del Equipo
 ## 🎤 Pitch
 - Daniel  
@@ -102,7 +104,8 @@ SortlyScan_ExpoTech/
 - Joel  
 ## 📈 Estado Actual
 
---
+---
+
 ## 🚧 Proyecto en fase inicial de desarrollo:
 
 Organización del repositorio
@@ -111,14 +114,16 @@ Planificación técnica
 Desarrollo web
 Implementación IA
 
---
+---
+
 # 🌱 Impacto Esperado
 Fomentar hábitos sostenibles en niños.
 Incrementar interés en reciclaje escolar.
 Facilitar métricas ecológicas reales.
 Integrar educación + tecnología + medio ambiente.
 
---
+---
+
 # 📚 Proyecto Académico
 
 Desarrollado para ExpoTech 2026.
