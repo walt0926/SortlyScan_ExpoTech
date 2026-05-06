@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta name="color-scheme" content="light dark">
-  <link rel="stylesheet" href="public/CSS/styleIniciodeSesion.css">
-  <link rel="stylesheet" href="public/JS/scriptIniciodesesion.js">
+  <link rel="stylesheet" href="CSS/styleIniciodeSesion.css">
+
 </head>
 <body>
   <div class="tailwind">
@@ -41,4 +41,6 @@
     </div>
     <div class="tailwind"></div>
 </body>
+<script src="JS/Inicio_de_sesion.js"></script>
+
 </html>
