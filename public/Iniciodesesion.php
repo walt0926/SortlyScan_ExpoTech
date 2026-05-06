@@ -4,6 +4,7 @@
   <meta name="color-scheme" content="light dark">
   <link rel="stylesheet" href="public/CSS/styleIniciodeSesion.css">
   <link rel="stylesheet" href="public/JS/scriptIniciodesesion.js">
+  <title>Inicio_de_sesion_SortlyScan</title>
 </head>
 <body>
   <div class="tailwind">
