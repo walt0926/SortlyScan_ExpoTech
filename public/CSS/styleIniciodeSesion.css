@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap');
+.login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: linear-gradient(135deg, #FFB8A3 0%, #FF6B35 100%);
+    font-family: 'Nunito', sans-serif;
+}
+
+.login-card-container {
+    width: 100%;
+    max-width: 448px;
+}
+
+.icon-circle {
+    margin: 0px auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;
+    height: 6rem;
+    background-color: white;
+    border-radius: 9999px;
+    box-shadow: 0 20px 30px -6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.popi{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon-school {
+    color: #FF6B35;
+}
+
+.titulo-principal {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 3.75rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.text-white { color: white; }
+.text-scan { color: #4ECDC4; }
+
+.subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+}
+
+.login-form {
+    background-color: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.label-text {
+    display: block;
+    color: #4b5563;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.input-codigo {
+    width: 87%;
+    padding: 1.25rem;
+    text-align: center;
+    font-size: 1.5rem;
+    border: 2px solid #f3f4f6;
+    background-color: #f9fafb;
+    border-radius: 1rem;
+    font-family: 'Baloo 2', sans-serif;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.input-codigo:focus {
+    border-color: #4ECDC4;
+    right: 4px rgba(78, 205, 196, 0.2);
+}
+
+.btn-entrar {
+    width: 100%;
+    margin-top: 1rem;
+    background-color: #FF6B35;
+    color: white;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-entrar:hover {
+    background-color: #FF5722;
+    transform: scale(1.02);
+}
+
+.link-footer {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.link-footer:hover {
+    color: white;
+}
+
+.footer{
+    margin-top: 25px;
+    text-align: center;
+}
