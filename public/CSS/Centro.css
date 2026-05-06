@@ -1,12 +1,12 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: #eef5f1;
+    background: #F7FDF5;
 }
 
 header {
     background: linear-gradient(90deg, #4CAF50);
-    color: white;
+    color: #F7FDF5;
     padding: 15px;
     font-size: 20px;
 }
@@ -28,8 +28,8 @@ button {
     padding: 10px;
     border: none;
     border-radius: 8px;
-    background: #5b5bd6;
-    color: white;
+    background: #00bcd4;
+    color: #F7FDF5;
     cursor: pointer;
 }
 
@@ -52,7 +52,7 @@ button {
 }
 
 .card {
-    background: #f5f5f5;
+    background: #F7FDF5;
     padding: 12px;
     border-radius: 12px;
 }
@@ -60,9 +60,9 @@ button {
 .btn {
     display: inline-block;
     margin-top: 8px;
-    background: orange;
+    background: #F57C00;
     padding: 6px 10px;
     border-radius: 8px;
-    color: white;
+    color:#F7FDF5;
     text-decoration: none;
 }
