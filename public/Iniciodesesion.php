@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
   <meta name="color-scheme" content="light dark">
-  <link rel="stylesheet" href="public/CSS/styleIniciodeSesion.css">
-  <link rel="stylesheet" href="public/JS/scriptIniciodesesion.js">
+  <link rel="stylesheet" href="CSS/styleIniciodeSesion.css">
 </head>
 <body>
   <div class="tailwind">
