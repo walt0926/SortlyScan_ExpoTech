@@ -11,7 +11,7 @@
 
     <div class="main-container">
         <header class="header-text">
-            <h1>SoftlyScan</h1>
+            <h1>SortlyScan</h1>
             <p>Panel de Docente</p>
         </header>
 
