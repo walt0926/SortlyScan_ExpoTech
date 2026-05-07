@@ -1,0 +1,181 @@
+:root {
+    --bg-color: #fdf5f2;
+    --green-main: #58c271;
+    --orange: #ff6333;
+    --dark-text: #2d3748;
+    --gray-text: #718096;
+    --teal-btn: #48bbad;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    min-height: 100vh;
+    padding: 30px 20px;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 80px; /* Espacio para el botón flotante */
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.user-welcome h1 {
+    font-size: 1.8rem;
+    color: var(--dark-text);
+}
+
+.user-welcome p {
+    color: var(--gray-text);
+    margin-top: 5px;
+}
+
+.icon-exit-btn {
+    background: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    cursor: pointer;
+    color: var(--gray-text);
+    font-size: 1.2rem;
+}
+
+/* Tarjeta Verde de Puntos */
+.points-card {
+    background-color: var(--green-main);
+    border-radius: 30px;
+    padding: 30px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 20px rgba(88, 194, 113, 0.2);
+}
+
+.points-header {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.9;
+}
+
+.points-number {
+    font-size: 4rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.rank-badge {
+    background-color: var(--orange);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.decorative-star {
+    position: absolute;
+    right: -20px;
+    top: 20px;
+    font-size: 10rem;
+    opacity: 0.15;
+    transform: rotate(15deg);
+}
+
+/* Ranking */
+.ranking-container h3 {
+    margin-bottom: 20px;
+    color: var(--dark-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ranking-container h3 i { color: var(--orange); }
+
+.ranking-list {
+    background: white;
+    border-radius: 25px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.ranking-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #f8fafc;
+    border-radius: 20px;
+}
+
+.item-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.rank-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.gold { background-color: #f6ad55; }
+
+.item-right {
+    color: var(--green-main);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Botón Flotante (FAB) */
+.fab-camera {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    background-color: var(--teal-btn);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(72, 187, 173, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.fab-camera:active {
+    transform: scale(0.9);
+}
