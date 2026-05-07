@@ -3,7 +3,6 @@
 <head>
   <meta name="color-scheme" content="light dark">
   <link rel="stylesheet" href="CSS/styleIniciodeSesion.css">
-  <link rel="stylesheet" href="JS/scriptIniciodesesion.js">
 </head>
 <body>
   <div class="tailwind">
