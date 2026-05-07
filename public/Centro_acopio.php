@@ -13,10 +13,10 @@
 
 <body>
 
-<header>🌱 SortlyScan</header>
+<header>SortlyScan</header>
 
 <div class="controls">
-    <button onclick="miUbicacion()">📍 Mi ubicación</button>
+    <button onclick="miUbicacion()">Mi ubicación</button>
     <input type="text" id="busqueda" placeholder="Buscar centro...">
     <button onclick="buscar()">Buscar</button>
 </div>

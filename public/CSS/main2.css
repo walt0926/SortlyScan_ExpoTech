@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #FFB8A3 0%, #FF6B35 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.ranking-card {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border-radius: 35px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.ranking-title {
+    font-family: 'Baloo 2', sans-serif;
+    color: #FF6B35;
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+}
+
+.ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    background: #f9fafb;
+    border-radius: 20px;
+    transition: transform 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.ranking-item:hover {
+    transform: scale(1.03);
+    background: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Colores de Medallas según posición */
+.rank-number {
+    width: 40px;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: #9ca3af;
+}
+
+.rank-number.gold { color: #FFD700; font-size: 1.7rem; }
+.rank-number.silver { color: #C0C0C0; font-size: 1.5rem; }
+.rank-number.bronze { color: #CD7F32; font-size: 1.4rem; }
+
+.user-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #eee;
+}
+
+.user-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.user-name {
+    font-weight: 700;
+    color: #1f2937;
+    font-size: 1.1rem;
+}
+
+.user-points {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    color: #4ECDC4; /* El turquesa de tus imágenes */
+    font-size: 1.3rem;
+}
+
+.top-3 {
+    background: white;
+    border-color: #f3f4f6;
+}
