@@ -33,3 +33,6 @@ Thumbs.db
 # Archivos temporales
 *.tmp
 *.bak
+
+#Variables de entorno :V
+.env

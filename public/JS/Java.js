@@ -1,86 +1,63 @@
- // Global variables
-        let video = null;
-        let detectionCanvas = null;
-        let detectionCtx = null;
-        let stream = null;
-        let mobileNetModel = null;
-        let cocoSsdModel = null;
-        let isDetecting = false;
-        let autoDetectInterval = null;
-        let totalDetections = 0;
-        let totalConfidence = 0;
+let net;
+const video = document.getElementById('video');
+const categoryDisplay = document.getElementById('wasteCategoryLarge');
+const confidenceDisplay = document.getElementById('confidenceValue');
+const countDisplay = document.getElementById('totalCount');
+const historyList = document.getElementById('historyList');
 
-        // Serial communication variables
-        let serialPort = null;
-        let writer = null;
-        let isArduinoConnected = false;
+let score = 0;
+let isDetecting = false;
+let lastAddedItem = "";
 
-        // Waste classification mapping
-        const wasteClassification = {
-            // Wet Waste
-            'banana': 'wet', 'apple': 'wet', 'orange': 'wet', 'broccoli': 'wet', 'carrot': 'wet',
-            'hot dog': 'wet', 'pizza': 'wet', 'donut': 'wet', 'cake': 'wet', 'avocado': 'wet',
-            'lemon': 'wet', 'sandwich': 'wet', 'food': 'wet', 'fruit': 'wet', 'vegetable': 'wet',
-            'plant': 'wet', 'flower': 'wet', 'bread': 'wet', 'egg': 'wet', 'mushroom': 'wet',
-            'salad': 'wet', 'meat': 'wet', 'cheese': 'wet', 'seafood': 'wet',
+// DICCIONARIO EXTENDIDO DE RECICLAJE
+// Añadimos más palabras clave para que sea mucho más asertivo
+const RECYCLE_MAP = {
+    organico: ['banana', 'apple', 'orange', 'lemon', 'fruit', 'vegetable', 'pineapple', 'meat', 'pizza', 'bread', 'food'],
+    papel: ['paper', 'notebook', 'book', 'carton', 'cardboard', 'envelope', 'magazine', 'paper towel'],
+    plastico: ['bottle', 'water bottle', 'pill bottle', 'plastic', 'cup', 'toy', 'container', 'wrapper'],
+    vidrio: ['wine bottle', 'beer bottle', 'glass', 'jar', 'vial', 'beaker'],
+    metal: ['can', 'tin', 'soda can', 'aluminum', 'pot', 'pan', 'foil', 'screw'],
+    electronico: ['mouse', 'keyboard', 'laptop', 'cellphone', 'remote', 'battery', 'screen', 'monitor', 'joystick']
+};
 
-            // Paper Waste
-            'book': 'paper', 'paper': 'paper', 'notebook': 'paper', 'newspaper': 'paper',
+// Configuración inicial
+async function setupApp() {
+    try {
+        // Cargamos MobileNet v2 (más preciso)
+        net = await mobilenet.load({version: 2, alpha: 1.0});
+        
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('mainInterface').style.display = 'grid';
+    } catch (error) {
+        console.error("Error al cargar la IA:", error);
+        alert("Hubo un problema al cargar los modelos. Revisa tu internet.");
+    }
+}
 
-            // Plastic Waste
-            'bottle': 'plastic', 'plastic': 'plastic', 'plastic bag': 'plastic',
-
-            // Glass Waste
-            'wine glass': 'glass', 'cup': 'glass', 'glass': 'glass', 'bowl': 'glass',
-
-            // Electronic Waste
-            'cell phone': 'electronic', 'laptop': 'electronic', 'mouse': 'electronic', 'keyboard': 'electronic', 'mouse': 'electronic',
-
-            // Can Waste
-            'can': 'can', 'aluminum': 'can', 'metal': 'can', 'soda can': 'can',
-
-            // Unknown / Other
-            'car': 'unknown', 'bicycle': 'unknown', 'bus': 'unknown', 'train': 'unknown',
-            'truck': 'unknown', 'boat': 'unknown', 'traffic light': 'unknown', 'fire hydrant': 'unknown',
-            'stop sign': 'unknown', 'parking meter': 'unknown', 'bench': 'unknown', 'bird': 'unknown',
-            'cat': 'unknown', 'dog': 'unknown', 'horse': 'unknown', 'sheep': 'unknown', 'cow': 'unknown',
-            'elephant': 'unknown', 'bear': 'unknown', 'zebra': 'unknown', 'giraffe': 'unknown'
-        };
-
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', async function() {
-            await loadAIModels();
-            initializeElements();
-            setupEventListeners();
-            checkSerialSupport();
+// Iniciar Cámara
+async function startCamera() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            video: { facingMode: "environment" } 
         });
+        video.srcObject = stream;
+        isDetecting = true;
+        document.getElementById('scanLine').style.display = 'block';
+        detectFrame();
+    } catch (err) {
+        alert("No se pudo acceder a la cámara.");
+    }
+}
 
-        async function loadAIModels() {
-            try {
-                document.getElementById('loadingDetails').textContent = 'Loading MobileNet (Image Classification)...';
-                mobileNetModel = await mobilenet.load();
-               
-                document.getElementById('loadingDetails').textContent = 'Loading COCO-SSD (Object Detection)...';
-                cocoSsdModel = await cocoSsd.load();
-               
-                document.getElementById('loadingScreen').style.display = 'none';
-                document.getElementById('mainInterface').style.display = 'block';
-                document.getElementById('mainInterface').classList.add('fade-in');
-               
-                updateStatus('✨ AI Models loaded! Connect Arduino and start camera.', 'success');
-               
-            } catch (error) {
-                console.error('Error loading AI models:', error);
-                updateStatus('❌ Failed to load AI models. Please refresh the page.', 'error');
-            }
-        }
+// Bucle de Detección
+async function detectFrame() {
+    if (!isDetecting || video.paused || video.ended) return;
 
-        function initializeElements() {
-            video = document.getElementById('video');
-            detectionCanvas = document.getElementById('detectionCanvas');
-            detectionCtx = detectionCanvas.getContext('2d');
-        }
+    // Pedimos a la IA que analice el video
+    const predictions = await net.classify(video);
+    
+    if (predictions.length > 0) {
+        let matchFound = null;
 
         function setupEventListeners() {
             document.getElementById('connectArduino').addEventListener('click', connectToArduino);
@@ -301,61 +278,86 @@
                     }
                 }
             }
-
-            return {
-                wasteCategory: wasteCategory,
-                detectedObject: detectedObject,
-                confidence: confidence,
-                processingTime: processingTime
-            };
+            if (matchFound) break;
         }
 
-        function updateResults(result) {
-            const wasteCategoryElement = document.getElementById('wasteCategoryLarge');
-            wasteCategoryElement.textContent = result.wasteCategory;
-           
-            if (result.wasteCategory === 'WET') {
-                wasteCategoryElement.className = 'waste-category-large wet';
-            } else if (result.wasteCategory === 'PAPER') {
-                wasteCategoryElement.className = 'waste-category-large paper';
-            } else if (result.wasteCategory === 'PLASTIC') {
-                wasteCategoryElement.className = 'waste-category-large plastic';
-            } else if (result.wasteCategory === 'GLASS') {
-                wasteCategoryElement.className = 'waste-category-large glass';
-            } else if (result.wasteCategory === 'ELECTRONIC') {
-                wasteCategoryElement.className = 'waste-category-large electronic';
-            } else if (result.wasteCategory === 'CAN') {
-                wasteCategoryElement.className = 'waste-category-large can';
-            } else {
-                wasteCategoryElement.className = 'waste-category-large unknown';
-            }
-           
-            document.getElementById('confidenceValue').textContent = (result.confidence * 100).toFixed(0) + '%';
-            document.getElementById('processingValue').textContent = result.processingTime.toFixed(2);
+        if (matchFound && matchFound.probability > 0.5) {
+            updateUI(matchFound);
+        } else {
+            // Si no está seguro o no conoce el objeto
+            categoryDisplay.innerText = "Analizando...";
+            categoryDisplay.className = "category-tag unknown";
+            confidenceDisplay.innerText = "--";
         }
+    }
 
-        function updateStatistics(result) {
-            totalDetections++;
-            totalConfidence += result.confidence;
-           
-            document.getElementById('totalCount').textContent = totalDetections;
-           
-            const avgConfidence = (totalConfidence / totalDetections) * 100;
-            document.getElementById('accuracyValue').textContent = avgConfidence.toFixed(0) + '%';
-        }
+    // Ejecutar cada 600ms para que sea fluido pero no lento
+    setTimeout(detectFrame, 600);
+}
 
-        function updateStatus(message, type) {
-            const statusIndicator = document.getElementById('statusIndicator');
-            statusIndicator.textContent = message;
-            statusIndicator.className = `status-indicator ${type}`;
-        }
+// Actualizar Interfaz
+function updateUI(match) {
+    const labels = {
+        organico: "🍎 ORGÁNICO",
+        papel: "📄 PAPEL / CARTÓN",
+        plastico: "🥤 PLÁSTICO",
+        vidrio: "🍷 VIDRIO",
+        metal: "🥫 METAL / LATAS",
+        electronico: "💻 ELECTRÓNICO"
+    };
 
-        // Handle page unload
-        window.addEventListener('beforeunload', async () => {
-            if (writer) {
-                await writer.close();
-            }
-            if (serialPort) {
-                await serialPort.close();
-            }
-        });
+    categoryDisplay.innerText = labels[match.category];
+    categoryDisplay.className = `category-tag ${match.category}`;
+    confidenceDisplay.innerText = Math.round(match.probability * 100) + "%";
+
+    // Sistema de Puntos e Historial
+    // Solo agregamos si estamos muy seguros (>75%) y es un objeto distinto al anterior
+    if (match.probability > 0.75 && lastAddedItem !== match.name) {
+        lastAddedItem = match.name;
+        addToHistory(match.name, labels[match.category]);
+        
+        score += 10;
+        countDisplay.innerText = score;
+
+        // Efecto visual de "Pop" en los puntos
+        countDisplay.style.transform = "scale(1.3)";
+        setTimeout(() => countDisplay.style.transform = "scale(1)", 200);
+    }
+}
+
+// Agregar al Registro (Historial)
+function addToHistory(item, categoryName) {
+    // Quitar el mensaje de "vacío" si existe
+    const emptyState = document.querySelector('.empty-state');
+    if (emptyState) emptyState.remove();
+
+    const entry = document.createElement('div');
+    entry.className = 'history-item';
+    entry.innerHTML = `
+        <span><strong>${item.toUpperCase()}</strong></span>
+        <span style="font-size: 0.8rem; color: #666;">${categoryName}</span>
+    `;
+    
+    // Insertar al principio de la lista
+    historyList.prepend(entry);
+
+    // Limitar historial a 10 elementos para no llenar la pantalla
+    if (historyList.children.length > 10) {
+        historyList.removeChild(historyList.lastChild);
+    }
+}
+
+// Botones de Control
+document.getElementById('startBtn').addEventListener('click', () => {
+    startCamera();
+    document.getElementById('startBtn').disabled = true;
+    document.getElementById('stopBtn').disabled = false;
+});
+
+document.getElementById('stopBtn').addEventListener('click', () => {
+    // Reiniciar la página es la forma más limpia de resetear la cámara y la IA
+    location.reload();
+});
+
+// Arrancar la aplicación
+setupApp();
