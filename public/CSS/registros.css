@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #4CAF50; /* Color verde azulado del fondo */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Encabezado */
+.header-text h1 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.header-text p {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+/* Tarjeta Blanca */
+.login-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Switch de Docente/Director */
+.role-selector {
+    background-color: #f3f4f6;
+    display: flex;
+    padding: 5px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.role-btn {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    background: transparent;
+    color: #4b5563;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.role-btn.active {
+    background: white;
+    color: #38b2ac;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Formulario */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    color: #2d3748;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.input-group i {
+    margin-right: 5px;
+    font-size: 0.9rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+    background-color: #f9fafb;
+    outline: none;
+    font-size: 1rem;
+}
+
+.input-group input::placeholder {
+    color: #a0aec0;
+}
+
+/* Botón Iniciar Sesión */
+.login-btn {
+    width: 100%;
+    background-color: #ff6333; /* Color naranja del botón */
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #e8562a;
+}
+
+/* Enlace inferior */
+.back-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
