@@ -97,58 +97,6 @@
             });
         }
 
-        function checkSerialSupport() {
-            if ('serial' in navigator) {
-                logSerial('✅ Web Serial API supported');
-                updateArduinoStatus('Arduino Ready to Connect', 'connecting');
-            } else {
-                logSerial('❌ Web Serial API not supported');
-                updateArduinoStatus('Serial API Not Supported', 'disconnected');
-                document.getElementById('connectArduino').disabled = true;
-            }
-        }
-
-        async function connectToArduino() {
-            try {
-                updateArduinoStatus('Connecting...', 'connecting');
-                logSerial('> Requesting serial port...');
-               
-                serialPort = await navigator.serial.requestPort();
-               
-                await serialPort.open({ baudRate: 9600 });
-               
-                writer = serialPort.writable.getWriter();
-               
-                isArduinoConnected = true;
-                updateArduinoStatus('Arduino Connected', 'connected');
-                logSerial('✅ Arduino connected successfully');
-                logSerial('> Ready to send commands');
-               
-                document.getElementById('connectArduino').textContent = '🔗 Connected';
-                document.getElementById('connectArduino').disabled = true;
-               
-            } catch (error) {
-                console.error('Arduino connection error:', error);
-                updateArduinoStatus('Connection Failed', 'disconnected');
-                logSerial('❌ Connection failed: ' + error.message);
-            }
-        }
-       
-        async function sendToArduino(command) {
-            if (!isArduinoConnected) {
-                logSerial('⚠️ Not connected to Arduino. Command not sent.');
-                return;
-            }
-            try {
-                const encoder = new TextEncoder();
-                await writer.write(encoder.encode(command));
-                logSerial(`➡️ Command sent: '${command}'`);
-            } catch (error) {
-                console.error('Error sending data to Arduino:', error);
-                logSerial('❌ Failed to send command: ' + error.message);
-            }
-        }
-
         function logSerial(message) {
             const serialLog = document.getElementById('serialLog');
             serialLog.innerHTML += message + '<br>';

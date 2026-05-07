@@ -11,10 +11,6 @@
     <link rel="stylesheet" href="CSS/barraNavIA.css">
 </head>
 <body>
-    <div id="arduinoStatus" class="arduino-status">
-        🔌 Arduino Desconectado
-    </div>
-
     <div id="loadingScreen" class="loading-screen">
         <div class="loading-container">
             <div class="loading-spinner"></div>
@@ -28,7 +24,7 @@
     <div id="mainInterface" class="main-container" style="display: none;">
         <div class="header">
             <div class="header-card">
-                <h1 class="header-title">Escaner de SortlyScan</h1>
+                <h1 class="header-title">Escáner de SortlyScan</h1>
             </div>
         </div>
 
