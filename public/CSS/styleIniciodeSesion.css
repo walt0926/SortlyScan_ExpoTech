@@ -91,7 +91,7 @@
 .btn-entrar {
     width: 100%;
     margin-top: 1rem;
-    background-color: #FF6B35;
+    background-color: #4CAF50;
     color: white;
     padding: 1.25rem;
     border-radius: 1rem;
@@ -104,7 +104,7 @@
 }
 
 .btn-entrar:hover {
-    background-color: #FF5722;
+    background-color: #4CAF50;
     transform: scale(1.02);
 }
 
