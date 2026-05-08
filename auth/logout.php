@@ -1,12 +1,11 @@
 <?php
+// auth/logout.php
 session_start();
+header('Content-Type: application/json');
 
-// Limpiar todas las variables de sesión
 $_SESSION = [];
 
-// Destruir sesión
 if (session_destroy()) {
-    // Eliminar la cookie de sesión (si existe)
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
         setcookie(
@@ -19,11 +18,10 @@ if (session_destroy()) {
             $params["httponly"]
         );
     }
-
+    
+    echo json_encode(['success' => true, 'message' => 'Sesión cerrada correctamente.']);
 } else {
-    // Manejar el error en caso de que la destrucción de la sesión falle
-    http_response_code(500); // Internal Server Error
-    echo json_encode(["error" => "Error al cerrar la sesión"]);
-    exit;
+    http_response_code(500);
+    echo json_encode(["success" => false, "message" => "Error al cerrar la sesión"]);
 }
 ?>

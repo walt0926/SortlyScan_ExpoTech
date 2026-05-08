@@ -1,38 +1,48 @@
 <?php
-// Crear un nuevo usuario
+// usuarios/create.php (Para crear maestros)
+session_start();
 header("Content-Type: application/json");
-require_once("../config/conexion.php");
+require_once("../config/conexion.php"); 
 
-//$data = json_decode(file_get_contents("php://input"), true);
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Director') {
+    http_response_code(403);
+    echo json_encode(["success" => false, "message" => "Acceso denegado. Solo directores pueden crear usuarios."]);
+    exit;
+}
 
-if (
-    !empty($_POST['usuario']) &&
-    !empty($_POST['nombre']) &&
-    !empty($_POST['correo']) &&
-    !empty($_POST['contrasena']) &&
-    !empty($_POST['rol'])
-) {
-    $database = new Database();
-    $db = $database->getConnection();
+$nombre = filter_input(INPUT_POST, 'nombre_completo', FILTER_SANITIZE_STRING);
+$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+$password = $_POST['password'] ?? '';
+$id_mined = $_SESSION['id_mined']; 
 
-    $hashed_password = password_hash($_POST['contrasena'], PASSWORD_DEFAULT);
+if ($nombre && $username && $password) {
+    try {
+        $check = $pdo->prepare("SELECT id_usuario FROM Usuarios WHERE username = ?");
+        $check->execute([$username]);
+        
+        if ($check->rowCount() > 0) {
+            echo json_encode(["success" => false, "message" => "El nombre de usuario ya está en uso."]);
+            exit;
+        }
 
-    $query = "INSERT INTO usuarios (usuario, nombre, correo, contrasena, rol)
-              VALUES (:usuario, :nombre, :correo, :contrasena, :rol)";
-    $stmt = $db->prepare($query);
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $query = "INSERT INTO Usuarios (id_mined, username, password, rol, nombre_completo) 
+                  VALUES (:id_mined, :username, :password, 'Maestro', :nombre)";
+        
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([
+            ':id_mined' => $id_mined,
+            ':username' => $username,
+            ':password' => $hashed_password,
+            ':nombre'   => $nombre
+        ]);
 
-    $stmt->bindParam(":usuario", $_POST['usuario']);
-    $stmt->bindParam(":nombre", $_POST['nombre']);
-    $stmt->bindParam(":correo", $_POST['correo']);
-    $stmt->bindParam(":contrasena", $hashed_password);
-    $stmt->bindParam(":rol", $_POST['rol']);
+        echo json_encode(["success" => true, "message" => "Maestro registrado con éxito."]);
 
-    if ($stmt->execute()) {
-        echo json_encode(["mensaje" => "Usuario creado correctamente."]);
-    } else {
-        echo json_encode(["error" => "Error al crear usuario."]);
+    } catch (PDOException $e) {
+        echo json_encode(["success" => false, "message" => "Error de base de datos."]);
     }
 } else {
-    echo json_encode(["error" => "Datos incompletos."]);
+    echo json_encode(["success" => false, "message" => "Datos incompletos."]);
 }
 ?>

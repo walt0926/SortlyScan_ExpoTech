@@ -1,74 +1,38 @@
 <?php
-session_start();
-header("Content-Type: application/json; charset=utf-8");
-require_once("../config/conexion.php");
+// auth/signup.php
+require_once '../config/conexion.php';
+header('Content-Type: application/json');
 
-if (
-    !empty($_POST['correo']) &&
-    !empty($_POST['nombre']) &&
-    !empty($_POST['fecha']) &&
-    !empty($_POST['contrasena'])
-) {
-    $correo = trim($_POST['correo']);
-    $nombre = trim($_POST['nombre']);
-    $fecha = $_POST['fecha'];  
-    $contrasena = $_POST['contrasena'];
+$id_mined = filter_input(INPUT_POST, 'id_mined', FILTER_SANITIZE_STRING);
+$nombre_centro = filter_input(INPUT_POST, 'nombre_centro', FILTER_SANITIZE_STRING);
+$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+$password = $_POST['password'] ?? '';
+$nombre_director = filter_input(INPUT_POST, 'nombre_completo', FILTER_SANITIZE_STRING);
 
-    // Validar email
-    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(["error" => "Correo electrónico inválido."]);
-        exit();
-    }
-
-    // Validar fecha formato YYYY-MM-DD
-    if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $fecha)) {
-        echo json_encode(["error" => "Fecha de nacimiento inválida."]);
-        exit();
-    }
-
-    $hashed_password = password_hash($contrasena, PASSWORD_DEFAULT);
-
-    $database = new Database();
-    $db = $database->getConnection();
-
-    // Chequear si correo ya existe
-    $query = "SELECT * FROM usuarios WHERE Correo_electronico = :correo";
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(":correo", $correo);
-    $stmt->execute();
-
-    if ($stmt->rowCount() > 0) {
-        echo json_encode(["error" => "El correo electrónico ya está registrado."]);
-        exit();
-    }
-
-    // Insertar usuario nuevo
-    $query = "INSERT INTO usuarios (Nombre_completo, Fecha_nacimiento, Correo_electronico, Contrasena) 
-              VALUES (:nombre, :fecha, :correo, :contrasena)";
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(":nombre", $nombre);
-    $stmt->bindParam(":fecha", $fecha);
-    $stmt->bindParam(":correo", $correo);
-    $stmt->bindParam(":contrasena", $hashed_password);
-
-    if ($stmt->execute()) {
-        $id_usuario = $db->lastInsertId();
-
-        // Guardar en sesión
-        $_SESSION['usuario'] = [
-            "id" => $id_usuario,
-            "nombre" => $nombre,
-            "correo" => $correo
-        ];
-        $_SESSION['LAST_ACTIVITY'] = time();
-
-        echo json_encode([
-            "mensaje" => "Usuario creado y sesión iniciada.",
-            "usuario" => $_SESSION['usuario']
-        ]);
-    } else {
-        echo json_encode(["error" => "Error al crear el usuario."]);
-    }
-} else {
-    echo json_encode(["error" => "Datos incompletos."]);
+if (!$id_mined || !$nombre_centro || !$email || !$password || !$nombre_director) {
+    echo json_encode(['success' => false, 'message' => 'Faltan datos obligatorios.']);
+    exit;
 }
+
+try {
+    $pdo->beginTransaction(); 
+
+    $stmt1 = $pdo->prepare("INSERT INTO Instituciones (id_mined, nombre_centro) VALUES (?, ?)");
+    $stmt1->execute([$id_mined, $nombre_centro]);
+
+    $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
+    $stmt2 = $pdo->prepare("INSERT INTO Usuarios (id_mined, email, password, rol, nombre_completo) VALUES (?, ?, ?, 'Director', ?)");
+    $stmt2->execute([$id_mined, $email, $hashed_pass, $nombre_director]);
+
+    $pdo->commit(); 
+    echo json_encode(['success' => true, 'message' => 'Institución y Director registrados correctamente.']);
+
+} catch (PDOException $e) {
+    $pdo->rollBack();
+    if ($e->getCode() == 23000) {
+        echo json_encode(['success' => false, 'message' => 'El Código de Centro o el Email ya están registrados.']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+}
+?>
