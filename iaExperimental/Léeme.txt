@@ -1,0 +1,2 @@
+Creé esta carpeta intentando modificar el java.js del otro repositorio.
+Intento eliminar las secciones innecesarias de Arduino y adaptarlo para PHP.
