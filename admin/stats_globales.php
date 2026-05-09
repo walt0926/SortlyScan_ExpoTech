@@ -1,6 +1,8 @@
 // Esto servirá para desglosar las métricas por salones
 
 <?php
+require_once "../auth/verificar_acceso.php";
+verificarAccesoAPI(['Director']); // Si no es director, recibe un error 403 en JSON.
 // admin/stats_globales.php
 session_start();
 header("Content-Type: application/json");
