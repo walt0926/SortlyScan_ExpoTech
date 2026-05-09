@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reciclaje - Inicio</title>
   <link rel="stylesheet" href="CSS/menu.css">
-
-
 </head>
 <body>
 

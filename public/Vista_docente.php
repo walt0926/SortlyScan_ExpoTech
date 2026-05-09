@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SortlyScan - Panel de Docente</title>
     <link rel="stylesheet" href="style_panel.css">
+    <link rel="stylesheet" href="CSS/Vista_docente.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
