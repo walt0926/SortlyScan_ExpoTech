@@ -1,112 +1,123 @@
-const API_URL = "http://tu-servidor.com/api"; //URL DE BACKEND
+// iniciodesesion.js - Versión Completa y Compatible con SortlyScan Backend_URL = "http://localhost/sortlyscan"; // Ajusta esto si tu carpeta en www se llama diferente
 
 let currentUser = null;
 
+    // Función para cambiar entre vista de Alumno y Staff
+    function toggleView() {
+      const staffSec = document.getElementById('section-staff');
+      const studentSec = document.getElementById('section-alumno');
+      const btn = document.getElementById('toggle-view');
+      const sub = document.getElementById('dynamic-subtitle');
+
+      if (staffSec.style.display === 'none') {
+        staffSec.style.display = 'block';
+        studentSec.style.display = 'none';
+        btn.innerText = "Regresar a vista de alumnos";
+        sub.innerText = "Panel de Control Educativo";
+      } else {
+        staffSec.style.display = 'none';
+        studentSec.style.display = 'block';
+        btn.innerText = "¿Eres docente o director? Ingresa aquí";
+        sub.innerText = "¡Aprende y gana puntos reciclando!";
+      }
+    }
+
+// ==========================================
+// 1. LOGIN PARA DIRECTOR Y MAESTRO
+// ==========================================
 async function login() {
-    const nameInput = document.getElementById("username").value;
+    const identifierInput = document.getElementById("username").value; // Puede ser correo o nombre de usuario
+    const passwordInput = document.getElementById("password").value;
+
+    // REGLA 1: Usar FormData para que PHP reciba los datos en $_POST
+    const formData = new FormData();
+    formData.append('action', 'login_staff');
+    formData.append('identifier', identifierInput);
+    formData.append('password', passwordInput);
 
     try {
-        const response = await fetch(`${API_URL}/login.php`, {
+        const response = await fetch(`${API_URL}/auth/login.php`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nombre: nameInput })
+            body: formData,
+            credentials: 'include' // REGLA 2: Vital para mantener la sesión iniciada
         });
 
         const data = await response.json();
 
         if (data.success) {
-            currentUser = data.user; 
+            // REGLA 3: Los nombres de los roles coinciden con MySQL
+            currentUser = { role: data.rol }; 
             
-            if (currentUser.role === "teacher") {
-                showScreen("teacherDashboard");
-            } else {
-                showScreen("studentDashboard");
+            // Redirecciones basadas en el rol
+            if (currentUser.role === "Director") {
+                window.location.href = "Home_pw.php"; // Cambiar al nombre real de tu archivo HTML/PHP
+            } else if (currentUser.role === "Maestro") {
+                window.location.href = "Dashboard_maestro.php"; // Cambiar al nombre real de tu archivo
             }
         } else {
-            alert("Usuario no encontrado en la base de datos.");
+            alert("Acceso denegado: " + data.message);
         }
     } catch (error) {
         console.error("Error de conexión:", error);
-        alert("No se pudo conectar con el servidor MySQL.");
+        alert("No se pudo conectar con el servidor.");
     }
 }
 
-async function addPoints(studentId, amount) {
+// ==========================================
+// 2. LOGIN PARA ALUMNO (Con Código de Aula y PIN)
+// ==========================================
+async function loginAlumno() {
+    const idAlumno = document.getElementById("selectAlumno").value; // ID obtenido del selector del frontend
+    const pinInput = document.getElementById("pin").value; // PIN de 4 dígitos
+
+    const formData = new FormData();
+    formData.append('action', 'login_alumno');
+    formData.append('id_alumno', idAlumno);
+    formData.append('pin', pinInput);
+
     try {
-        const response = await fetch(`${API_URL}/update_points.php`, {
+        const response = await fetch(`${API_URL}/auth/login.php`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                id: studentId, 
-                points: amount 
-            })
+            body: formData,
+            credentials: 'include'
         });
 
-        const result = await response.json();
-        if (result.success) {
-            renderTeacherDashboard();
+        const data = await response.json();
+
+        if (data.success) {
+            // REGLA 4: Guardar datos en LocalStorage para que la cámara/IA sepa quién es
+            localStorage.setItem('id_alumno', data.alumno.id_alumno);
+            localStorage.setItem('nombre_alumno', data.alumno.nombre_display);
+            
+            // Redirigir a la vista donde está la cámara
+            window.location.href = "Scanner.php"; 
+        } else {
+            alert("Error: " + data.message);
         }
     } catch (error) {
-        console.error("Error al actualizar puntos:", error);
+        console.error("Error de red:", error);
+        alert("Error al intentar validar el alumno.");
     }
 }
 
-async function getRanking() {
+// ==========================================
+// 3. CERRAR SESIÓN (Logout)
+// ==========================================
+async function logout() {
     try {
-        const response = await fetch(`${API_URL}/get_ranking.php`);
-        const students = await response.json();
-        return students;
+        const response = await fetch(`${API_URL}/auth/logout.php`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            localStorage.removeItem('id_alumno');
+            localStorage.removeItem('nombre_alumno');
+            window.location.href = "Iniciodesesion.php"; // Redirigir al inicio
+        }
     } catch (error) {
-        console.error("Error al obtener ranking:", error);
-        return [];
+        console.error("Error al cerrar sesión:", error);
     }
-}
-
-function showScreen(screenId) {
-    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-    document.getElementById(screenId).classList.add("active");
-
-    if (screenId === "studentDashboard") renderStudentDashboard();
-    if (screenId === "teacherDashboard") renderTeacherDashboard();
-}
-
-async function renderStudentDashboard() {
-    const students = await getRanking();
-    const rankingList = document.querySelector("#studentDashboard ul");
-    rankingList.innerHTML = "";
-
-    students.forEach((s, index) => {
-        const li = document.createElement("li");
-        if (currentUser && s.name === currentUser.name) li.classList.add("highlight");
-        li.innerText = `#${index + 1} ${s.name} - ${s.points} pts`;
-        rankingList.appendChild(li);
-    });
-
-    const userUpdate = students.find(s => s.id === currentUser.id);
-    document.querySelector(".points").innerText = userUpdate ? userUpdate.points : 0;
-}
-
-async function renderTeacherDashboard() {
-    const students = await getRanking();
-    const table = document.querySelector("#teacherDashboard table");
-    table.innerHTML = `
-        <tr>
-            <th>Nombre</th>
-            <th>Puntos</th>
-            <th>Acciones</th>
-        </tr>
-    `;
-
-    students.filter(s => s.role === 'student').forEach((s) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${s.name}</td>
-            <td>${s.points}</td>
-            <td>
-                <button onclick="addPoints(${s.id}, 10)">➕</button>
-                <button onclick="addPoints(${s.id}, -10)">➖</button>
-            </td>
-        `;
-        table.appendChild(row);
-    });
 }

@@ -138,3 +138,31 @@ body {
     color: white;
     border-style: solid;
 }
+
+/* Estilos para inputs dentro del panel */
+.input-estilo {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    outline: none;
+}
+
+.btn-accion {
+    width: 100%;
+    padding: 12px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-accion:hover { background: var(--dark-blue); }
+
+.management-section {
+    border: 2px solid #edf2f7;
+}

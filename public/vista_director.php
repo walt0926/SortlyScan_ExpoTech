@@ -12,60 +12,59 @@
     <div class="container">
         <header class="main-header">
             <div class="titles">
-                <h1>Panel de Director</h1>
-                <p>Vista general de todas las clases</p>
+                <h1 id="school-name">Panel de Director</h1>
+                <p>Vista general de la institución</p>
             </div>
-            <button class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Salir</button>
+            <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Salir</button>
         </header>
 
+        <!-- Estadísticas Dinámicas -->
         <section class="stats-grid">
             <div class="stat-card orange">
                 <div class="stat-icon"><i class="fa-solid fa-school"></i> Total clases</div>
-                <div class="stat-number">4</div>
+                <div class="stat-number" id="stat-clases">0</div>
             </div>
             <div class="stat-card teal">
                 <div class="stat-icon"><i class="fa-solid fa-users"></i> Total estudiantes</div>
-                <div class="stat-number">95</div>
+                <div class="stat-number" id="stat-alumnos">0</div>
             </div>
             <div class="stat-card green">
                 <div class="stat-icon"><i class="fa-solid fa-trophy"></i> Puntos totales</div>
-                <div class="stat-number">10,750</div>
+                <div class="stat-number" id="stat-puntos">0</div>
             </div>
         </section>
 
+        <!-- SECCIÓN DE GESTIÓN -->
+        <section class="management-section ranking-section">
+            <div class="section-header">
+                <h3><i class="fa-solid fa-plus-circle"></i> Gestión de Clases y Docentes</h3>
+            </div>
+            <div class="form-management-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- Crear Salón -->
+                <div class="form-box" style="background: #f8fafc; padding: 20px; border-radius: 15px;">
+                    <h4 style="margin-bottom:10px">Registrar Nueva Clase</h4>
+                    <input type="text" id="nombre-clase" placeholder="Ej: 3ro Primaria - A" class="input-estilo">
+                    <button onclick="crearClase()" class="btn-accion">Crear Clase</button>
+                </div>
+                <!-- Asignar Docente -->
+                <div class="form-box" style="background: #f8fafc; padding: 20px; border-radius: 15px;">
+                    <h4 style="margin-bottom:10px">Asignar Docente a Clase</h4>
+                    <select id="select-clases" class="input-estilo"><option>Cargando clases...</option></select>
+                    <input type="text" id="nombre-docente" placeholder="Nombre del Profesor" class="input-estilo">
+                    <input type="password" id="pass-docente" placeholder="Contraseña Docente" class="input-estilo">
+                    <button onclick="asignarDocente()" class="btn-accion">Asignar Docente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ranking Dinámico -->
         <section class="ranking-section">
             <div class="section-header">
                 <h3><i class="fa-solid fa-trophy"></i> Ranking de Clases</h3>
             </div>
-
-            <div class="ranking-list">
-                <div class="ranking-item">
-                    <div class="class-info">
-                        <div class="rank-circle gold"><i class="fa-solid fa-trophy"></i></div>
-                        <div>
-                            <h4>Clase ABC123</h4>
-                            <p>Docente: Prof. García • 25 estudiantes</p>
-                        </div>
-                    </div>
-                    <div class="points">
-                        <span class="points-num">3200</span>
-                        <span class="points-label">puntos</span>
-                    </div>
-                </div>
-
-                <div class="ranking-item">
-                    <div class="class-info">
-                        <div class="rank-circle silver"><i class="fa-solid fa-trophy"></i></div>
-                        <div>
-                            <h4>Clase DEF456</h4>
-                            <p>Docente: Prof. Morales • 22 estudiantes</p>
-                        </div>
-                    </div>
-                    <div class="points">
-                        <span class="points-num">2800</span>
-                        <span class="points-label">puntos</span>
-                    </div>
-                </div>
+            <div class="ranking-list" id="ranking-container">
+                <!-- Se llena con JS -->
+                <p style="text-align:center; color: #999;">Cargando ranking de la institución...</p>
             </div>
         </section>
 
@@ -80,5 +79,6 @@
         </section>
     </div>
 
+    <script src="JS/Panel_Director.js"></script>
 </body>
 </html>
