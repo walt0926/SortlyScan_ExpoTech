@@ -24,8 +24,7 @@
                     <a href="#inicio" class="transition-colors text-green-600 font-medium">Inicio</a>
                     <a href="#sobre nosotros" class="transition-colors text-gray-700 hover:text-green-600">Sobre Nosotros</a>
                     <a href="#beneficios" class="transition-colors text-gray-700 hover:text-green-600">Beneficios</a>
-                    <a href="registro.php" class="transition-colors text-gray-700 hover:text-green-600">Registro</a>
-                    <a href="Centro_acopio.php" class="transition-colors text-gray-700 hover:text-green-600">Centros de Acopio</a>
+                    <a href="#unite" class="transition-colors text-gray-700 hover:text-green-600">Registro</a>
                 </nav>
                 <div class="hidden md:flex items-center gap-3">
                     <button onclick="window.location.href='ValidarInstitucion.php'"  data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600" >Iniciar Sesión / Registrarse</button>
@@ -265,7 +264,7 @@
                   Únete a SortlyScan y sé parte del cambio. Registra tu institución hoy y comienza a enseñar reciclaje de forma innovadora.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-10 rounded-md px-6 has-[>svg]:px-4 bg-white text-green-600 hover:bg-green-50 shadow-xl">Crear cuenta ahora</button>
+                  <button onclick='ValidarInstitucion.php' data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-10 rounded-md px-6 has-[>svg]:px-4 bg-white text-green-600 hover:bg-green-50 shadow-xl">Crear cuenta ahora</button>
                 </div>
               </div>
             </section>
