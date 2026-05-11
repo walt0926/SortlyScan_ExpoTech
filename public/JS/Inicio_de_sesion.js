@@ -1,123 +1,147 @@
-// iniciodesesion.js - Versión Completa y Compatible con SortlyScan Backend_URL = "http://localhost/sortlyscan"; // Ajusta esto si tu carpeta en www se llama diferente
-
-let currentUser = null;
-
-    // Función para cambiar entre vista de Alumno y Staff
-    function toggleView() {
-      const staffSec = document.getElementById('section-staff');
-      const studentSec = document.getElementById('section-alumno');
-      const btn = document.getElementById('toggle-view');
-      const sub = document.getElementById('dynamic-subtitle');
-
-      if (staffSec.style.display === 'none') {
-        staffSec.style.display = 'block';
-        studentSec.style.display = 'none';
-        btn.innerText = "Regresar a vista de alumnos";
-        sub.innerText = "Panel de Control Educativo";
-      } else {
-        staffSec.style.display = 'none';
-        studentSec.style.display = 'block';
-        btn.innerText = "¿Eres docente o director? Ingresa aquí";
-        sub.innerText = "¡Aprende y gana puntos reciclando!";
-      }
-    }
-
-// ==========================================
-// 1. LOGIN PARA DIRECTOR Y MAESTRO
-// ==========================================
-async function login() {
-    const identifierInput = document.getElementById("username").value; // Puede ser correo o nombre de usuario
-    const passwordInput = document.getElementById("password").value;
-
-    // REGLA 1: Usar FormData para que PHP reciba los datos en $_POST
-    const formData = new FormData();
-    formData.append('action', 'login_staff');
-    formData.append('identifier', identifierInput);
-    formData.append('password', passwordInput);
-
+//*** FUNCIÓN MOTOR (El puente con PHP/MySQL)Este es el espacio principal de conexión. Todos los demás procesos pasan por aquí.*/
+async function ejecutarPeticion(archivoPHP, datos) {
     try {
-        const response = await fetch(`${API_URL}/auth/login.php`, {
+        const params = new URLSearchParams();
+        for (let key in datos) params.append(key, datos[key]);
+
+        // --- CONEXIÓN PHP: Aquí se hace la llamada física al servidor ---
+        const response = await fetch(`PHP/${archivoPHP}`, {
             method: 'POST',
-            body: formData,
-            credentials: 'include' // REGLA 2: Vital para mantener la sesión iniciada
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params
         });
-
-        const data = await response.json();
-
-        if (data.success) {
-            // REGLA 3: Los nombres de los roles coinciden con MySQL
-            currentUser = { role: data.rol }; 
-            
-            // Redirecciones basadas en el rol
-            if (currentUser.role === "Director") {
-                window.location.href = "Home_pw.php"; // Cambiar al nombre real de tu archivo HTML/PHP
-            } else if (currentUser.role === "Maestro") {
-                window.location.href = "Dashboard_maestro.php"; // Cambiar al nombre real de tu archivo
-            }
-        } else {
-            alert("Acceso denegado: " + data.message);
-        }
+        return await response.json();
     } catch (error) {
-        console.error("Error de conexión:", error);
-        alert("No se pudo conectar con el servidor.");
+        console.error("Error crítico de conexión:", error);
+        return { success: false, message: "No se pudo conectar con el servidor" };
     }
 }
 
-// ==========================================
-// 2. LOGIN PARA ALUMNO (Con Código de Aula y PIN)
-// ==========================================
-async function loginAlumno() {
-    const idAlumno = document.getElementById("selectAlumno").value; // ID obtenido del selector del frontend
-    const pinInput = document.getElementById("pin").value; // PIN de 4 dígitos
+/**
+ * 1. PANTALLA INICIAL: Validar CCT (Institución)
+ */
+async function procesarAcceso(rol) {
+    const cctInput = document.getElementById('cct-input').value.trim().toUpperCase();
+    if (!cctInput) return alert("Ingresa el CCT");
 
-    const formData = new FormData();
-    formData.append('action', 'login_alumno');
-    formData.append('id_alumno', idAlumno);
-    formData.append('pin', pinInput);
+    // --- CONEXIÓN PHP: Valida si la escuela existe en MySQL ---
+    const data = await ejecutarPeticion('validar_institucion.php', { cct: cctInput });
 
-    try {
-        const response = await fetch(`${API_URL}/auth/login.php`, {
-            method: 'POST',
-            body: formData,
-            credentials: 'include'
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            // REGLA 4: Guardar datos en LocalStorage para que la cámara/IA sepa quién es
-            localStorage.setItem('id_alumno', data.alumno.id_alumno);
-            localStorage.setItem('nombre_alumno', data.alumno.nombre_display);
-            
-            // Redirigir a la vista donde está la cámara
-            window.location.href = "Scanner.php"; 
-        } else {
-            alert("Error: " + data.message);
-        }
-    } catch (error) {
-        console.error("Error de red:", error);
-        alert("Error al intentar validar el alumno.");
+    if (data.success) {
+        localStorage.setItem('institucion_nombre', data.nombre);
+        localStorage.setItem('institucion_cct', cctInput);
+        
+        // Redirección según el botón presionado
+        if (rol === 'alumno') window.location.href = "registro_alumno.html";
+        else if (rol === 'maestro') window.location.href = "login_maestros.html";
+        else if (rol === 'director') window.location.href = "login_director.html";
+    } else {
+        alert("CCT no encontrado");
     }
 }
 
-// ==========================================
-// 3. CERRAR SESIÓN (Logout)
-// ==========================================
-async function logout() {
-    try {
-        const response = await fetch(`${API_URL}/auth/logout.php`, {
-            method: 'POST',
-            credentials: 'include'
+/**
+ * 2. PANTALLA ALUMNO: Validar Código de Clase
+ */
+async function validarCodigoClase() {
+    const code = document.getElementById('class-code-input').value.trim().toUpperCase();
+    const cct = localStorage.getItem('institucion_cct');
+
+    // --- CONEXIÓN PHP: Revisa si la clase existe para ese CCT en MySQL ---
+    const data = await ejecutarPeticion('validar_clase.php', { codigo_clase: code, cct: cct });
+
+    if (data.success) {
+        localStorage.setItem('clase_id', data.clase_id); // Guardamos el ID de la BD
+        localStorage.setItem('clase_nombre', data.nombre_clase);
+        window.location.href = "seleccion_nombre.html";
+    } else {
+        alert(data.message);
+    }
+}
+
+/**
+ * 3. PANTALLA SELECCIÓN: Cargar lista de alumnos
+ */
+async function cargarAlumnos() {
+    const claseId = localStorage.getItem('clase_id');
+    const select = document.getElementById('lista-alumnos');
+
+    // --- CONEXIÓN PHP: Trae los nombres e IDs de la tabla 'alumnos' ---
+    const data = await ejecutarPeticion('obtener_alumnos.php', { clase_id: claseId });
+
+    if (data.success) {
+        select.innerHTML = '<option value="">-- Selecciona tu nombre --</option>';
+        data.alumnos.forEach(alum => {
+            // El 'value' es el ID de la base de datos, el texto es el nombre
+            select.innerHTML += `<option value="${alum.id}">${alum.nombre}</option>`;
         });
+    }
+}
+
+/**
+ * 4. PANTALLA PIN: Validar código de 4 dígitos
+ */
+async function validarPIN() {
+    const pin = document.getElementById('pin-input').value;
+    const alumnoId = localStorage.getItem('alumno_id');
+
+    if (pin.length !== 4) return alert("El PIN debe ser de 4 dígitos");
+
+    // --- CONEXIÓN PHP: Verifica si el PIN coincide con el alumno en MySQL ---
+    const data = await ejecutarPeticion('validar_pin.php', { id: alumnoId, pin: pin });
+
+    if (data.success) {
+        window.location.href = "dashboard_alumno.html";
+    } else {
+        alert("PIN Incorrecto");
+    }
+}
+
+/**
+ * INICIALIZADOR DE VISTAS
+ * Detecta en qué página estás para ejecutar la conexión necesaria al cargar
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // Si existe el elemento de la lista, carga los alumnos automáticamente
+    if (document.getElementById('lista-alumnos')) cargarAlumnos();
+    
+    // Si estamos en la pantalla de PIN, muestra el nombre que seleccionó
+    const displayNombre = document.getElementById('alumno-seleccionado');
+    if (displayNombre) displayNombre.innerText = localStorage.getItem('alumno_nombre');
+});
+
+/**
+ * LOGIN STAFF (Maestros y Directores)
+ * Conexión unificada para el personal de la institución
+ */
+async function validarLoginStaff(rol) {
+    const usuario = document.getElementById('user-staff').value.trim();
+    const password = document.getElementById('pass-staff').value.trim();
+    const cct = localStorage.getItem('institucion_cct');
+
+    if (!usuario || !password) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    // --- CONEXIÓN PHP: Enviamos credenciales, el rol y el CCT para validar en MySQL ---
+    const data = await ejecutarPeticion('login_staff.php', { 
+        identificador: usuario, 
+        pass: password, 
+        rol: rol, 
+        cct: cct 
+    });
+
+    if (data.success) {
+        // Guardamos un token o sesión si el PHP lo genera
+        localStorage.setItem('sesion_activa', 'true');
+        localStorage.setItem('rol_usuario', rol);
         
-        const data = await response.json();
+        alert(`¡Bienvenido! Accediendo como ${rol}.`);
         
-        if (data.success) {
-            localStorage.removeItem('id_alumno');
-            localStorage.removeItem('nombre_alumno');
-            window.location.href = "Iniciodesesion.php"; // Redirigir al inicio
-        }
-    } catch (error) {
-        console.error("Error al cerrar sesión:", error);
+        // Redirección según el éxito
+        window.location.href = (rol === 'director') ? "dashboard_director.html" : "dashboard_maestro.html";
+    } else {
+        alert(data.message || "Credenciales incorrectas para esta institución.");
     }
 }

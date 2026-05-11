@@ -11,7 +11,6 @@
         <div class="login-screen">
             <div class="login-card-container">
                 
-                <!-- ENCABEZADO -->
                 <div class="text-center mb-8 popi">
                     <div class="icon-circle">
                         <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 22v-4a2 2 0 1 0-4 0v4"></path><path d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10"></path><path d="M18 5v17"></path><path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6"></path><path d="M6 5v17"></path><circle cx="12" cy="9" r="2"></circle></svg>
@@ -22,52 +21,22 @@
                     <p id="setup-subtitle" class="subtitle">Identifica tu institución</p>
                 </div>
 
-                <!-- FORMULARIO DE ACCESO (Alumnos, Maestros y Director) -->
+                <!-- Formulario de acceso -->
                 <div id="form-acceso">
                     <div class="form-container">
                         <label class="block mb-4">
                             <span class="label-text">Código CCT de la Escuela</span>
                             <input type="text" id="cct-input" placeholder="Ej: 15EPR0001X" class="input-codigo">
                         </label>
-
-                        <div id="admin-auth" style="display: none;">
-                            <label class="block mb-4">
-                                <span class="label-text">Contraseña de Director</span>
-                                <input type="password" id="admin-pass-input" placeholder="••••••••" class="input-codigo">
-                            </label>
-                        </div>
-
                         <button onclick="procesarAcceso()" id="btn-principal" class="btn-entrar">Entrar a la Escuela</button>
                     </div>
                 </div>
 
-                <!-- FORMULARIO DE REGISTRO (Oculto inicialmente) -->
-                <div id="form-registro" style="display: none;">
-                    <div class="form-container">
-                        <label class="block mb-4">
-                            <span class="label-text">Nombre de la Institución</span>
-                            <input type="text" id="reg-nombre" placeholder="Nombre completo" class="input-codigo">
-                        </label>
-                        <label class="block mb-4">
-                            <span class="label-text">CCT de la Institución</span>
-                            <input type="text" id="reg-cct" placeholder="Código Único" class="input-codigo">
-                        </label>
-                        <label class="block mb-4">
-                            <span class="label-text">Crear Contraseña Maestra</span>
-                            <input type="password" id="reg-pass" placeholder="Mínimo 8 caracteres" class="input-codigo">
-                        </label>
-                        <button onclick="registrarInstitucion()" class="btn-entrar" style="background-color: #10b981;">Finalizar Registro</button>
-                    </div>
+                <div class="opciones-secundarias">
+                    <button onclick="mostrarLoginMaestro()" class="btn-link">Acceso Maestro</button>
+                    <span class="separador">|</span>
+                    <button onclick="mostrarLoginDirector()" class="btn-link">Acceso Director</button>
                 </div>
-
-                <!-- FOOTER DE NAVEGACIÓN -->
-                <div class="text-center mt-6 footer">
-                    <button id="mode-toggle" class="link-footer" onclick="toggleAdminMode()">¿Eres el Director? Acceso Administrativo</button>
-                    <div style="margin-top: 15px;">
-                        <button id="reg-toggle" class="link-footer" style="opacity: 0.6; font-size: 0.9em;" onclick="toggleRegistro()">Inscribir nueva institución</button>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

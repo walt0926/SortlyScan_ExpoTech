@@ -125,3 +125,60 @@
     margin-top: 25px;
     text-align: center;
 }
+.opciones-secundarias {
+    margin-top: 1.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: #F57C00; /* Naranja pedido */
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s;
+    opacity: 0.8; /* Lo hace menos visible inicialmente */
+}
+
+.btn-link:hover {
+    color: #FFB74D; /* Naranja más claro al pasar el mouse */
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.separador {
+    color: #e5e7eb;
+    font-weight: 300;
+}
+
+/* Ajuste opcional para la tarjeta si se ve muy apretada */
+.form-container {
+    background-color: #F7FDF5; /* Fondo suave pedido */
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Para resaltar el nombre de la escuela arriba del input */
+#nombre-institucion {
+    background: #F7FDF5;
+    padding: 5px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Animación simple para que el input destaque */
+.input-codigo::placeholder {
+    font-size: 1.1rem;
+    opacity: 0.5;
+}
