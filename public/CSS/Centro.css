@@ -1,47 +1,71 @@
+/* Importación sugerida para Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Nunito:wght@400;600&display=swap');
+
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #F7FDF5;
+    /* Fuente para párrafos y texto general */
+    font-family: 'Nunito', sans-serif;
+    background-color: #F7FDF5;
+    color: #333;
 }
 
 header {
     background: linear-gradient(90deg, #4CAF50);
     color: #F7FDF5;
-    padding: 15px;
-    font-size: 20px;
+    padding: 20px;
+    font-family: 'Baloo 2', sans-serif; 
+    font-size: 24px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3 {
+    font-family: 'Baloo 2', cursive;
+    color: #4CAF50;
 }
 
 .controls {
-    padding: 15px;
+    padding: 20px;
     display: flex;
     gap: 10px;
     justify-content: center;
+    background-color: #FFB74D; 
 }
 
 input {
     padding: 10px;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 2px solid #00BCD4;
+    font-family: 'Nunito', sans-serif;
 }
 
 button {
-    padding: 10px;
+    padding: 10px 20px;
     border: none;
     border-radius: 8px;
-    background: #00bcd4;
+    background: #00BCD4;
     color: #F7FDF5;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #4CAF50; 
 }
 
 .main {
     display: flex;
     gap: 15px;
-    padding: 15px;
+    padding: 20px;
 }
 
 #map {
     flex: 2;
     height: 500px;
+    border-radius: 15px;
+    border: 3px solid #4CAF50;
 }
 
 .cards {
@@ -52,17 +76,27 @@ button {
 }
 
 .card {
-    background: #F7FDF5;
-    padding: 12px;
+    background: #ffffff;
+    padding: 15px;
     border-radius: 12px;
+    border-left: 5px solid #FFB74D;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
 .btn {
     display: inline-block;
     margin-top: 8px;
+    /* Color naranja vibrante de la paleta */
     background: #F57C00;
-    padding: 6px 10px;
+    padding: 8px 15px;
     border-radius: 8px;
-    color:#F7FDF5;
+    color: #F7FDF5;
     text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    text-align: center;
+}
+
+.btn:hover {
+    background: #E66A00;
 }
