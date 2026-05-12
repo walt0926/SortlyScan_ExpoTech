@@ -41,6 +41,6 @@
             </div>
         </div>
     </div>
-    <script src="JS/auth_handler.js"></script>
+    <script src="JS/sesion_administrativos.js"></script>
 </body>
 </html>
