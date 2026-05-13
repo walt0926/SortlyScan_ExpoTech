@@ -35,7 +35,7 @@
                 <div class="opciones-secundarias">
                     <button onclick="mostrarLoginMaestro()" class="btn-link">Acceso Maestro</button>
                     <span class="separador">|</span>
-                    <button onclick="mostrarLoginDirector()" class="btn-link">Acceso Director</button>
+                    <button onclick="window.location.href = 'iniciodesesion_Director.php'" class="btn-link">Acceso Director</button>
                 </div>
             </div>
         </div>

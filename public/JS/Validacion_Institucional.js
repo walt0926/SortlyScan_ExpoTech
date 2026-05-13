@@ -31,8 +31,6 @@ async function validarAcceso(rol) {
                 window.location.href = "iniciodesesion_Alumno.php";
             } else if (rol === 'maestro') {
                 window.location.href = "iniciodesesion_Maestro.php";
-            } else if (rol === 'director') {
-                window.location.href = "iniciodesesion_Director.php";
             }
         } else {
             alert(data.message || "Código CCT no encontrado en nuestra base de datos.");
@@ -46,4 +44,3 @@ async function validarAcceso(rol) {
 // Funciones que llaman los botones del HTML
 function procesarAcceso() { validarAcceso('alumno'); }
 function mostrarLoginMaestro() { validarAcceso('maestro'); }
-function mostrarLoginDirector() { validarAcceso('director'); }
