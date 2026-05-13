@@ -1,107 +1,105 @@
-/* Importación de fuentes */
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap');
-
-* {
+/* General */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Nunito', sans-serif;
+    background-color: #f4f4f4;
 }
 
-body {
-    background-color: #F7FDF5;
-}
-
+/* Encabezado Verde Oscuro */
 header {
-    background-color: #4CAF50;
+    background-color: #58B45B;
     color: white;
-    padding: 15px;
     text-align: center;
-}
-
-header h1 {
-    font-family: 'Baloo 2', cursive;
-    font-size: 2.2rem;
-}
-
-
-.search-bar-container {
-    background-color: #4CAF50; 
     padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* BARRA DE BÚSQUEDA (Ahora Verde) */
+.controls {
+    background-color: #ffb347; /* Color naranja de fondo */
+    padding: 20px;
     display: flex;
     justify-content: center;
-    gap: 10px;
     align-items: center;
+    gap: 10px;
 }
 
+/* Cambiando el fondo naranja por VERDE como pediste */
+.controls {
+    background-color: #FFB347; /* Si quieres que TODA la franja sea verde, cambia esto a #58B45B */
+    background: linear-gradient(to bottom, #58B45B, #4CAF50); /* Opcional: un degradado verde */
+}
 
-.btn-top {
-    background-color: #F57C00; 
+/* Botones de la barra (Azul Cyan) */
+.controls button {
+    background-color: #00B4D8;
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 700;
+    border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
 }
 
-.search-input {
+.controls input {
     padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    width: 250px;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
-
-.main-content {
+/* Contenedor Principal */
+.main {
     display: flex;
     padding: 20px;
     gap: 20px;
+    height: 70vh;
 }
-
 
 #map {
-    flex: 2; 
-    height: 550px;
+    flex: 2;
+    height: 100%;
     border-radius: 15px;
-    border: 2px solid #4CAF50;
-    background-color: #e0f2f1;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-
-.cards-column {
-    flex: 1; 
+/* Panel de Tarjetas */
+.cards {
+    flex: 1;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
+/* Estilo de la Tarjeta (Card) */
 .card {
     background: white;
-    padding: 15px;
-    border-radius: 15px;
+    padding: 20px;
+    border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-left: 5px solid #F57C00; 
-}
-
-.card h3 {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-
-.btn-card {
-    background-color: #4CAF50; /* Cambiado de naranja a verde */
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 8px;
-    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    border-left: 5px solid #FF8C00; /* Detalle naranja lateral */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.btn-card:hover {
-    background-color: #388E3C;
+.card:hover {
+    background-color: #f9f9f9;
+}
+
+/* Botón "Cómo llegar" dentro de la card */
+.btn {
+    display: inline-block;
+    background-color: #F37021;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    width: fit-content;
 }
