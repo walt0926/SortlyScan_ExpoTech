@@ -33,8 +33,12 @@
                     <!-- Pasamos 'director' como argumento -->
                     <button onclick="validarLoginStaff('director')" class="btn-entrar" style="background-color: #00BCD4;">Entrar al Panel</button>
                     
-                    <div class="footer">
-                        <button onclick="window.location.href='index.html'" class="link-footer">Volver al inicio</button>
+                    <div class="btn-link">
+                        <a href="registroinstitucional.php" class="btn-secundario">¿Eres director y tu institución no está registrada? Registrarse con Institución</a>
+                    </div>
+
+                    <div class="footer" >
+                        <button onclick="window.location.href='registroinstitucional.php'" class="link-footer">Volver al inicio</button>
                     </div>
                 </div>
 
