@@ -1,102 +1,105 @@
-/* Importación sugerida para Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Nunito:wght@400;600&display=swap');
-
+/* General */
 body {
+    font-family: Arial, sans-serif;
     margin: 0;
-    /* Fuente para párrafos y texto general */
-    font-family: 'Nunito', sans-serif;
-    background-color: #F7FDF5;
-    color: #333;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
+/* Encabezado Verde Oscuro */
 header {
-    background: linear-gradient(90deg, #4CAF50);
-    color: #F7FDF5;
-    padding: 20px;
-    font-family: 'Baloo 2', sans-serif; 
-    font-size: 24px;
+    background-color: #58B45B;
+    color: white;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-h1, h2, h3 {
-    font-family: 'Baloo 2', cursive;
-    color: #4CAF50;
-}
-
+/* BARRA DE BÚSQUEDA (Ahora Verde) */
 .controls {
+    background-color: #ffb347; /* Color naranja de fondo */
     padding: 20px;
     display: flex;
-    gap: 10px;
     justify-content: center;
-    background-color: #FFB74D; 
+    align-items: center;
+    gap: 10px;
 }
 
-input {
-    padding: 10px;
-    border-radius: 8px;
-    border: 2px solid #00BCD4;
-    font-family: 'Nunito', sans-serif;
+/* Cambiando el fondo naranja por VERDE como pediste */
+.controls {
+    background-color: #FFB347; /* Si quieres que TODA la franja sea verde, cambia esto a #58B45B */
+    background: linear-gradient(to bottom, #58B45B, #4CAF50); /* Opcional: un degradado verde */
 }
 
-button {
-    padding: 10px 20px;
+/* Botones de la barra (Azul Cyan) */
+.controls button {
+    background-color: #00B4D8;
+    color: white;
     border: none;
-    border-radius: 8px;
-    background: #00BCD4;
-    color: #F7FDF5;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    font-weight: bold;
 }
 
-button:hover {
-    background: #4CAF50; 
+.controls input {
+    padding: 10px;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
+/* Contenedor Principal */
 .main {
     display: flex;
-    gap: 15px;
     padding: 20px;
+    gap: 20px;
+    height: 70vh;
 }
 
 #map {
     flex: 2;
-    height: 500px;
+    height: 100%;
     border-radius: 15px;
-    border: 3px solid #4CAF50;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+/* Panel de Tarjetas */
 .cards {
     flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo de la Tarjeta (Card) */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    border-left: 5px solid #FF8C00; /* Detalle naranja lateral */
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.card {
-    background: #ffffff;
-    padding: 15px;
-    border-radius: 12px;
-    border-left: 5px solid #FFB74D;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+.card:hover {
+    background-color: #f9f9f9;
 }
 
+/* Botón "Cómo llegar" dentro de la card */
 .btn {
     display: inline-block;
-    margin-top: 8px;
-    /* Color naranja vibrante de la paleta */
-    background: #F57C00;
-    padding: 8px 15px;
-    border-radius: 8px;
-    color: #F7FDF5;
+    background-color: #F37021;
+    color: white;
     text-decoration: none;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 5px;
     text-align: center;
-}
-
-.btn:hover {
-    background: #E66A00;
+    font-size: 14px;
+    width: fit-content;
 }
