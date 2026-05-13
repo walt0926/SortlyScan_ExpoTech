@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="CSS/barraNavIA.css">
 </head>
 <body>
+    <div id="arduinoStatus" class="arduino-status">
+        🔌 Arduino Desconectado
+    </div>
 
     <div id="loadingScreen" class="loading-screen">
         <div class="loading-container">
@@ -82,6 +85,41 @@
                 </div>
             </div>
         </div>
+
+        <div class="serial-panel">
+            <h3 class="serial-title">📡 Monitor Serial</h3>
+            <div id="serialLog" class="serial-log">
+                > Monitor Serial de arduino<br>
+                > Esperando conexión...<br>
+            </div>
+            <div class="serial-commands">
+                <div class="command-item">
+                    <span>Orgánica:</span>
+                    <span class="command-code">'w'</span>
+                </div>
+                <div class="command-item">
+                    <span>Papel:</span>
+                    <span class="command-code">'p'</span>
+                </div>
+                <div class="command-item">
+                    <span>Plástico:</span>
+                    <span class="command-code">'l'</span>
+                </div>
+                <div class="command-item">
+                    <span>Vidrio:</span>
+                    <span class="command-code">'g'</span>
+                </div>
+                <div class="command-item">
+                    <span>Electrónico:</span>
+                    <span class="command-code">'e'</span>
+                </div>
+                <div class="command-item">
+                    <span>Aluminio:</span>
+                    <span class="command-code">'c'</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="JS/Java.js"></script>
 </body>

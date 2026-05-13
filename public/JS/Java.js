@@ -1,4 +1,4 @@
-// Global variables
+ // Global variables
         let video = null;
         let detectionCanvas = null;
         let detectionCtx = null;
@@ -411,3 +411,4 @@
                 await serialPort.close();
             }
         });
+        
