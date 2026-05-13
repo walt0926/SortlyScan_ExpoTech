@@ -7,8 +7,8 @@ async function ejecutarPeticion(archivoPHP, datos) {
         const params = new URLSearchParams();
         for (let key in datos) params.append(key, datos[key]);
 
-        // --- CONEXIÓN PHP: Se comunica con la carpeta PHP en tu servidor ---
-        const response = await fetch(`PHP/${archivoPHP}`, {
+        // --- CONEXIÓN PHP: Modificado para apuntar a la carpeta logic/ ---
+        const response = await fetch(`logic/${archivoPHP}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: params
@@ -31,7 +31,15 @@ async function validarLoginStaff(rol) {
     // Obtenemos los elementos del DOM basándonos en tus HTML
     const inputUsuario = document.getElementById('user-staff');
     const inputPass = document.getElementById('pass-staff');
+    
+    // Recuperamos el CCT que guardamos en la pantalla anterior
     const cctActual = localStorage.getItem('institucion_cct');
+
+    if (!cctActual) {
+        alert("Sesión inválida. Por favor, vuelve a ingresar el código de tu escuela.");
+        window.location.href = "ValidarInstitucion.php";
+        return;
+    }
 
     const usuario = inputUsuario.value.trim();
     const password = inputPass.value.trim();
@@ -42,7 +50,7 @@ async function validarLoginStaff(rol) {
         return;
     }
 
-    // --- ESPACIO DE CONEXIÓN: 'login_staff.php' debe procesar estos datos ---
+    // --- Ejecución de la petición al nuevo archivo PHP ---
     const data = await ejecutarPeticion('login_staff.php', { 
         identificador: usuario, 
         pass: password, 
@@ -51,19 +59,22 @@ async function validarLoginStaff(rol) {
     });
 
     if (data.success) {
-        // Persistencia de sesión básica
+        // Persistencia de sesión
         localStorage.setItem('sesion_activa', 'true');
         localStorage.setItem('rol_usuario', rol);
-        localStorage.setItem('usuario_nombre', data.nombre_usuario || usuario);
+        localStorage.setItem('usuario_nombre', data.nombre_usuario);
+        
+        // Opcional: Guardamos el ID del usuario por si lo necesitas para otras consultas (ej. buscar sus salones)
+        if (data.id_usuario) localStorage.setItem('usuario_id', data.id_usuario);
 
-        // Redirección inteligente basada en el rol
+        // Redirección basada en el rol (Asegúrate de que estas páginas existan con esos nombres)
         if (rol === 'director') {
-            window.location.href = "dashboard_director.html";
+            window.location.href = "dashboard_director.php"; // Cambié .html a .php asumiendo tu estructura
         } else {
-            window.location.href = "dashboard_maestro.html";
+            window.location.href = "dashboard_maestro.php"; // Cambié .html a .php
         }
     } else {
-        // Mostramos el error que venga desde el PHP (ej: "Contraseña incorrecta")
+        // Mostramos el error devuelto por PHP
         alert(data.message || "Error de autenticación. Verifica tus datos.");
     }
 }
@@ -73,7 +84,7 @@ async function validarLoginStaff(rol) {
  * Se ejecuta cuando el HTML termina de cargar
  */
 document.addEventListener('DOMContentLoaded', () => {
-    // Recuperamos el nombre de la institución guardado previamente
+    // Recuperamos el nombre de la institución para mostrarlo en pantalla
     const nombreInstitucion = localStorage.getItem('institucion_nombre');
     const labelInstitucion = document.getElementById('nombre-institucion');
 
@@ -81,12 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
         labelInstitucion.innerText = nombreInstitucion;
     }
 
-    // Opcional: Permitir login al presionar "Enter" en los inputs
+    // Permitir login al presionar "Enter"
     const inputs = document.querySelectorAll('.input-codigo');
     inputs.forEach(input => {
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                // Buscamos el botón de la página actual y disparamos el click
                 const btn = document.querySelector('.btn-entrar');
                 if (btn) btn.click();
             }
