@@ -8,13 +8,12 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #acdc5f 0%, #764ba2 100%);
+            background: #4CAF50CF;
             overflow: hidden;
             height: 100vh;
             position: relative;
         }
 
-        /* Animated Background */
         body::before {
             content: '';
             position: absolute;
@@ -35,7 +34,6 @@
             66% { transform: scale(0.9) rotate(240deg); }
         }
 
-        /* Glass Card Styles */
         .glass-card {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(15px);
@@ -46,7 +44,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Arduino Connection Status */
         .arduino-status {
             position: fixed;
             top: 20px;
@@ -64,14 +61,14 @@
         }
 
         .arduino-status.connected {
-            background: rgba(76, 175, 80, 0.9);
+            background:#4CAF50;
         }
 
-        .arduino-status.connecting {
-            background: rgba(255, 152, 0, 0.9);
-        }
+.arduino-status.connecting {
+    background: rgba(255, 0, 0, 0.9);
+    display: none;
+}
 
-        /* Loading Screen */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -83,7 +80,7 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
+            background: #ffb74d;
             backdrop-filter: blur(20px);
         }
 
@@ -126,7 +123,6 @@
             max-width: 400px;
         }
 
-        /* Main Container */
         .main-container {
             position: relative;
             height: 100vh;
@@ -134,7 +130,6 @@
             flex-direction: column;
         }
 
-        /* Header */
         .header {
             position: absolute;
             top: 30px;
@@ -166,7 +161,6 @@
             font-weight: 400;
         }
 
-        /* Camera Container */
         .camera-container {
             position: relative;
             width: 100%;
@@ -189,10 +183,9 @@
             pointer-events: none;
         }
 
-        /* Information Panel - Bottom Left */
         .info-panel {
             position: absolute;
-            bottom: 30px;
+            bottom: 150px;
             left: 30px;
             width: 350px;
             padding: 25px;
@@ -266,34 +259,48 @@
             font-weight: 500;
         }
 
-        /* Controls Panel - Top Right */
         .controls-panel {
-            position: absolute;
-            top: 12px;
-            right: 50px;
-            padding: 10px 10px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: row; 
+            gap: 20px; 
+            align-items: center;
+            padding: 25px 40px;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(20px);
-            border-radius: 30px 10px;
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            z-index: 50;
+            z-index: 100;
         }
 
         .control-button {
-            display: block;
-            width: 120px;
-            padding: 5px 5px;
-            margin-bottom: 5px;
-            background: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            width: auto;
+            min-width: 140px;
+            padding: 15px 20px;
+            margin-bottom: 0;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
+            border-radius: 15px;
             color: white;
-            font-size: 1x1em;
-            font-weight: 600;
+            font-size: 1.1em;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(5px);
             text-align: center;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efecto al pasar el mouse para que se sienta interactivo */
+.control-button:hover:not(:disabled) {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .control-button:hover {
@@ -309,14 +316,16 @@
         }
 
         .control-button.primary {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.8), rgba(46, 125, 50, 0.8));
+            background: #00bbd4ec;
         }
 
+
         .control-button.danger {
-            background: linear-gradient(135deg, rgba(244, 67, 54, 0.8), rgba(198, 40, 40, 0.8));
+            background: #f57b00de;
         }
 
         .control-button.arduino {
+            display: none;
             background: linear-gradient(135deg, rgba(0, 150, 136, 0.8), rgba(0, 121, 107, 0.8));
         }
 

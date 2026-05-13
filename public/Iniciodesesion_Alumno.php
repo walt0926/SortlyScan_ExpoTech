@@ -36,6 +36,6 @@
             </div>
         </div>
     </div>
-    <script src="JS/iniciodesesion_Alumno.js"></script>
+    <script src="JS/inicio_de_sesion.js"></script>
 </body>
 </html>

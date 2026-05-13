@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="CSS/barraNavIA.css">
 </head>
 <body>
-    <div id="arduinoStatus" class="arduino-status">
+    <div id="arduinoStatus" class="arduino-status-conecting" style="display:none;">
         🔌 Arduino Desconectado
     </div>
 
@@ -44,13 +44,13 @@
         <div id="autoIndicator" class="auto-indicator">
             🔄 AUTODETECTANDO...
         </div>
-
-        <div class="controls-panel">
-            <button id="connectArduino" class="control-button arduino">🔌 Conectar Arduino</button>
+    
+        <div class="controls-panel" style="display: block;" >
+            <button id="connectArduino" class="control-button arduino" style="display: none;">🔌 Conectar Arduino</button>
             <button id="startBtn" class="control-button primary">🎥 Iniciar</button>
             <button id="stopBtn" class="control-button danger" disabled>⏹️ Parar</button>
             <button id="detectBtn" class="control-button" disabled>🔍 Detectar</button>
-            <div class="auto-toggle">
+            <div class="auto-toggle"  style="display: none;">
                 <span class="auto-toggle-label">Auto</span>
                 <label class="toggle-switch">
                     <input type="checkbox" id="autoToggle">
@@ -58,6 +58,7 @@
                 </label>
             </div>
         </div>
+    
 
         <div id="infoPanel" class="info-panel">
             <div class="waste-category-display">
@@ -71,7 +72,7 @@
                     <div class="info-value" id="confidenceValue">--</div>
                     <div class="info-label">Viabilidad</div>
                 </div>
-                <div class="info-item">
+                <div class="info-item" style="display:none;">
                     <div class="info-value" id="processingValue">--</div>
                     <div class="info-label">Tiempo (s)</div>
                 </div>
@@ -79,14 +80,14 @@
                     <div class="info-value" id="totalCount">0</div>
                     <div class="info-label">Total</div>
                 </div>
-                <div class="info-item">
+                <div class="info-item" style="display:none;">
                     <div class="info-value" id="accuracyValue">--</div>
                     <div class="info-label">Promedio</div>
                 </div>
             </div>
         </div>
 
-        <div class="serial-panel">
+        <div class="serial-panel" style="display: none;">
             <h3 class="serial-title">📡 Monitor Serial</h3>
             <div id="serialLog" class="serial-log">
                 > Monitor Serial de arduino<br>
