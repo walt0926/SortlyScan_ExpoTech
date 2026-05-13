@@ -72,7 +72,7 @@ async function validarCodigoClase() {
     if (data.success) {
         localStorage.setItem('clase_id', data.clase_id);
         localStorage.setItem('clase_nombre', data.nombre_clase);
-        window.location.href = "seleccion_nombre.html";
+        window.location.href = "Inicioparte2";
     } else {
         alert(data.message);
     }

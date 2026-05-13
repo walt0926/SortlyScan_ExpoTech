@@ -29,7 +29,7 @@
                     <button onclick="validarCodigoClase()" class="btn-entrar">Unirse a la Clase</button>
                     
                     <div class="footer">
-                        <button onclick="window.location.href='index.html'" class="link-footer">Volver atrás</button>
+                        <button onclick="window.location.href='ValidarInstitucion.php'" class="link-footer">Volver atrás</button>
                     </div>
                 </div>
 
