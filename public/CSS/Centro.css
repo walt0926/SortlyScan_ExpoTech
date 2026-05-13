@@ -1,158 +1,102 @@
+/* Importación sugerida para Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Nunito:wght@400;600&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap');
-
-
-* {
+body {
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    /* Fuente para párrafos y texto general */
+    font-family: 'Nunito', sans-serif;
+    background-color: #F7FDF5;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(90deg, #4CAF50);
+    color: #F7FDF5;
+    padding: 20px;
+    font-family: 'Baloo 2', sans-serif; 
+    font-size: 24px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3 {
+    font-family: 'Baloo 2', cursive;
+    color: #4CAF50;
+}
+
+.controls {
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    background-color: #FFB74D; 
+}
+
+input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #00BCD4;
     font-family: 'Nunito', sans-serif;
 }
 
-body {
-    background-color: #F7FDF5; /* Fondo claro del mockup */
-    color: #333;
-}
-
-
-header {
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.logo {
-    font-family: 'Codec Pro', 'Baloo 2', sans-serif;
-    color: #4CAF50;
-    font-size: 24px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #666;
-    margin: 0 15px;
-    font-weight: 600;
-    transition: color 0.3s;
-}
-
-nav a:hover {
-    color: #4CAF50;
-}
-
-.btn-login {
-    background-color: #00C853; /* Verde vibrante del botón 'Iniciar Sesión' */
-    color: white;
+button {
     padding: 10px 20px;
+    border: none;
     border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
+    background: #00BCD4;
+    color: #F7FDF5;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
-
-.hero-section {
-    padding: 40px 5%;
+button:hover {
+    background: #4CAF50; 
 }
 
-h1 {
-    font-family: 'Baloo 2', cursive;
-    color: #4CAF50;
-    font-size: 2.5rem;
-    margin-bottom: 5px;
+.main {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
 }
 
-.hero-section p {
-    color: #666;
-    font-size: 1.1rem;
-}
-
-
-.main-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 25px;
-    padding: 0 5% 40px 5%;
-}
-
-
-.card-container {
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-    border: 1px solid #edf2ed;
-}
-
-/* Mapa */
-#map-container {
-    height: 450px;
-    background-color: #e8f5e9; /* Representación del mapa verde */
+#map {
+    flex: 2;
+    height: 500px;
     border-radius: 15px;
-    margin-top: 15px;
-    position: relative;
-    overflow: hidden;
-    background-image: radial-gradient(#c8e6c9 1px, transparent 1px); /* Efecto rejilla */
-    background-size: 20px 20px;
+    border: 3px solid #4CAF50;
 }
 
-
-.sidebar {
+.cards {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 
-h3 {
-    font-family: 'Baloo 2', cursive;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-
-.search-box {
-    position: relative;
-}
-
-.search-box input {
-    width: 100%;
-    padding: 15px 15px 15px 45px;
-    border-radius: 12px;
-    border: none;
-    background-color: #f1f3f1;
-    font-size: 0.95rem;
-}
-
-
-.stat-widget {
-    background-color: #f9fdf9;
-    padding: 15px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-left: 5px solid #4CAF50;
-}
-
-.stat-value {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #4CAF50;
-}
-
-
-.legend {
-    background: white;
+.card {
+    background: #ffffff;
     padding: 15px;
     border-radius: 12px;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 10;
+    border-left: 5px solid #FFB74D;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 8px;
+    /* Color naranja vibrante de la paleta */
+    background: #F57C00;
+    padding: 8px 15px;
+    border-radius: 8px;
+    color: #F7FDF5;
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    text-align: center;
+}
+
+.btn:hover {
+    background: #E66A00;
 }
