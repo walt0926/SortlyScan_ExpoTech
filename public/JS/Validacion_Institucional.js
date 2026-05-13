@@ -1,85 +1,60 @@
-/**
- * Función principal para validar acceso contra PHP/MySQL
- * @param {string} rol - El rol que intenta acceder ('alumno', 'maestro', 'director')
- */
-async function validarAcceso(rol) {
-    // Obtenemos el input, limpiamos espacios y convertimos a mayúsculas
-    const cctInput = document.getElementById('cct-input').value.trim().toUpperCase();
+document.addEventListener('DOMContentLoaded', () => {
+    // Limpiamos datos anteriores para evitar conflictos de sesiones pasadas
+    localStorage.removeItem('institucion_cct');
+    localStorage.removeItem('institucion_nombre');
+    
+    // Permitir "Enter" en el input del CCT
+    const inputCCT = document.getElementById('cct-input');
+    if (inputCCT) {
+        inputCCT.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                procesarAcceso();
+            }
+        });
+    }
+});
 
-    // Validación básica de campo vacío
-    if (cctInput === "") {
-        alert("Por favor, ingresa el código CCT.");
+// Función para el botón principal "Validar Institución"
+function procesarAcceso() {
+    const cctInput = document.getElementById('cct-input').value.trim();
+
+    if (!cctInput) {
+        alert("Por favor, ingresa el código CCT de la escuela.");
+        return false;
+    }
+
+    // Guardamos el CCT en localStorage
+    localStorage.setItem('institucion_cct', cctInput);
+    localStorage.setItem('institucion_nombre', 'CCT: ' + cctInput); 
+    
+    alert("Institución validada. Selecciona tu acceso.");
+    return true;
+}
+
+// Función para ir al Login de Maestro
+function mostrarLoginMaestro() {
+    const cctInput = document.getElementById('cct-input').value.trim();
+    const cctGuardado = localStorage.getItem('institucion_cct');
+
+    // Si no hay CCT guardado, verificamos si al menos lo escribió en el input
+    if (!cctGuardado) {
+        if (cctInput) {
+            // Lo escribió pero no le dio a "Validar Institución", lo validamos automáticamente
+            procesarAcceso();
+            window.location.href = 'iniciodesesion_Maestro.php';
+        } else {
+            alert("Los maestros deben ingresar el código CCT de la escuela primero.");
+            document.getElementById('cct-input').focus();
+        }
         return;
     }
-
-    try {
-        /**
-         * LLAMADA AL SERVIDOR
-         * Apuntamos a 'logic/validar_institucion.php' ya que la carpeta 'PHP' no existe
-         * y estamos separando la lógica en su propia carpeta.
-         */
-        const response = await fetch('logic/validar_institucion.php', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/x-www-form-urlencoded' 
-            },
-            body: `cct=${encodeURIComponent(cctInput)}`
-        });
-
-        // Verificamos si la respuesta es un JSON válido
-        if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
-        }
-
-        const data = await response.json();
-
-        if (data.success) {
-            // --- PERSISTENCIA DE DATOS ---
-            // Guardamos info relevante para usarla en las siguientes pantallas
-            localStorage.setItem('institucion_nombre', data.nombre);
-            localStorage.setItem('institucion_cct', cctInput);
-            localStorage.setItem('rol_usuario', rol);
-
-            // --- LÓGICA DE REDIRECCIÓN ---
-            // Redirigimos según el rol pasado por parámetro
-            switch (rol) {
-                case 'alumno':
-                    window.location.href = "iniciodesesion_Alumno.php";
-                    break;
-                case 'maestro':
-                    window.location.href = "iniciodesesion_Maestro.php";
-                    break;
-                case 'director':
-                    window.location.href = "iniciodesesion_Director.php";
-                    break;
-                default:
-                    alert("Rol no reconocido.");
-            }
-        } else {
-            // Si el PHP devuelve success: false (CCT no encontrado)
-            alert(data.message || "Código CCT no encontrado en nuestra base de datos.");
-        }
-    } catch (error) {
-        console.error("Error en la conexión:", error);
-        alert("Hubo un error al conectar con el servidor. Verifica tu conexión a internet o la configuración del servidor.");
-    }
+    
+    // Si todo está bien, lo enviamos al login
+    window.location.href = 'iniciodesesion_Maestro.php';
 }
 
-/**
- * Funciones disparadas por los eventos 'onclick' en el HTML
- */
-
-// Se ejecuta al dar clic en "Entrar a la Escuela"
-function procesarAcceso() { 
-    validarAcceso('alumno'); 
-}
-
-// Se ejecuta al dar clic en "Acceso Maestro"
-function mostrarLoginMaestro() { 
-    validarAcceso('maestro'); 
-}
-
-// Se ejecuta al dar clic en "Acceso Director"
-function mostrarLoginDirector() { 
-    validarAcceso('director'); 
+// Función para ir al Login de Director
+function mostrarLoginDirector() {
+    // El director NO necesita CCT. Lo enviamos directo a su login.
+    window.location.href = 'iniciodesesion_Director.php';
 }

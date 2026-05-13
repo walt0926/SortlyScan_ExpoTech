@@ -16,10 +16,12 @@ class Database {
         
         $env = parse_ini_file($env_path);
 
-        $host = $env['DB_HOST'] ?? 'localhost';
-        $db_name = $env['DB_NAME'] ?? 'bdsortlyscan';
-        $username = $env['DB_USER'] ?? 'root';
-        $password = $env['DB_PASS'] ?? '';
+        // Se reemplazó el operador '??' por 'isset()' para garantizar la compatibilidad 
+        // con versiones de PHP anteriores a la 7.0. La lógica es idéntica.
+        $host = isset($env['DB_HOST']) ? $env['DB_HOST'] : 'localhost';
+        $db_name = isset($env['DB_NAME']) ? $env['DB_NAME'] : 'bdsortlyscan';
+        $username = isset($env['DB_USER']) ? $env['DB_USER'] : 'root';
+        $password = isset($env['DB_PASS']) ? $env['DB_PASS'] : '';
 
         try {
             $this->conn = new PDO(

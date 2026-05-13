@@ -32,10 +32,11 @@ async function validarLoginStaff(rol) {
     const inputUsuario = document.getElementById('user-staff');
     const inputPass = document.getElementById('pass-staff');
     
-    // Recuperamos el CCT que guardamos en la pantalla anterior
-    const cctActual = localStorage.getItem('institucion_cct');
+    // Recuperamos el CCT que guardamos en la pantalla anterior (puede estar vacío para el director)
+    const cctActual = localStorage.getItem('institucion_cct') || '';
 
-    if (!cctActual) {
+    // AHORA: Solo le exigimos el CCT al maestro. El director pasa aunque sea null o vacío.
+    if (rol !== 'director' && !cctActual) {
         alert("Sesión inválida. Por favor, vuelve a ingresar el código de tu escuela.");
         window.location.href = "ValidarInstitucion.php";
         return;
@@ -55,7 +56,7 @@ async function validarLoginStaff(rol) {
         identificador: usuario, 
         pass: password, 
         rol: rol, // 'maestro' o 'director'
-        cct: cctActual 
+        cct: cctActual // Para el director enviará vacío (''), ¡y está bien!
     });
 
     if (data.success) {
@@ -67,11 +68,11 @@ async function validarLoginStaff(rol) {
         // Opcional: Guardamos el ID del usuario por si lo necesitas para otras consultas (ej. buscar sus salones)
         if (data.id_usuario) localStorage.setItem('usuario_id', data.id_usuario);
 
-        // Redirección basada en el rol (Asegúrate de que estas páginas existan con esos nombres)
+        // Redirección basada en el rol
         if (rol === 'director') {
-            window.location.href = "dashboard_director.php"; // Cambié .html a .php asumiendo tu estructura
+            window.location.href = "dashboard_director.php";
         } else {
-            window.location.href = "dashboard_maestro.php"; // Cambié .html a .php
+            window.location.href = "dashboard_maestro.php"; 
         }
     } else {
         // Mostramos el error devuelto por PHP
