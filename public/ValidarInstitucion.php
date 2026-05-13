@@ -21,21 +21,20 @@
                     <p id="setup-subtitle" class="subtitle">Identifica tu institución</p>
                 </div>
 
-                <!-- Formulario de acceso -->
                 <div id="form-acceso">
                     <div class="form-container">
                         <label class="block mb-4">
                             <span class="label-text">Código CCT de la Escuela</span>
                             <input type="text" id="cct-input" placeholder="Ej: 15EPR0001X" class="input-codigo">
                         </label>
-                        <button onclick="procesarAcceso()" id="btn-principal" class="btn-entrar">Entrar a la Escuela</button>
+                        <button onclick="procesarAcceso()" id="btn-principal" class="btn-entrar">Validar Institución</button>
                     </div>
                 </div>
 
                 <div class="opciones-secundarias">
                     <button onclick="mostrarLoginMaestro()" class="btn-link">Acceso Maestro</button>
                     <span class="separador">|</span>
-                    <button onclick="window.location.href = 'iniciodesesion_Director.php'" class="btn-link">Acceso Director</button>
+                    <button onclick="mostrarLoginDirector()" class="btn-link">Acceso Director</button>
                 </div>
             </div>
         </div>

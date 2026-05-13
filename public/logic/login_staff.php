@@ -22,57 +22,54 @@ $password_input = $_POST['pass'] ?? '';
 $rol = $_POST['rol'] ?? ''; // 'maestro' o 'director'
 $cct = $_POST['cct'] ?? ''; // El id_mined de la institución
 
-// 4. Validación de campos vacíos
-if (empty($identificador) || empty($password_input) || empty($rol) || empty($cct)) {
-    echo json_encode(["success" => false, "message" => "Todos los campos son obligatorios, incluyendo el CCT de la institución."]);
+// 4. Validación de campos obligatorios
+if (empty($identificador) || empty($password_input) || empty($rol)) {
+    echo json_encode(["success" => false, "message" => "Usuario y contraseña son obligatorios."]);
+    exit;
+}
+
+// Validación diferenciada: El maestro SÍ requiere CCT, el director NO.
+if ($rol === 'maestro' && empty($cct)) {
+    echo json_encode(["success" => false, "message" => "Falta el CCT de la institución para el maestro."]);
     exit;
 }
 
 try {
     // 5. Preparamos la consulta SQL
-    // APLICAMOS EL FILTRO: Buscamos al usuario según su rol y ASEGURANDO que pertenezca a la escuela actual ($cct)
-    
     if ($rol === 'director') {
-        // Los directores ingresan con email
+        // Al director solo lo buscamos por email, sin importar el CCT
         $query = "SELECT id_usuario, nombre_completo, password FROM Usuarios 
-                  WHERE email = :identificador AND rol = 'Director' AND id_mined = :cct LIMIT 1";
+                  WHERE email = :identificador AND rol = 'Director' LIMIT 1";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':identificador', $identificador, PDO::PARAM_STR);
     } else {
-        // Los maestros ingresan con username (número de nómina u otro usuario)
+        // Al maestro sí lo filtramos por su escuela (CCT)
         $query = "SELECT id_usuario, nombre_completo, password FROM Usuarios 
                   WHERE username = :identificador AND rol = 'Maestro' AND id_mined = :cct LIMIT 1";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':identificador', $identificador, PDO::PARAM_STR);
+        $stmt->bindParam(':cct', $cct, PDO::PARAM_STR);
     }
 
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(':identificador', $identificador, PDO::PARAM_STR);
-    $stmt->bindParam(':cct', $cct, PDO::PARAM_STR);
     $stmt->execute();
-
     $usuario = $stmt->fetch();
 
     // 6. Verificamos si se encontró al usuario
     if ($usuario) {
-        // ATENCIÓN: Esta verificación depende de cómo guardes las contraseñas en tu BD.
-        // Si usas password_hash() en PHP para crear usuarios, debes usar password_verify() aquí.
-        // Asumiendo que las contraseñas están en texto plano por ahora (para pruebas):
-        
         if ($password_input === $usuario['password']) {
-            
-            // Si usas contraseñas encriptadas, comenta el IF de arriba y descomenta este:
-            // if (password_verify($password_input, $usuario['password'])) {
-            
             // Éxito: Todo coincide
             echo json_encode([
                 "success" => true,
                 "nombre_usuario" => $usuario['nombre_completo'],
-                "id_usuario" => $usuario['id_usuario'] // Útil para guardarlo en el localStorage si lo necesitas luego
+                "id_usuario" => $usuario['id_usuario'] 
             ]);
         } else {
             // Error: Contraseña incorrecta
             echo json_encode(["success" => false, "message" => "Contraseña incorrecta."]);
         }
     } else {
-        // Error: Usuario no encontrado (o no pertenece a esa escuela)
-        echo json_encode(["success" => false, "message" => "Usuario no encontrado en esta institución."]);
+        // Error: Usuario no encontrado
+        echo json_encode(["success" => false, "message" => "Usuario no encontrado."]);
     }
 
 } catch (PDOException $e) {
