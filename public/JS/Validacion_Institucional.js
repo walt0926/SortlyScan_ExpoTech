@@ -1,9 +1,10 @@
+// public/JS/Validacion_Institucional.js
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Limpiamos datos anteriores para evitar conflictos de sesiones pasadas
+    // Limpieza de datos al cargar
     localStorage.removeItem('institucion_cct');
     localStorage.removeItem('institucion_nombre');
     
-    // Permitir "Enter" en el input del CCT
     const inputCCT = document.getElementById('cct-input');
     if (inputCCT) {
         inputCCT.addEventListener('keypress', (e) => {
@@ -14,47 +15,82 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Función para el botón principal "Validar Institución"
-function procesarAcceso() {
+async function procesarAcceso() {
     const cctInput = document.getElementById('cct-input').value.trim();
 
     if (!cctInput) {
         alert("Por favor, ingresa el código CCT de la escuela.");
-        return false;
+        return;
     }
 
-    // Guardamos el CCT en localStorage
-    localStorage.setItem('institucion_cct', cctInput);
-    localStorage.setItem('institucion_nombre', 'CCT: ' + cctInput); 
-    
-    alert("Institución validada. Selecciona tu acceso.");
-    return true;
+    try {
+        const params = new URLSearchParams();
+        params.append('cct', cctInput);
+
+        // Intentamos contactar al archivo con el error tipográfico 'validad'
+        const response = await fetch('logic/validad_institucion.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params
+        });
+
+        // Verificamos si la respuesta es exitosa (HTTP 200)
+        if (!response.ok) {
+            alert(`Error del servidor: ${response.status} ${response.statusText}\nVerifica que el archivo public/logic/validad_institucion.php existe.`);
+            return;
+        }
+
+        // Intentamos leer el JSON
+        const data = await response.json();
+
+        if (data.success) {
+            localStorage.setItem('institucion_cct', cctInput);
+            localStorage.setItem('institucion_nombre', data.nombre_institucion);
+            
+            // Redirigir al alumno
+            window.location.href = 'Iniciodesesion_Alumno.php';
+        } else {
+            alert(data.message || "CCT no encontrado.");
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        alert("Error crítico: El servidor envió una respuesta inválida (posible error de PHP) o el archivo no existe.");
+    }
 }
 
-// Función para ir al Login de Maestro
-function mostrarLoginMaestro() {
+// Función para maestros (usada en la misma pantalla)
+async function mostrarLoginMaestro() {
     const cctInput = document.getElementById('cct-input').value.trim();
-    const cctGuardado = localStorage.getItem('institucion_cct');
-
-    // Si no hay CCT guardado, verificamos si al menos lo escribió en el input
-    if (!cctGuardado) {
-        if (cctInput) {
-            // Lo escribió pero no le dio a "Validar Institución", lo validamos automáticamente
-            procesarAcceso();
-            window.location.href = 'iniciodesesion_Maestro.php';
-        } else {
-            alert("Los maestros deben ingresar el código CCT de la escuela primero.");
-            document.getElementById('cct-input').focus();
-        }
+    if (!cctInput) {
+        alert("Primero ingresa el CCT de tu escuela.");
         return;
     }
     
-    // Si todo está bien, lo enviamos al login
-    window.location.href = 'iniciodesesion_Maestro.php';
+    // Antes de ir al login, validamos si la escuela existe
+    try {
+        const params = new URLSearchParams();
+        params.append('cct', cctInput);
+        const response = await fetch('logic/validad_institucion.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params
+        });
+
+        if (!response.ok) throw new Error("Error en servidor");
+        const data = await response.json();
+
+        if(data.success) {
+            localStorage.setItem('institucion_cct', cctInput);
+            localStorage.setItem('institucion_nombre', data.nombre_institucion);
+            window.location.href = 'iniciodesesion_Maestro.php';
+        } else {
+            alert(data.message || "CCT no encontrado.");
+        }
+    } catch (e) {
+        alert("Error al validar la institución. Verifica la conexión.");
+    }
 }
 
-// Función para ir al Login de Director
 function mostrarLoginDirector() {
-    // El director NO necesita CCT. Lo enviamos directo a su login.
     window.location.href = 'iniciodesesion_Director.php';
 }
