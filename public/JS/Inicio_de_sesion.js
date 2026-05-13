@@ -1,14 +1,14 @@
-// public/JS/Inicio_de_sesion.js
+// public/JS/inicio_de_sesion.js
 
 /**
  * MOTOR DE PETICIONES
+ * El puente principal entre el navegador y tus archivos PHP en la carpeta logic/
  */
 async function ejecutarPeticion(archivoPHP, datos) {
     try {
         const params = new URLSearchParams();
         for (let key in datos) params.append(key, datos[key]);
 
-        // Llamada al servidor
         const response = await fetch(`logic/${archivoPHP}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -33,7 +33,7 @@ async function ejecutarPeticion(archivoPHP, datos) {
 }
 
 /**
- * 1. PANTALLA INICIAL: Validar CCT
+ * 1. PANTALLA INICIAL: Validar CCT (Institución)
  */
 async function procesarAcceso(rol) {
     const input = document.getElementById('cct-input');
@@ -72,18 +72,19 @@ async function validarCodigoClase() {
     if (data.success) {
         localStorage.setItem('clase_id', data.clase_id);
         localStorage.setItem('clase_nombre', data.nombre_clase);
-        window.location.href = "Inicioparte2";
+        window.location.href = "Inicioparte2.php";
     } else {
         alert(data.message);
     }
 }
 
 /**
- * 3. PANTALLA SELECCIÓN: Cargar lista de alumnos
+ * 3. PANTALLA SELECCIÓN ALUMNO: Cargar lista de alumnos (Inicioparte2.php)
  */
 async function cargarAlumnos() {
     const claseId = localStorage.getItem('clase_id');
     const select = document.getElementById('lista-alumnos');
+    
     if (!claseId || !select) return;
 
     const data = await ejecutarPeticion('obtener_alumnos.php', { clase_id: claseId });
@@ -91,30 +92,56 @@ async function cargarAlumnos() {
     if (data.success) {
         select.innerHTML = '<option value="">-- Selecciona tu nombre --</option>';
         data.alumnos.forEach(alum => {
-            select.innerHTML += `<option value="${alum.id}">${alum.nombre}</option>`;
+            const option = document.createElement('option');
+            option.value = alum.id_alumno;
+            option.textContent = alum.nombre_display;
+            select.appendChild(option);
         });
+    } else {
+        select.innerHTML = `<option value="">${data.message}</option>`;
     }
 }
 
 /**
- * 4. PANTALLA PIN: Validar código de 4 dígitos
+ * 4. PANTALLA SELECCIÓN ALUMNO: Confirmar y pasar al PIN
+ */
+function confirmarAlumno() {
+    const select = document.getElementById('lista-alumnos');
+    const alumnoId = select.value;
+    const alumnoNombre = select.options[select.selectedIndex].text;
+
+    if (!alumnoId) {
+        alert("Por favor, selecciona tu nombre de la lista.");
+        return;
+    }
+
+    localStorage.setItem('alumno_id', alumnoId);
+    localStorage.setItem('alumno_nombre', alumnoNombre);
+    
+    window.location.href = "Inicioparte3.php"; 
+}
+
+/**
+ * 5. PANTALLA PIN: Validar código de 4 dígitos
  */
 async function validarPIN() {
     const pin = document.getElementById('pin-input').value;
     const alumnoId = localStorage.getItem('alumno_id');
+    
     if (pin.length !== 4) return alert("El PIN debe ser de 4 dígitos");
+    if (!alumnoId) return alert("Error: No has seleccionado un alumno.");
 
     const data = await ejecutarPeticion('validar_pin.php', { id: alumnoId, pin: pin });
 
     if (data.success) {
-        window.location.href = "dashboard_alumno.html";
+        window.location.href = "Vista_Estudiante.php";
     } else {
         alert("PIN Incorrecto");
     }
 }
 
 /**
- * LOGIN STAFF
+ * 6. LOGIN STAFF (Maestros y Directores)
  */
 async function validarLoginStaff(rol) {
     const usuario = document.getElementById('user-staff').value.trim();
@@ -141,16 +168,33 @@ async function validarLoginStaff(rol) {
 }
 
 /**
- * INICIALIZADOR
+ * INICIALIZADOR AUTOMÁTICO
  */
 document.addEventListener('DOMContentLoaded', () => {
+    // Llenar nombre de la institución si el label existe
     const labelInstitucion = document.getElementById('nombre-institucion');
     if (labelInstitucion) {
         labelInstitucion.innerText = localStorage.getItem('institucion_nombre') || '';
     }
 
-    if (document.getElementById('lista-alumnos')) cargarAlumnos();
+    // Llenar nombre de la clase si el label existe (en Inicioparte2.php)
+    const labelClase = document.getElementById('nombre-clase');
+    if (labelClase) {
+        labelClase.innerText = localStorage.getItem('clase_nombre') || 'Clase';
+    }
 
+    // Si existe el select de alumnos, cargarlos de inmediato
+    if (document.getElementById('lista-alumnos')) {
+        cargarAlumnos();
+    }
+    
+    // Mostrar nombre seleccionado en pantalla de PIN
+    const displayNombre = document.getElementById('alumno-seleccionado');
+    if (displayNombre) {
+        displayNombre.innerText = localStorage.getItem('alumno_nombre') || 'Alumno';
+    }
+
+    // Soporte para tecla "Enter"
     const inputs = document.querySelectorAll('.input-codigo');
     inputs.forEach(input => {
         input.addEventListener('keypress', (e) => {
