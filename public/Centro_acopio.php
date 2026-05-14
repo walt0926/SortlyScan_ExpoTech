@@ -2,77 +2,60 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SortlyScan - Centros de Acopio</title>
 
-    <title>SortlyScan | Eco-Map</title>
-
+    <!-- Importación de Fuentes para el Sitio Web -->
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
     <link rel="stylesheet" href="CSS/Centro.css">
-
 </head>
 
 <body>
 
+    <!-- Apartado para el panel de Navegación -->
     <div class="bg-glow glow-1"></div>
     <div class="bg-glow glow-2"></div>
-
     <div id="panel-tab" class="panel-tab">
         <span>NAV</span>
     </div>
 
+    <!-- Elementos del panel de Navegación -->
     <div id="routing-panel" class="side-panel">
-
         <div class="panel-header">
-
             <div>
                 <p class="panel-subtitle">SortlyScan Navigation</p>
-
                 <h3 class="panel-title">
                     Directions
                 </h3>
             </div>
-
             <button type="button" class="btn-close">
                 ×
             </button>
-
         </div>
-
         <div id="instructions-container"></div>
-
         <button type="button" class="btn-clear-route">
             Clear Route
         </button>
-
     </div>
 
+    <!--Encabezado principal-->
     <header class="main-header">
-
         <div class="logo-wrapper">
-
-            <img src="img/logo3.png" alt="SortlyScan" class="brand-logo">
-
+            <img src="img/logo3.png" alt="SortlyScan" class="brand-logo"> //Logo version Blanca
         </div>
 
         <div class="search-group">
-
             <input
                 type="text"
                 id="busqueda"
                 placeholder="Search recycling centers..."
             >
-
             <button class="btn-location">
                 My Location
             </button>
-
         </div>
-
     </header>
 
     <div id="map"></div>
