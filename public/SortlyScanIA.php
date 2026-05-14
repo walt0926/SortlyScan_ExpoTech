@@ -1,3 +1,11 @@
+<?php
+// Iniciamos sesión para obtener el ID del alumno que está usando la plataforma.
+session_start();
+
+// Validamos si existe el ID del alumno en la sesión. 
+// Si no, asignamos un 1 por defecto para evitar errores durante tus pruebas.
+$id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +19,8 @@
     <link rel="stylesheet" href="CSS/barraNavIA.css">
 </head>
 <body>
+    <input type="hidden" id="studentId" value="<?php echo htmlspecialchars($id_alumno_actual); ?>">
+
     <div id="arduinoStatus" class="arduino-status-conecting" style="display:none;">
         🔌 Arduino Desconectado
     </div>
