@@ -43,7 +43,7 @@
     <!--Encabezado principal-->
     <header class="main-header">
         <div class="logo-wrapper">
-            <img src="img/logo3.png" alt="SortlyScan" class="brand-logo"> //Logo version Blanca
+            <img src="img/logo3.png" alt="SortlyScan" class="brand-logo"> <!-- Logo versión blanca -->
         </div>
 
         <div class="search-group">
@@ -60,22 +60,19 @@
 
     <div id="map"></div>
 
+<!-- Slicer para carrusel -->
     <div class="slider-wrapper">
-
         <button class="slider-arrow left" id="prevBtn">
             ❮
         </button>
-
         <div class="slider-container" id="cards"></div>
-
         <button class="slider-arrow right" id="nextBtn">
             ❯
         </button>
-
     </div>
 
+<!-- Boton para retroceder -->
     <button class="back-button" onclick="history.back()">
-
     <svg xmlns="http://www.w3.org/2000/svg"
          width="22"
          height="22"
@@ -87,17 +84,13 @@
          stroke-linejoin="round">
 
         <path d="M15 18l-6-6 6-6"/>
-
     </svg>
-
     </button>
 
+<!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-
     <script src="JS/Centro.js"></script>
 
 </body>
-
 </html>
