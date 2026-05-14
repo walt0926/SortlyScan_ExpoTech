@@ -1,105 +1,614 @@
-/* General */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+:root{
+    --primary-green:#8BC34A;
+    --green-light:#AED581;
+    --green-dark:#689F38;
+
+    --dark:#0B0B0B;
+    --dark-soft:#121212;
+    --dark-card:#181818;
+
+    --border:#2A2A2A;
+
+    --white:#FFFFFF;
+    --gray:#BDBDBD;
 }
 
-/* Encabezado Verde Oscuro */
-header {
-    background-color: #58B45B;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    font-size: 24px;
-    font-weight: bold;
+*{
+    box-sizing:border-box;
 }
 
-/* BARRA DE BÚSQUEDA (Ahora Verde) */
-.controls {
-    background-color: #ffb347; /* Color naranja de fondo */
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+body{
+    margin:0;
+    overflow:hidden;
+    background:#050505;
+    font-family:'Nunito',sans-serif;
+    color:white;
 }
 
-/* Cambiando el fondo naranja por VERDE como pediste */
-.controls {
-    background-color: #FFB347; /* Si quieres que TODA la franja sea verde, cambia esto a #58B45B */
-    background: linear-gradient(to bottom, #58B45B, #4CAF50); /* Opcional: un degradado verde */
+#map{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    filter:
+        saturate(.9)
+        brightness(.92)
+        contrast(1.05);
 }
 
-/* Botones de la barra (Azul Cyan) */
-.controls button {
-    background-color: #00B4D8;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
+.bg-glow{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(120px);
+    z-index:0;
+    pointer-events:none;
 }
 
-.controls input {
-    padding: 10px;
-    width: 300px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.glow-1{
+    width:350px;
+    height:350px;
+    background:rgba(139,195,74,.16);
+    top:-100px;
+    left:-120px;
 }
 
-/* Contenedor Principal */
-.main {
-    display: flex;
-    padding: 20px;
-    gap: 20px;
-    height: 70vh;
+.glow-2{
+    width:280px;
+    height:280px;
+    background:rgba(139,195,74,.10);
+    bottom:-80px;
+    right:-80px;
 }
 
-#map {
-    flex: 2;
-    height: 100%;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.main-header{
+    position:fixed;
+
+    top:18px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:auto;
+    min-width:500px;
+    max-width:760px;
+
+    height:78px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:34px;
+
+    padding:0 26px;
+
+    background:rgba(12,12,12,.82);
+
+    backdrop-filter:blur(14px);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:28px;
+
+    z-index:3000;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.04);
 }
 
-/* Panel de Tarjetas */
-.cards {
-    flex: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.logo-wrapper{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding-right:8px;
 }
 
-/* Estilo de la Tarjeta (Card) */
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    cursor: pointer;
-    border-left: 5px solid #FF8C00; /* Detalle naranja lateral */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.brand-logo{
+    height:52px;
+    width:auto;
+    object-fit:contain;
 }
 
-.card:hover {
-    background-color: #f9f9f9;
+.search-group{
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+
+    width:430px;
+
+    margin-left:auto;
 }
 
-/* Botón "Cómo llegar" dentro de la card */
-.btn {
-    display: inline-block;
-    background-color: #F37021;
-    color: white;
-    text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 14px;
-    width: fit-content;
+.search-group input{
+    width:240px;
+
+    height:46px;
+
+    border:none;
+    outline:none;
+
+    border-radius:16px;
+
+    background:#181818;
+
+    color:white;
+
+    padding:0 16px;
+
+    font-size:.92rem;
+
+    border:1px solid rgba(255,255,255,.04);
+
+    transition:.2s;
+}
+
+.search-group input:focus{
+    border-color:rgba(139,195,74,.55);
+    box-shadow:
+        0 0 0 4px rgba(139,195,74,.12);
+}
+
+.search-group input::placeholder{
+    color:#777;
+}
+
+.btn-location{
+    height:48px;
+
+    border:none;
+
+    padding:0 20px;
+
+    margin-left:auto;
+
+    border-radius:18px;
+
+    background: #8bc34a;;
+
+    color:#101010;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:
+        0 10px 20px rgba(139,195,74,.25);
+}
+
+.btn-location:hover{
+    transform:translateY(-2px);
+}
+
+.btn-location:hover{
+    transform:translateY(-2px);
+}
+
+.side-panel{
+    position:fixed;
+    top:110px;
+    left:-400px;
+    width:370px;
+    height:76vh;
+    background:rgba(15,15,15,.94);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:28px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    z-index:3000;
+    transition:left .35s ease;
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.55);
+}
+
+.side-panel.visible{
+    left:22px;
+}
+
+.panel-header{
+    padding:22px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.panel-subtitle{
+    margin:0;
+    font-size:.75rem;
+    color:#7C7C7C;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.panel-title{
+    margin:2px 0 0;
+    font-size:1.8rem;
+    color:var(--primary-green);
+    font-family:'Baloo 2',cursive;
+}
+
+.btn-close{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#1E1E1E;
+    color:white;
+    font-size:1.5rem;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.btn-close:hover{
+    background:#2A2A2A;
+    transform:rotate(90deg);
+}
+
+#instructions-container{
+    flex:1;
+    overflow-y:auto;
+    padding:18px;
+}
+
+.leaflet-routing-container{
+    background:transparent !important;
+    box-shadow:none !important;
+    width:100% !important;
+}
+
+.leaflet-routing-alt{
+    background:transparent !important;
+    border:none !important;
+    color:white !important;
+}
+
+.leaflet-routing-alt h2{
+    color:var(--primary-green);
+    font-size:1rem;
+}
+
+.leaflet-routing-alt td{
+    color:white !important;
+    font-size:.92rem;
+    padding:10px 0;
+}
+
+.btn-clear-route{
+    height:62px;
+    border:none;
+    background:linear-gradient(
+        135deg,
+        #C62828,
+        #EF5350
+    );
+    color:white;
+    font-size:.96rem;
+    font-weight:900;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.btn-clear-route:hover{
+    filter:brightness(1.06);
+}
+
+.panel-tab{
+    position:fixed;
+    top:130px;
+    left:0;
+    width:52px;
+    height:130px;
+    background:linear-gradient(
+        180deg,
+        #8BC34A,
+        #689F38
+    );
+    border-radius:0 18px 18px 0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:2900;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.45);
+}
+
+.panel-tab span{
+    transform:rotate(-90deg);
+    color:#111;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.slider-wrapper{
+    position:fixed;
+
+    right:24px;
+    bottom:24px;
+
+    width:420px;
+    max-width:92%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:14px;
+
+    z-index:2500;
+}
+
+.slider-arrow{
+    width:54px;
+    height:54px;
+    border:none;
+    border-radius:50%;
+    background:rgba(15,15,15,.88);
+    backdrop-filter:blur(10px);
+    color:white;
+    font-size:1.5rem;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,.06);
+    transition:.25s;
+}
+
+.slider-arrow:hover{
+    background:var(--primary-green);
+    color:#111;
+    transform:scale(1.08);
+}
+
+.slider-container{
+    width:100%;
+
+    backdrop-filter:blur(10px);
+}
+
+.card{
+    position:relative;
+    width:100%;
+    height:190px;
+    overflow:hidden;
+    border-radius:30px;
+    background:#111;
+    border:1px solid rgba(255,255,255,.05);
+    cursor:pointer;
+    animation:fadeCard .35s ease;
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.55);
+}
+
+@keyframes fadeCard{
+
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.card img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.96) 8%,
+            rgba(0,0,0,.5) 55%,
+            rgba(0,0,0,.12) 100%
+        );
+    z-index:1;
+}
+
+.card-content{
+    position:absolute;
+    left:22px;
+    right:22px;
+    bottom:22px;
+    z-index:2;
+}
+
+.card-title{
+    margin:0 0 8px;
+    font-size:1.4rem;
+    font-weight:900;
+    color:white;
+    text-shadow:0 2px 10px rgba(0,0,0,.6);
+}
+
+.card-subtitle{
+    color:#D6D6D6;
+    font-size:.92rem;
+    margin-bottom:16px;
+}
+
+.btn-directions{
+    height:44px;
+    border:none;
+    padding:0 18px;
+    border-radius:14px;
+    background:linear-gradient(
+        135deg,
+        #8BC34A,
+        #AED581
+    );
+    color:#111;
+    font-weight:900;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:
+        0 8px 18px rgba(139,195,74,.25);
+}
+
+.btn-directions:hover{
+    transform:translateY(-2px);
+}
+
+.custom-marker{
+    background:transparent;
+    border:none;
+}
+
+.marker-pin{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:linear-gradient(
+        135deg,
+        #8BC34A,
+        #AED581
+    );
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    font-size:16px;
+    font-weight:bold;
+    border:3px solid #111;
+    box-shadow:
+        0 0 0 5px rgba(139,195,74,.18),
+        0 10px 20px rgba(0,0,0,.45);
+    animation:pulseMarker 2s infinite;
+}
+
+.user-marker{
+    background:transparent;
+    border:none;
+}
+
+.user-pin{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#111;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#8BC34A;
+    border:3px solid #8BC34A;
+    box-shadow:
+        0 0 0 5px rgba(139,195,74,.18),
+        0 8px 20px rgba(0,0,0,.45);
+    animation:userPulse 1.8s infinite;
+}
+
+@keyframes pulseMarker{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+@keyframes userPulse{
+
+    0%{
+        box-shadow:
+            0 0 0 0 rgba(139,195,74,.45),
+            0 8px 20px rgba(0,0,0,.45);
+    }
+
+    70%{
+        box-shadow:
+            0 0 0 14px rgba(139,195,74,0),
+            0 8px 20px rgba(0,0,0,.45);
+    }
+
+    100%{
+        box-shadow:
+            0 0 0 0 rgba(139,195,74,0),
+            0 8px 20px rgba(0,0,0,.45);
+    }
+
+}
+
+.leaflet-popup-content-wrapper{
+    background:#161616 !important;
+    color:white !important;
+    border-radius:16px !important;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.leaflet-popup-tip{
+    background:#161616 !important;
+}
+
+.back-button{
+    position:fixed;
+
+    top:18px;
+    left:24px;
+
+    width:74px;
+    height:74px;
+
+    border:none;
+
+    border-radius:26px;
+
+    background:rgba(12,12,12,.82);
+
+    backdrop-filter:blur(14px);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    color:#8BC34A;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    z-index:3200;
+
+    transition:.25s;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.back-button:hover{
+    transform:translateY(-2px) scale(1.03);
+
+    background:rgba(18,18,18,.95);
+
+    color:#AED581;
+}
+
+.back-button svg{
+    transition:.2s;
+}
+
+.back-button:hover svg{
+    transform:translateX(-2px);
 }
