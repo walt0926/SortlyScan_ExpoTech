@@ -1,386 +1,272 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SortlyScan</title>
-<meta name="description"
-      content="Plataforma educativa ambiental para enseñar reciclaje a niños mediante tecnología y gamificación.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="CSS/home.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SortlyScan - Reciclaje con Inteligencia Artificial</title>
+    <meta name="description" content="Plataforma educativa ambiental que transforma el reciclaje en un juego mediante IA, escaneo inteligente y recompensas.">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="CSS/home.css">
 </head>
+
 <body>
-<!-- Header -->
-
-<header class="main-header">
-
-    <div class="container header-container">
-
-        <!-- Logo -->
-        <a href="/" class="logo-container">
-            <div class="logo-icon">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     width="24"
-                     height="24"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round">
-
-                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
-                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
-                </svg>
-            </div>
-            <span class="logo-text">
-                SortlyScan
-            </span>
-        </a>
-
-        <!-- Navegación -->
-        <nav class="nav-menu">
-            <a href="#inicio">Inicio</a>
-            <a href="#sobre-nosotros">
-                Sobre Nosotros
+    <header class="header">
+        <div class="container nav">
+            <a href="#" class="logo">
+                <img src="img/logo2.png" alt="SortlyScan Logo" class="logo-img">
             </a>
-            <a href="#beneficios">
-                Beneficios
-            </a>
-            <a href="#unete">
-                Registro
-            </a>
-        </nav>
 
-        <!-- Botón -->
-        <div class="header-button">
-            <button onclick="window.location.href='ValidarInstitucion.php'">
-                Iniciar Sesión
-            </button>
-        </div>
-    </div>
-</header>
+            <nav class="menu" id="navMenu">
+                <a href="#inicio">Inicio</a>
+                <a href="#como-funciona">¿Cómo funciona?</a>
+                <a href="#funciones">Características</a>
+                <a href="#impacto">Impacto</a>
+                <a href="#planes">Planes</a>
+                <button class="btn-login mobile-only">Iniciar Sesión</button>
+            </nav>
 
-<!-- Hero -->
-
-<section id="inicio" class="hero-section">
-
-    <div class="hero-overlay"></div>
-
-    <div class="container hero-grid">
-
-        <!-- Texto -->
-        <div class="hero-content">
-
-            <div class="hero-badge">
-                <span>
-                    🌱 Tecnología + Educación Ambiental
-                </span>
-            </div>
-
-            <h1 class="hero-title">
-                Enseñando a reciclar con
-                <span>
-                    tecnología y diversión
-                </span>
-            </h1>
-            <p class="hero-description">
-
-                Una plataforma educativa que convierte el reciclaje
-                en una experiencia divertida, interactiva y moderna
-                para niños de El Salvador.
-
-            </p>
-            <div class="hero-buttons">
-                <button class="btn-primary">
-                    Registrarse ahora
-                </button>
-                <button class="btn-secondary">
-                    Conocer más
+            <div class="nav-actions">
+                <button class="btn-login desktop-only">Iniciar Sesión</button>
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
             </div>
-
-            <!-- Estadísticas -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>7-12</h3>
-                    <p>
-                        Años de edad
-                    </p>
-                </div>
-                <div class="stat-card">
-                    <h3>100%</h3>
-                    <p>
-                        Interactivo
-                    </p>
-                </div>
-                <div class="stat-card">
-                    <h3>IA</h3>
-                    <p>
-                        Tecnología educativa
-                    </p>
-                </div>
-            </div>
         </div>
+    </header>
 
-        <!-- Imagen -->
-        <div class="hero-image-container">
-            <div class="image-glow"></div>
-            <img
-                src="https://www.prensalibre.com/wp-content/uploads/2022/05/BV-17052022-TECNO-Y-RECICLAJE-02_67685413.jpg"
-                alt="SortlyScan"
-                class="hero-image">
-        </div>
-    </div>
-</section>
-
-<!-- Sobre Nosotros -->
-
-<section id="sobre-nosotros" class="about-section">
-
-    <div class="container">
-        <!-- Encabezado -->
-        <div class="section-header">
-            <span class="section-badge">
-                Educación Ambiental Inteligente
-            </span>
-            <h2 class="section-title">
-                ¿Qué es SortlyScan?
-            </h2>
-            <p class="section-description">
-                Según el Ministerio de Medio Ambiente y Recursos Naturales (MARN),
-                El Salvador recicla menos del 5% de sus residuos.
-
-                Cada día se generan más de 4000 toneladas de desechos y gran parte
-                termina contaminando ríos, quebradas y calles.
-            </p>
-            <p class="section-description">
-                SortlyScan combina tecnología, reciclaje y gamificación
-                para enseñar hábitos sostenibles de manera divertida.
-            </p>
-        </div>
-
-        <!-- Grid -->
-        <div class="about-grid">
-
-            <!-- Imagen -->
-            <div class="about-image-container">
-                <div class="image-glow"></div>
-                <img
-                    src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?q=80&w=1200&auto=format&fit=crop"
-                    alt="Niños reciclando"
-                    class="about-image">
-            </div>
-
-            <!-- Información -->
-            <div class="about-content">
-
-                <!-- Misión -->
-                <div class="info-card">
-                    <div class="info-icon">
-                        🎯
+    <main>
+        <section class="hero" id="inicio">
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <div class="hero-text-center">
+                    <div class="hero-badge">
+                        <span class="pulse-dot"></span> 🤖 Impulsado por Inteligencia Artificial
                     </div>
-                    <div>
-                        <h3>
-                            Nuestra Misión
-                        </h3>
-                        <p>
-                            Fomentar conciencia ambiental mediante herramientas
-                            educativas digitales e interactivas.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Visión -->
-                <div class="info-card">
-
-                    <div class="info-icon blue">
-                        👁️
+                    <h1>El futuro de la <span>educación ambiental</span> está aquí</h1>
+                    <p>SortlyScan convierte el reciclaje escolar en una competencia interactiva. Escanea residuos con tu cámara, aprende a clasificarlos con IA y gana puntos para tu institución.</p>
+                    
+                    <div class="hero-buttons">
+                        <button class="btn-primary">Registrar mi Escuela</button>
                     </div>
 
-                    <div>
-                        <h3>
-                            Nuestra Visión
-                        </h3>
-                        <p>
-                            Convertirnos en el referente nacional en educación
-                            ambiental digital para niños.
-                        </p>
+                    <div class="hero-mini-stats">
+                        <div class="m-stat"><strong>+50k</strong> <span>Residuos Escaneados</span></div>
+                        <div class="m-stat"><strong>120+</strong> <span>Centros Educativos</span></div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Valores -->
-                <div class="values-card">
-                    <h3>
-                        Nuestros Valores
-                    </h3>
-                    <ul>
-                        <li>
-                            🌱 Sostenibilidad
-                        </li>
-                        <li>
-                            📚 Enseñanza divertida
-                        </li>
-                        <li>
-                            ♻️ Conciencia ambiental
-                        </li>
-                        <li>
-                            🤝 Compromiso social
-                        </li>
-                    </ul>
+        <section class="how-it-works" id="como-funciona">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Método SortlyScan</span>
+                    <h2>Reciclar nunca fue tan fácil</h2>
+                    <p>Diseñamos un ecosistema digital amigable para estudiantes y profesores dividido en tres pilares mecánicos.</p>
+                </div>
+
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-num">01</div>
+                        <h3>Apunta y Escanea</h3>
+                        <p>Los alumnos usan la cámara de su dispositivo. Nuestra IA identifica instantáneamente plásticos, cartón, aluminio o vidrio.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">02</div>
+                        <h3>Clasificación Correcta</h3>
+                        <p>La app indica el contenedor exacto según las normativas vigentes y despliega una trivia rápida sobre economía circular.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">03</div>
+                        <h3>Suma y Recompensa</h3>
+                        <p>Cada depósito exitoso otorga puntos individuales y colectivos, escalando puestos en el Leaderboard escolar regional.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<!-- Beneficios -->
-
-<section id="beneficios" class="benefits-section">
-
-    <div class="container">
-
-        <div class="section-header">
-            <span class="section-badge">
-                Beneficios Educativos
-            </span>
-            <h2 class="section-title">
-                Beneficios para Instituciones
-            </h2>
-        </div>
-
-        <div class="benefits-grid">
-            <div class="benefit-card">
-                <div class="benefit-icon orange">
-                    🏆
+        <section class="features" id="funciones">
+            <div class="container main-carousel-container">
+                <div class="section-header">
+                    <span class="section-tag">Módulos de la Plataforma</span>
+                    <h2>Herramientas que transforman hábitos</h2>
                 </div>
-                <h3>
-                    Competencias
-                </h3>
-                <p>
-                    Motiva a los estudiantes mediante retos y rankings.
-                </p>
-            </div>
 
-            <div class="benefit-card">
-                <div class="benefit-icon yellow">
-                    ⭐
+                <div class="carousel-master-wrapper">
+                    <button class="c-arrow prev" id="aboutPrev" aria-label="Anterior">‹</button>
+                    <button class="c-arrow next" id="aboutNext" aria-label="Siguiente">›</button>
+
+                    <div class="carousel-viewport">
+                        <div class="carousel-track" id="aboutTrack">
+                            
+                            <div class="feature-slide">
+                                <div class="f-slide-icon">🧠</div>
+                                <h3>Reconocimiento Óptico con IA</h3>
+                                <p>Entrenada específicamente para reconocer empaques y materiales complejos comerciales, reduciendo el margen de error humano en la separación de basura escolar.</p>
+                            </div>
+
+                            <div class="feature-slide">
+                                <div class="f-slide-icon blue-icon">🏆</div>
+                                <h3>Gamificación de Alto Impacto</h3>
+                                <p>Tablas de clasificación en tiempo real entre salones y colegios aliados. Logros desbloqueables, medallas digitales y recompensas canjeables en ferias ambientales.</p>
+                            </div>
+
+                            <div class="feature-slide">
+                                <div class="f-slide-icon yellow-icon">📍</div>
+                                <h3>Centros de Acopio Geolocalizados</h3>
+                                <p>Mapeo inteligente y rutas hacia los puntos autorizados de reciclaje más cercanos de El Salvador, garantizando que el material recolectado llegue a plantas de procesamiento reales.</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="carousel-indicators" id="aboutDots">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                    </div>
                 </div>
-                <h3>
-                    Recompensas
-                </h3>
-                <p>
-                    Sistema de puntos y logros para incentivar el reciclaje.
-                </p>
             </div>
+        </section>
 
-            <!-- Métricas -->
-            <div class="benefit-card">
-                <div class="benefit-icon green">
-                    📈
+        <section class="impact-dashboard" id="impacto">
+            <div class="container">
+                <div class="grid-dashboard">
+                    <div class="dash-text">
+                        <span class="section-tag text-left">Estadísticas Globales</span>
+                        <h2>Midiendo el cambio ecológico real</h2>
+                        <p>Nuestra base de datos centralizada recopila métricas que los docentes pueden descargar para proyectos analíticos o reportes institucionales de sostenibilidad.</p>
+                        <div class="live-indicator">
+                            <span class="live-dot"></span> Datos actualizados en tiempo real
+                        </div>
+                    </div>
+                    <div class="dash-board-view">
+                        <div class="db-card">
+                            <span class="db-title">CO₂ Evitado</span>
+                            <h3>14,820 kg</h3>
+                            <div class="db-bar"><div class="db-progress" style="width: 78%"></div></div>
+                        </div>
+                        <div class="db-card">
+                            <span class="db-title">Material Recogido</span>
+                            <h3>8.4 Toneladas</h3>
+                            <span class="db-sub text-green">▲ 12% este mes</span>
+                        </div>
+                        <div class="db-card">
+                            <span class="db-title">Trivias Completadas</span>
+                            <h3>+25,000</h3>
+                            <span class="db-sub">92% respuestas correctas</span>
+                        </div>
+                    </div>
                 </div>
-                <h3>
-                    Métricas
-                </h3>
-                <p>
-                    Seguimiento del impacto ambiental generado.
-                </p>
             </div>
-            <div class="benefit-card">
-                <div class="benefit-icon blue">
-                    📍
+        </section>
+
+        <section class="pricing" id="planes">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Suscripciones</span>
+                    <h2>Planes adaptados a tu institución</h2>
+                    <p>Elige el nivel de impacto ambiental y herramientas tecnológicas que deseas desplegar en tu comunidad educativa.</p>
                 </div>
-                <h3>
-                    Centros de Acopio
-                </h3>
-                <p>
-                    Mapa interactivo con puntos de reciclaje cercanos.
-                </p>
+
+                <div class="pricing-grid">
+                    <div class="price-card">
+                        <div class="price-header">
+                            <h3>Plan Piloto</h3>
+                            <p>Para probar la experiencia inicial</p>
+                            <div class="price-amount">Gratis</div>
+                        </div>
+                        <ul class="price-features">
+                            <li>✨ Escáner IA estándar (Hasta 500 escaneos/mes)</li>
+                            <li>✨ 1 Tabla de clasificación general escolar</li>
+                            <li>✨ Soporte por correo comunitario</li>
+                            <li class="disabled">❌ Panel analítico avanzado para profesores</li>
+                            <li class="disabled">❌ Recompensas patrocinadas personalizadas</li>
+                        </ul>
+                        <button class="btn-price-card">Empezar Gratis</button>
+                    </div>
+
+                    <div class="price-card popular">
+                        <div class="popular-badge">Más Elegido</div>
+                        <div class="price-header">
+                            <h3>Escuela Pro</h3>
+                            <p>El estándar de gamificación total escolar</p>
+                            <div class="price-amount">$29<span>/mes</span></div>
+                        </div>
+                        <ul class="price-features">
+                            <li>✨ Escáner IA ilimitado en todo el campus</li>
+                            <li>✨ Subtablas por secciones, grados y aulas</li>
+                            <li>✨ Dashboard analítico con reportes exportables</li>
+                            <li>✨ Acceso premium a trivias pedagógicas semanales</li>
+                            <li>✨ Gestión interna de recompensas físicas</li>
+                        </ul>
+                        <button class="btn-price-card active">Adquirir Pro</button>
+                    </div>
+
+                    <div class="price-card">
+                        <div class="price-header">
+                            <h3>Distrital / Multi-Sede</h3>
+                            <p>Para corporaciones de colegios o alcaldías</p>
+                            <div class="price-amount">Custom</div>
+                        </div>
+                        <ul class="price-features">
+                            <li>✨ Escaneo cross-platform centralizado masivo</li>
+                            <li>✨ Competencias inter-colegiales a nivel nacional</li>
+                            <li>✨ Integración API con sistemas de recolección municipales</li>
+                            <li>✨ Gestor de cuentas dedicado y capacitación docente</li>
+                            <li>✨ Material promocional e infografías físicas impresas</li>
+                        </ul>
+                        <button class="btn-price-card">Contactar Asesor</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-modern">
+            <div class="container">
+                <div class="cta-inner-box">
+                    <h2>¿Listo para digitalizar la conciencia ambiental en tu aula?</h2>
+                    <p>Únete de forma gratuita como plan piloto institucional y obtén acceso completo al panel de administración para profesores.</p>
+                    <div class="cta-action-btns">
+                        <button class="btn-primary-dark">Registrar Institución</button>
+                        <button class="btn-secondary-white">Hablar con un Asesor</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h3>♻️ SortlyScan</h3>
+                <p>Uniendo tecnología disruptiva y pedagogía para salvaguardar los recursos del mañana.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explorar</h4>
+                <a href="#inicio">Inicio</a>
+                <a href="#como-funciona">Metodología</a>
+                <a href="#funciones">Características</a>
+                <a href="#planes">Planes de Precios</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contacto Legal</h4>
+                <p>📧 contacto@sortlyscan.com</p>
+                <p>📍 San Salvador, El Salvador</p>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- Registrar Nueva Institución-->
-
-<section id="unete" class="cta-section">
-    <div class="container cta-content">
-        <h2>
-            ¿Listo para transformar la educación ambiental?
-        </h2>
-        <p>
-            Únete a SortlyScan y sé parte del cambio ecológico
-            en las escuelas de El Salvador.
-        </p>
-        <button onclick="window.location.href='registroinstitucional.php'">
-            Registrar nueva institución
-        </button>
-    </div>
-</section>
-
-
-<!-- FOOTER -->
-
-<footer class="main-footer">
-
-    <div class="container footer-grid">
-
-        <!-- Logo -->
-        <div>
-            <h2>
-                🌱 SortlyScan
-            </h2>
-            <p>
-                Enseñando a las nuevas generaciones a cuidar
-                el planeta mediante tecnología educativa.
-            </p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SortlyScan. Todos los derechos reservados. Desarrollado para Educación Sostenible.</p>
         </div>
+    </footer>
 
-        <!-- Navegación -->
-        <div>
-            <h3>
-                Navegación
-            </h3>
-            <ul>
-                <li>
-                    <a href="#inicio">
-                        Inicio
-                    </a>
-                </li>
-                <li>
-                    <a href="#sobre-nosotros">
-                        Sobre Nosotros
-                    </a>
-                </li>
-                <li>
-                    <a href="#beneficios">
-                        Beneficios
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Contacto -->
-        <div>
-            <h3>
-                Contacto
-            </h3>
-            <p>
-                contacto@sortlyscan.com
-            </p>
-            <p>
-                El Salvador
-            </p>
-        </div>
-    </div>
-
-</footer>
+    <script src="JS/app.js"></script>
 </body>
 </html>

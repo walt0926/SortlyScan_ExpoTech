@@ -1,89 +1,131 @@
-// Loader
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.querySelector('.loader').classList.add('hidden');
-    }, 1000);
-});
+// JS/app.js
 
-// Mobile Menu
-const menuToggle = document.querySelector('.menu-toggle');
-const mobileMenu = document.querySelector('.mobile-menu');
-const navLinks = document.querySelectorAll('.nav-link, .mobile-link');
+// Esperar estrictamente a que todo el HTML esté cargado antes de operar los nodos
+document.addEventListener("DOMContentLoaded", () => {
 
-menuToggle.addEventListener('click', () => {
-    mobileMenu.classList.toggle('active');
-    menuToggle.classList.toggle('open');
-});
-
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        menuToggle.classList.remove('open');
-        navLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
+    // 1. Efecto blur/color en el header al hacer scroll
+    window.addEventListener("scroll", () => {
+        const header = document.querySelector(".header");
+        if(window.scrollY > 40){
+            header.style.background = "rgba(255, 255, 255, 0.95)";
+            header.style.boxShadow = "0 10px 30px rgba(0,0,0,0.03)";
+        } else {
+            header.style.background = "rgba(255, 255, 255, 0.85)";
+            header.style.boxShadow = "none";
+        }
     });
-});
 
-// Header Scroll Effect
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('.header');
-    if (window.scrollY > 50) {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-        header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-    } else {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
-        header.style.boxShadow = 'none';
+    // 2. Controladores del Menú Desplegable Móvil
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    if(menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('open');
+            navMenu.classList.toggle('open');
+        });
+
+        // Auto-cerrar menú móvil cuando hacen clic en una sección
+        document.querySelectorAll('.menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('open');
+                navMenu.classList.remove('open');
+            });
+        });
+    }
+
+
+    // 3. Sistema Blindado del Carrusel de Características
+// JS/app.js - Sección del Carrusel Blindada
+
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- LÓGICA DEL CARRUSEL ---
+    const track = document.getElementById('aboutTrack');
+    const prevBtn = document.getElementById('aboutPrev');
+    const nextBtn = document.getElementById('aboutNext');
+    const dots = document.querySelectorAll('#aboutDots .indicator');
+    const slides = document.querySelectorAll('#aboutTrack .feature-slide');
+    
+    if (track && slides.length > 0) {
+        const totalSlides = slides.length;
+        let currentIndex = 0;
+
+        function moveCarousel() {
+            // Calculamos el ancho exacto que tiene el contenedor en este preciso instante
+            const slideWidth = slides[0].getBoundingClientRect().width;
+            // Desplazamos de forma matemática pura
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            
+            // Actualizar puntitos
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        // Eventos Click
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            moveCarousel();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            moveCarousel();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                moveCarousel();
+            });
+        });
+
+        // Corregir desfases si el usuario cambia el tamaño de la pantalla del navegador
+        window.addEventListener('resize', moveCarousel);
+
+        // Soporte Táctil Móvil (Swipe)
+        let startX = 0;
+        let endX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            const difference = startX - endX;
+            
+            if (Math.abs(difference) > 50) { // Umbral de 50px de arrastre
+                if (difference > 0) {
+                    currentIndex = (currentIndex + 1) % totalSlides; // Izquierda a Derecha
+                } else {
+                    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; // Derecha a Izquierda
+                }
+                moveCarousel();
+            }
+        }, { passive: true });
+        
+        // Inicializar posición cero al cargar
+        moveCarousel();
+    }
+
+    // --- LÓGICA DE HAMBURGUESA (Mantenida) ---
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    if(menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('open');
+            navMenu.classList.toggle('open');
+        });
+
+        document.querySelectorAll('.menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('open');
+                navMenu.classList.remove('open');
+            });
+        });
     }
 });
-
-// Smooth Scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-        e.preventDefault();
-        const target = document.querySelector(anchor.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
-
-// Navbar Active
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section[id]');
-    let current = '';
-    
-    sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 100) {
-            current = section.id;
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// Parallax Effect
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const heroBg = document.querySelector('.hero-bg');
-    heroBg.style.transform = `translateY(${scrolled * 0.5}px)`;
-});
-
-// Intersection Observer
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('animate');
-        }
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.feature-card, .stat-item').forEach(el => {
-    el.classList.add('animate-ready');
-    observer.observe(el);
 });
