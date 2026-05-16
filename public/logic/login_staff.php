@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $identificador = $_POST['identificador'] ?? ''; // Para maestros es username, para directores es email
 $password_input = $_POST['pass'] ?? '';
 $rol = $_POST['rol'] ?? ''; // 'maestro' o 'director'
-$cct = $_POST['cct'] ?? ''; // El id_mined de la institución
+$cct = $_POST['cct'] ?? ''; // Ya no será obligatorio para el maestro
 
 // 4. Validación de campos obligatorios
 if (empty($identificador) || empty($password_input) || empty($rol)) {
@@ -28,27 +28,20 @@ if (empty($identificador) || empty($password_input) || empty($rol)) {
     exit;
 }
 
-// Validación diferenciada: El maestro SÍ requiere CCT, el director NO.
-if ($rol === 'maestro' && empty($cct)) {
-    echo json_encode(["success" => false, "message" => "Falta el CCT de la institución para el maestro."]);
-    exit;
-}
-
 try {
     // 5. Preparamos la consulta SQL
     if ($rol === 'director') {
-        // Al director solo lo buscamos por email, sin importar el CCT
+        // Al director lo buscamos por email
         $query = "SELECT id_usuario, nombre_completo, password FROM Usuarios 
                   WHERE email = :identificador AND rol = 'Director' LIMIT 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':identificador', $identificador, PDO::PARAM_STR);
     } else {
-        // Al maestro sí lo filtramos por su escuela (CCT)
+        // Al maestro lo buscamos por username y ya NO lo filtramos por CCT
         $query = "SELECT id_usuario, nombre_completo, password FROM Usuarios 
-                  WHERE username = :identificador AND rol = 'Maestro' AND id_mined = :cct LIMIT 1";
+                  WHERE username = :identificador AND rol = 'Maestro' LIMIT 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':identificador', $identificador, PDO::PARAM_STR);
-        $stmt->bindParam(':cct', $cct, PDO::PARAM_STR);
     }
 
     $stmt->execute();
