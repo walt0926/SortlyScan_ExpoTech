@@ -49,7 +49,8 @@ try {
 
     // 6. Verificamos si se encontró al usuario
     if ($usuario) {
-        if ($password_input === $usuario['password']) {
+        // SOLUCIÓN: Usar password_verify para validar el hash de la base de datos
+        if (password_verify($password_input, $usuario['password'])) {
             // Éxito: Todo coincide
             echo json_encode([
                 "success" => true,

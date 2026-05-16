@@ -3,46 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Institución - SortlyScan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/styleIniciodeSesion.css">
+    <title>Registro de Institución - SortlyScan</title>
 </head>
-<body class="login-screen">
-    <div class="login-card-container">
-        <div class="popi">
-            <div class="icon-circle">
-                <!-- Icono de escuela -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3l2-4h14l2 4"/><path d="M5 21V10.85"/><path d="M19 21V10.85"/><path d="M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/></svg>
-            </div>
-            <h1 class="titulo-principal"><span class="text-white">Sortly</span><span class="text-scan">Scan</span></h1>
-            <p class="subtitle">Registro de Institución</p>
-        </div>
-
-        <div class="login-form">
-            <form id="formRegistroEscuela">
-                <!-- SECCIÓN ESCUELA -->
-                <label class="label-text">Nombre de la Escuela</label>
-                <input type="text" name="nombre_escuela" class="input-codigo" style="font-size: 1.1rem; margin-bottom: 1rem;" placeholder="Ej. Instituto Nacional" required>
-
-                <label class="label-text">Número de Infraestructura (CCT)</label>
-                <input type="text" name="cct" class="input-codigo" style="font-size: 1.1rem; margin-bottom: 1rem;" placeholder="Clave única" required>
-
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 1.5rem 0;">
-
-                <!-- SECCIÓN DIRECTOR -->
-                <label class="label-text">Correo del Director</label>
-                <input type="email" name="email_director" class="input-codigo" style="font-size: 1.1rem; margin-bottom: 1rem;" placeholder="correo@ejemplo.com" required>
-
-                <label class="label-text">Contraseña</label>
-                <input type="password" name="password_director" class="input-codigo" style="font-size: 1.1rem;" placeholder="********" required>
-
-                <button type="submit" class="btn-entrar">REGISTRAR INSTITUCIÓN</button>
-            </form>
+<body>
+    <div class="login-screen d-flex align-items-center justify-content-center min-vh-100 px-3 py-5">
+        <div class="login-card-container w-100" style="max-width: 480px;">
             
-            <div class="footer">
-                <a href="iniciodesesion_Director.php" class="btn-link">¿Ya tienes cuenta? Inicia sesión</a>
+            <div class="text-center mb-4 popi d-flex flex-column align-items-center">
+                <div class="icon-circle shadow-lg d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-3 transition-transform" style="width: 5.5rem; height: 5.5rem;">
+                    <img src="img/logo1.png" alt="SortlyScan Isotipo" style="width: 65%; height: 65%; object-fit: contain;">
+                </div>
+                <h1 class="titulo-principal m-0 text-center">
+                    <span class="text-white">Registro</span><span class="text-scan">Institucional</span>
+                </h1>
+                <p class="subtitle text-white-50 mt-2">Da de alta tu escuela en la plataforma</p>
             </div>
+
+            <div class="card border-0 shadow-lg form-container p-4 p-sm-5 rounded-4 bg-white">
+                <form id="formRegistroEscuela">
+                    
+                    <div class="mb-4">
+                        <div class="text-muted fw-bold small text-uppercase tracking-wider mb-3 pb-1 border-bottom border-light">
+                            📍 Datos de la Escuela
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label label-text fw-bold text-secondary mb-1">Nombre de la Escuela</label>
+                            <input type="text" name="nombre_escuela" placeholder="Ej. Instituto Nacional" 
+                                   class="form-control form-control-lg input-codigo py-2 border-2 shadow-sm fs-6" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label label-text fw-bold text-secondary mb-1">Número de Infraestructura (CCT)</label>
+                            <input type="text" name="cct" placeholder="Clave única (CCT)" 
+                                   class="form-control form-control-lg input-codigo py-2 border-2 shadow-sm fs-6 uppercase-input" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="text-muted fw-bold small text-uppercase tracking-wider mb-3 pb-1 border-bottom border-light">
+                            👤 Datos del Directivo
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label label-text fw-bold text-secondary mb-1">Correo del Director</label>
+                            <input type="email" name="email_director" placeholder="correo@ejemplo.com" 
+                                   class="form-control form-control-lg input-codigo py-2 border-2 shadow-sm fs-6" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label label-text fw-bold text-secondary mb-1">Contraseña</label>
+                            <input type="password" name="password_director" placeholder="********" 
+                                   class="form-control form-control-lg input-codigo py-2 border-2 shadow-sm fs-6" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-registrar" class="btn btn-lg btn-entrar w-100 py-3 fw-bold shadow-sm transition-transform mt-2">
+                        REGISTRAR INSTITUCIÓN
+                    </button>
+                </form>
+                
+                <div class="text-center mt-4 border-top pt-3">
+                    <a href="iniciodesesion_Director.php" class="btn btn-link link-footer p-0 text-decoration-none fw-bold text-secondary fs-7">
+                        ← ¿Ya tienes registro? Inicia sesión aquí
+                    </a>
+                </div>
+            </div>
+
         </div>
     </div>
-    <script src="js/registro.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/registro.js"></script>
 </body>
 </html>

@@ -1,181 +1,156 @@
+/* CSS/vista_estudiante.css */
+
 :root {
     --bg-color: #fdf5f2;
     --green-main: #58c271;
+    --green-dark: #46a65d;
     --orange: #ff6333;
     --dark-text: #2d3748;
     --gray-text: #718096;
     --teal-btn: #48bbad;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
-}
-
 body {
     background-color: var(--bg-color);
+    font-family: 'Nunito', sans-serif;
     min-height: 100vh;
-    padding: 30px 20px;
-}
-
-.container {
-    max-width: 500px;
-    margin: 0 auto;
-    position: relative;
-    padding-bottom: 80px; /* Espacio para el botón flotante */
-}
-
-/* Header */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 30px;
-}
-
-.user-welcome h1 {
-    font-size: 1.8rem;
     color: var(--dark-text);
 }
 
-.user-welcome p {
-    color: var(--gray-text);
-    margin-top: 5px;
+.student-panel-container {
+    max-width: 520px; 
+    padding-bottom: 90px !important;
 }
 
-.icon-exit-btn {
-    background: white;
-    border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    cursor: pointer;
-    color: var(--gray-text);
-    font-size: 1.2rem;
-}
-
-/* Tarjeta Verde de Puntos */
+/* Tarjeta de Puntos Premium */
 .points-card {
-    background-color: var(--green-main);
-    border-radius: 30px;
-    padding: 30px;
-    color: white;
-    position: relative;
+    background: linear-gradient(135deg, var(--green-main) 0%, var(--green-dark) 100%);
+    border-radius: 24px;
     overflow: hidden;
-    margin-bottom: 40px;
-    box-shadow: 0 10px 20px rgba(88, 194, 113, 0.2);
+    position: relative;
+    box-shadow: 0 12px 24px rgba(88, 194, 113, 0.25);
+    transition: transform 0.3s ease;
 }
 
-.points-header {
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    opacity: 0.9;
-}
-
-.points-number {
-    font-size: 4rem;
-    font-weight: bold;
-    margin: 10px 0;
-}
-
-.rank-badge {
-    background-color: var(--orange);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
+.points-card:hover {
+    transform: translateY(-4px);
 }
 
 .decorative-star {
     position: absolute;
     right: -20px;
-    top: 20px;
-    font-size: 10rem;
-    opacity: 0.15;
+    bottom: -20px;
+    font-size: 9rem;
+    color: rgba(255, 255, 255, 0.15);
     transform: rotate(15deg);
+    pointer-events: none;
 }
 
-/* Ranking */
-.ranking-container h3 {
-    margin-bottom: 20px;
-    color: var(--dark-text);
-    display: flex;
+/* Badges de Podio Estilizados */
+.rank-badge {
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(5px);
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-weight: 700;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
 }
 
-.ranking-container h3 i { color: var(--orange); }
-
-.ranking-list {
+/* Lista de Ranking */
+.ranking-box {
     background: white;
-    border-radius: 25px;
-    padding: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    border-radius: 24px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
 }
 
 .ranking-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 15px;
+    padding: 14px 20px;
     background: #f8fafc;
-    border-radius: 20px;
+    border-radius: 18px;
+    margin-bottom: 12px;
+    border: 2px solid transparent;
+    transition: all 0.25s ease;
 }
 
-.item-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.ranking-item:last-child {
+    margin-bottom: 0;
+}
+
+.ranking-item:hover {
+    transform: scale(1.01);
+    background: #f1f5f9;
+}
+
+/* Resaltar al alumno logueado en la tabla */
+.ranking-item.current-user {
+    background: #fff8f5;
+    border-color: rgba(255, 99, 51, 0.3);
 }
 
 .rank-icon {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
+    font-weight: 800;
 }
 
-.gold { background-color: #f6ad55; }
+/* Colores Especiales del Podio */
+.rank-1 { background: linear-gradient(135deg, #ffd700, #ffa500); box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3); }
+.rank-2 { background: linear-gradient(135deg, #c0c0c0, #94a3b8); box-shadow: 0 4px 10px rgba(192, 192, 192, 0.3); }
+.rank-3 { background: linear-gradient(135deg, #cd7f32, #b45309); box-shadow: 0 4px 10px rgba(205, 127, 50, 0.3); }
+.rank-default { background: #cbd5e1; color: var(--dark-text); }
 
-.item-right {
-    color: var(--green-main);
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+/* Botón de Salida */
+.btn-logout {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: none;
+    background-color: white;
+    color: var(--orange);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
 }
 
-/* Botón Flotante (FAB) */
+.btn-logout:hover {
+    background-color: var(--orange);
+    color: white;
+    transform: rotate(8deg);
+}
+
+/* Botón de Cámara Flotante (FAB) */
 .fab-camera {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 70px;
-    height: 70px;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: var(--teal-btn);
     color: white;
     border: none;
-    border-radius: 50%;
-    font-size: 1.8rem;
-    cursor: pointer;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
     box-shadow: 0 8px 20px rgba(72, 187, 173, 0.4);
     display: flex;
-    justify-content: center;
     align-items: center;
-    transition: transform 0.2s;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
 }
 
-.fab-camera:active {
-    transform: scale(0.9);
+.fab-camera:hover {
+    background-color: #3ca89c;
+    box-shadow: 0 12px 24px rgba(72, 187, 173, 0.5);
+    transform: translateX(-50%) translateY(-3px) scale(1.03);
+    color: white;
 }

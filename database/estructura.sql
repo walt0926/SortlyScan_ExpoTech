@@ -1,5 +1,3 @@
--- database/estructura.sql
-
 CREATE DATABASE IF NOT EXISTS bdsortlyscan CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE bdsortlyscan;
 
@@ -58,3 +56,12 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+-- ==========================================
+-- REGISTROS DE PRUEBA (MOCK DATA)
+-- ==========================================
+INSERT INTO Instituciones (id_mined, nombre_centro) VALUES ('MINED-1234', 'Centro Escolar General Francisco Morazán');
+
+-- Contraseña encriptada para pruebas: 'admin123'
+INSERT INTO Usuarios (id_usuario, id_mined, email, username, password, rol, nombre_completo) 
+VALUES (1, 'MINED-1234', 'director@escuela.edu.sv', 'director123', '$2y$10$mC7M7XpGvDbeXwKxI9pTe.3PZqEwEwW3oR2MvFfhO9kYm4S3q2un2', 'Director', 'Dr. Carlos Mendoza');

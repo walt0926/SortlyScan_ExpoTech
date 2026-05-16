@@ -3,42 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/styleIniciodeSesion.css">
     <title>SortlyScan - Acceso Institucional</title>
 </head>
 <body>
-    <div class="tailwind">
-        <div class="login-screen">
-            <div class="login-card-container">
-                
-                <div class="text-center mb-8 popi">
-                    <div class="icon-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 22v-4a2 2 0 1 0-4 0v4"></path><path d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10"></path><path d="M18 5v17"></path><path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6"></path><path d="M6 5v17"></path><circle cx="12" cy="9" r="2"></circle></svg>
-                    </div>
-                    <h1 class="titulo-principal">
-                        <span class="text-white">Sortly</span><span class="text-scan">Scan</span>
-                    </h1>
-                    <p id="setup-subtitle" class="subtitle">Identifica tu institución</p>
+    <div class="login-screen d-flex align-items-center justify-content-center min-vh-100 px-3">
+        <div class="login-card-container w-100" style="max-width: 450px;">
+            
+            <div class="text-center mb-4 popi d-flex flex-column align-items-center">
+                <div class="icon-circle shadow-lg d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-3 transition-transform" style="width: 5.5rem; height: 5.5rem;">
+                    <img src="img/logo1.png" alt="SortlyScan Isotipo" style="width: 85%; height: 85%; object-fit: contain;">
                 </div>
+                <h1 class="titulo-principal m-0 text-center">
+                    <span class="text-white">Sortly</span><span class="text-scan">Scan</span>
+                </h1>
+                <p id="setup-subtitle" class="subtitle text-white-50 mt-1">Identifica tu institución</p>
+            </div>
 
-                <div id="form-acceso">
-                    <div class="form-container">
-                        <label class="block mb-4">
-                            <span class="label-text">Código CCT de la Escuela</span>
-                            <input type="text" id="cct-input" placeholder="Ej: 15EPR0001X" class="input-codigo">
-                        </label>
-                        <button onclick="procesarAcceso()" id="btn-principal" class="btn-entrar">Validar Institución</button>
-                    </div>
+            <div id="form-acceso" class="card border-0 shadow-lg form-container p-4 p-sm-5 rounded-4 bg-white">
+                <div class="mb-4">
+                    <label for="cct-input" class="form-label label-text fw-bold text-secondary text-center d-block mb-3">
+                        Código CCT de la Escuela
+                    </label>
+                    <input type="text" id="cct-input" placeholder="Ej: 15EPR0001X" 
+                           class="form-control form-control-lg input-codigo text-center py-3 border-2 shadow-sm uppercase-input">
                 </div>
+                <button onclick="procesarAcceso()" id="btn-principal" class="btn btn-lg btn-entrar w-100 py-3 fw-bold shadow-sm transition-transform">
+                    Validar Institución
+                </button>
+            </div>
 
-                <div class="opciones-secundarias">
-                    <button onclick="mostrarLoginMaestro()" class="btn-link">Acceso Maestro</button>
-                    <span class="separador">|</span>
-                    <button onclick="mostrarLoginDirector()" class="btn-link">Acceso Director</button>
-                </div>
+            <div class="opciones-secundarias d-flex justify-content-center align-items-center gap-2 mt-4">
+                <button onclick="mostrarLoginMaestro()" class="btn btn-link btn-opcion p-0 text-decoration-none fw-bold">Acceso Maestro</button>
+                <span class="separador text-white-50">|</span>
+                <button onclick="mostrarLoginDirector()" class="btn btn-link btn-opcion p-0 text-decoration-none fw-bold">Acceso Director</button>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="JS/Validacion_Institucional.js"></script>
 </body>
 </html>
