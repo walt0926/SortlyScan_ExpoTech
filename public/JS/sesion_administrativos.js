@@ -83,20 +83,12 @@ async function validarLoginStaff(rol) {
         localStorage.setItem('usuario_nombre', data.nombre_usuario);
         
         if (data.id_usuario) localStorage.setItem('usuario_id', data.id_usuario);
-        
-        // Si es maestro, también actualizamos su CCT institucional local
-        if (rol === 'maestro') {
-            localStorage.setItem('institucion_cct', cctValue);
-            if (data.nombre_institucion) {
-                localStorage.setItem('institucion_nombre', data.nombre_institucion);
-            }
-        }
 
-        // Redirección directa basada en el rol
+        // Redirección basada en el rol
         if (rol === 'director') {
-            window.location.href = "dashboard_director.php";
+            window.location.href = "Vista_Director.php";
         } else {
-            window.location.href = "dashboard_maestro.php"; 
+            window.location.href = "Vista_Maestro.php"; 
         }
     } else {
         // Mostramos el error devuelto por tu backend PHP

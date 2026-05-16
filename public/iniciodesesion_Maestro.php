@@ -15,25 +15,20 @@
                 <div class="icon-circle shadow-lg d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-3 transition-transform" style="width: 5.5rem; height: 5.5rem;">
                     <img src="img/logo1.png" alt="SortlyScan Isotipo" style="width: 65%; height: 65%; object-fit: contain;">
                 </div>
-                <h1 class="titulo-principal m-0 text-center">
-                    <span class="text-white">Acceso</span><span class="text-scan">Maestro</span>
-                </h1>
-                <p class="subtitle text-white-50 mt-2">Ingresa el CCT de tu escuela y tus credenciales</p>
-            </div>
 
-            <div class="card border-0 shadow-lg form-container p-4 p-sm-5 rounded-4 bg-white">
-                
-                <div class="mb-3">
-                    <label for="cct-input" class="form-label label-text fw-bold text-secondary mb-2">
-                        Código CCT de la Escuela
-                    </label>
-                    <input type="text" id="cct-input" placeholder="Ej: 15EPR0001X" 
-                           class="form-control form-control-lg input-codigo py-2 border-2 shadow-sm fs-6 uppercase-input">
+                 <div id="form-acceso">
+                    <div class="form-container">
+                        <label class="block mb-4">
+                            <span class="label-text">Código CCT de la Escuela</span>
+                            <input type="text" id="cct-input" placeholder="Ej: 15EPR0001X" class="input-codigo">
+                        </label>
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="user-staff" class="form-label label-text fw-bold text-secondary mb-2">
-                        Usuario o No. de Nómina
+                <div class="form-container">
+                    <label class="block mb-4">
+                        <span class="label-text">Usuario o No. de Nómina</span>
+                        <input type="text" id="user-staff" placeholder="Ej: MAE12345" class="input-codigo">
                     </label>
                     <input type="text" id="user-staff" placeholder="Ej: MAE12345" 
                            class="form-control form-control-lg input-codigo py-2 border-2 shadow-sm fs-6">
