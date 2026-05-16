@@ -1,179 +1,162 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap');
 
 :root {
     --color-white: #ffffff;
+    --color-green-50: #f0fdf4;
     --color-green-500: #22c55e;
     --color-green-600: #16a34a;
+    --color-emerald-500: #10b981;
     --color-emerald-600: #059669;
+    --color-teal-400: #2dd4bf;
+    --color-orange-50: #fff7ed;
+    --color-yellow-50: #fefce8;
 }
 
+/* Reseteo general manteniendo Nunito */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
 }
 
-
-.bg-white { 
-    background-color: white; 
+body {
+    background-color: var(--color-white);
+    color: #1f2937;
+    overflow-x: hidden;
 }
 
-.text-white { 
-    color: white; 
-}
-
+/* Clases de Degradados y Colores Originales */
 .bg-gradient-to-br { 
     background-image: linear-gradient(to bottom right, var(--color-green-500), var(--color-emerald-600)); 
 }
 
-.shadow-sm { 
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); 
+.bg-gradient-hero {
+    background-image: linear-gradient(to bottom right, var(--color-green-500), var(--color-emerald-500), var(--color-teal-400));
 }
 
-.rounded-xl { 
-    border-radius: 0.75rem; 
+.bg-gradient-cards {
+    background-image: linear-gradient(to bottom right, var(--color-green-50, #f0fdf4), var(--color-emerald-50, #ecfdf5));
 }
 
-* {
-    font-family: Nunito, system-ui, -apple-system, sans-serif;
+.bg-gradient-benefits {
+    background-image: linear-gradient(to bottom right, var(--color-orange-50), var(--color-yellow-50));
 }
 
-.text-white {
+.bg-gradient-cta {
+    background-image: linear-gradient(to bottom right, var(--color-green-600), var(--color-emerald-600));
+}
+
+.bg-gradient-footer {
+    background-image: linear-gradient(to bottom right, #14532d, #064e3b);
+}
+
+.text-gradient-green {
+    background-image: linear-gradient(to right, var(--color-green-600), var(--color-emerald-500));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-orange {
+    background-image: linear-gradient(to right, #ea580c, #eab308);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Modificadores de Componentes */
+.rounded-xl { border-radius: 0.75rem; }
+.bg-white-20 { background-color: rgba(255, 255, 255, 0.2); }
+.bg-white-10 { background-color: rgba(255, 255, 255, 0.1); }
+.backdrop-blur { backdrop-filter: blur(8px); }
+.text-green-50 { color: #f0fdf4; }
+.text-green-100 { color: #dcfce7; }
+.text-green-600 { color: var(--color-green-600); }
+.text-green-900 { color: #14532d; }
+.text-emerald-900 { color: #064e3b; }
+.text-orange-900 { color: #7c2d12; }
+.text-yellow-900 { color: #713f12; }
+.text-gray-700 { color: #374151; }
+.text-gray-600 { color: #4b5563; }
+
+/* Botones Personalizados Modernos */
+.btn-custom-primary {
+    background-image: linear-gradient(to right, var(--color-green-600), var(--color-emerald-500));
     color: var(--color-white);
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-custom-primary:hover {
+    background-image: linear-gradient(to right, #15803d, #047857);
+    color: var(--color-white);
+    transform: translateY(-1px);
 }
 
-@supports (color:color-mix(in lab,red,red)) {
-    * {
-        outline-color: 
-color-mix(in oklab, var(--ring) 50%, transparent);
-    }
+.btn-hero {
+    border-width: 2px;
+    transition: all 0.3s ease;
+}
+.btn-hero:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
 
-* {
-    border-color: var(--border);
-    outline-color: var(--ring);
+/* Efectos Visuales Avanzados */
+.hero-grid-pattern {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=');
 }
 
-*, :after, :before, ::backdrop {
-    box-sizing: border-box;
-    border: 0 solid;
-    margin: 0;
-    padding: 0;
+.card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
 }
 
+/* Bordes de tarjetas de beneficios */
+.border-orange-custom { border: 2px solid #ffedd5 !important; }
+.border-orange-custom:hover { border-color: #fdba74 !important; }
+.border-yellow-custom { border: 2px solid #fef9c3 !important; }
+.border-yellow-custom:hover { border-color: #fde047 !important; }
+.border-green-custom { border: 2px solid #dcfce7 !important; }
+.border-green-custom:hover { border-color: #86efac !important; }
+.border-blue-custom { border: 2px solid #e0f2fe !important; }
+.border-blue-custom:hover { border-color: #7dd3fc !important; }
 
-div {
-    display: block;
-    unicode-bidi: isolate;
+/* Gradientes específicos de iconos de beneficios */
+.bg-gradient-orange-card { background-image: linear-gradient(to bottom right, #f97316, #ef4444); }
+.bg-gradient-yellow-card { background-image: linear-gradient(to bottom right, #eab308, #f59e0b); }
+.bg-gradient-blue-card { background-image: linear-gradient(to bottom right, #3b82f6, #06b6d4); }
+
+/* Listas con bullets personalizados */
+.check-bullet {
+    background-color: var(--color-green-500);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-.to-teal-400 {
-    --tw-gradient-to: var(--color-teal-400);
-    --tw-gradient-stops: var(--tw-gradient-via-stops);
+/* Footer & Redes */
+.social-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
 }
+.social-btn:hover { background-color: rgba(255, 255, 255, 0.2); color: white; }
+.footer-links a { color: #dcfce7; text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: white; }
 
-.via-emerald-500 {
-    --tw-gradient-via: var(--color-emerald-500);
-    --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);
-    --tw-gradient-stops: var(--tw-gradient-via-stops);
-}
-
-.from-green-500 {
-    --tw-gradient-from: var(--color-green-500);
-    --tw-gradient-stops: var(--tw-gradient-via-stops);
-}
-
-.bg-gradient-to-br {
-    --tw-gradient-position: to bottom right in oklab;
-    background-image: linear-gradient(var(--tw-gradient-stops));
-}
-
-.to-white {
-    --tw-gradient-to: var(--color-white);
-    --tw-gradient-stops: var(--tw-gradient-via-stops);
-}
-
-.from-green-50 {
-    --tw-gradient-from: var(--color-green-50);
-    --tw-gradient-stops: var(--tw-gradient-via-stops);
-}
-
-.bg-gradient-to-b {
-    --tw-gradient-position: to bottom in oklab;
-    background-image: linear-gradient(var(--tw-gradient-stops));
-}
-
-body {
-    background-color: var(--background);
-    color: var(--foreground);
-}
-
-style
-:root {
-    --banner-height: 48px;
-    --banner-height-v2: 40px;
-    --full-height-with-banner: calc(100dvh - var(--banner-height));
-}
-
-html {
-    font-size: var(--font-size);
-}
-
-html, :host {
-    -webkit-text-size-adjust: 100%;
-    tab-size: 4;
-    line-height: 1.5;
-    font-family: var(--default-font-family);
-    font-feature-settings: var(--default-font-feature-settings, normal);
-    font-variation-settings: var(--default-font-variation-settings, normal);
-    -webkit-tap-highlight-color: transparent;
-}
-
-style
-:root{
-    font-synthesis: none;
-}
-
-*, :after, :before, ::backdrop {
-    box-sizing: border-box;
-    border: 0 solid;
-    margin: 0;
-    padding: 0;
-}
-
-*, :after, :before, ::backdrop {
-    box-sizing: border-box;
-    border: 0 solid;
-    margin: 0;
-    padding: 0;
-}
-
-*, :after, :before, ::backdrop {
-    box-sizing: border-box;
-    border: 0 solid;
-    margin: 0;
-    padding: 0;
-}
-
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #10b981;
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-@font-face {
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url(https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIOOaBXso.woff2) format('woff2');
-    unicode-range: U +0460 -052F, U +1C80 -1C8A, U +20B4, U +2DE0 -2DFF, U + A640-A69F, U + FE2E-FE2F;
-}
+/* Scrollbar Personalizado */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: #10b981; border-radius: 5px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
