@@ -25,7 +25,6 @@
                             <span class="label-text">Código CCT de la Escuela</span>
                             <input type="text" id="cct-input" placeholder="Ej: 15EPR0001X" class="input-codigo">
                         </label>
-                        <button onclick="procesarAcceso()" id="btn-principal" class="btn-entrar">Validar Institución</button>
                     </div>
                 </div>
 
