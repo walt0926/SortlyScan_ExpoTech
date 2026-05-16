@@ -59,36 +59,9 @@ async function procesarAcceso() {
 }
 
 // Función para maestros (usada en la misma pantalla)
-async function mostrarLoginMaestro() {
-    const cctInput = document.getElementById('cct-input').value.trim();
-    if (!cctInput) {
-        alert("Primero ingresa el CCT de tu escuela.");
-        return;
-    }
-    
-    // Antes de ir al login, validamos si la escuela existe
-    try {
-        const params = new URLSearchParams();
-        params.append('cct', cctInput);
-        const response = await fetch('logic/validad_institucion.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: params
-        });
-
-        if (!response.ok) throw new Error("Error en servidor");
-        const data = await response.json();
-
-        if(data.success) {
-            localStorage.setItem('institucion_cct', cctInput);
-            localStorage.setItem('institucion_nombre', data.nombre_institucion);
-            window.location.href = 'iniciodesesion_Maestro.php';
-        } else {
-            alert(data.message || "CCT no encontrado.");
-        }
-    } catch (e) {
-        alert("Error al validar la institución. Verifica la conexión.");
-    }
+function mostrarLoginMaestro() {
+    // Se eliminaron las ~30 líneas de validación. Ahora solo redirige.
+    window.location.href = 'iniciodesesion_Maestro.php';
 }
 
 function mostrarLoginDirector() {

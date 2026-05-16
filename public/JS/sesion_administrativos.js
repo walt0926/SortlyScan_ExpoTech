@@ -32,15 +32,8 @@ async function validarLoginStaff(rol) {
     const inputUsuario = document.getElementById('user-staff');
     const inputPass = document.getElementById('pass-staff');
     
-    // Recuperamos el CCT que guardamos en la pantalla anterior (puede estar vacío para el director)
+    // Recuperamos el CCT (ahora puede estar vacío para ambos roles sin problema)
     const cctActual = localStorage.getItem('institucion_cct') || '';
-
-    // AHORA: Solo le exigimos el CCT al maestro. El director pasa aunque sea null o vacío.
-    if (rol !== 'director' && !cctActual) {
-        alert("Sesión inválida. Por favor, vuelve a ingresar el código de tu escuela.");
-        window.location.href = "ValidarInstitucion.php";
-        return;
-    }
 
     const usuario = inputUsuario.value.trim();
     const password = inputPass.value.trim();
@@ -56,7 +49,7 @@ async function validarLoginStaff(rol) {
         identificador: usuario, 
         pass: password, 
         rol: rol, // 'maestro' o 'director'
-        cct: cctActual // Para el director enviará vacío (''), ¡y está bien!
+        cct: cctActual // Enviará vacío si no hay, y el backend ya no lo exigirá para el maestro
     });
 
     if (data.success) {
