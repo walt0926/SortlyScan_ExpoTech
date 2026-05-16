@@ -13,14 +13,8 @@
 
     <header class="navbar navbar-expand-md bg-white shadow-sm sticky-top z-3">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2 group style-logo" href="#">
-                <div class="bg-gradient-to-br p-2 rounded-xl transition-transform logo-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf text-white">
-                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
-                        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
-                    </svg>
-                </div>
-                <span class="text-gradient-green font-bold fs-3">SortlyScan</span>
+            <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="img/logo2.png" alt="SortlyScan" style="height: 70px; width: auto; object-fit: contain;" class="transition-transform logo-icon py-1">
             </a>
 
             <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSortly" aria-controls="navbarSortly" aria-expanded="false" aria-label="Toggle navigation">
