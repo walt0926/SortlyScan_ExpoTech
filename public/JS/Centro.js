@@ -530,3 +530,9 @@ class SortlyApp{
 }
 
 const app = new SortlyApp();
+// Forzar a Leaflet a recalcular el tamaño correcto debido a los cambios del CSS
+if (typeof map !== 'undefined') {
+    setTimeout(function() {
+        map.invalidateSize();
+    }, 400);
+}
