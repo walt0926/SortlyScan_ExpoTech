@@ -1,195 +1,105 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap');
+
+/* Fondo General con degradado */
 .login-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
     background: linear-gradient(135deg, #b8ffa3 0%, #4CAF50 100%);
     font-family: 'Nunito', sans-serif;
 }
 
-.login-card-container {
-    width: 100%;
-    max-width: 448px;
-}
-
-.icon-circle {
-    margin: 0px auto;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 6rem;
-    height: 6rem;
-    background-color: white;
-    border-radius: 9999px;
-    box-shadow: 0 20px 30px -6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1.5rem;
-}
-
-.popi{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.icon-school {
-    color: #4CAF50;
-}
-
+/* Tipografía del Logo de SortlyScan */
 .titulo-principal {
     font-family: 'Baloo 2', sans-serif;
-    font-size: 3.75rem;
+    font-size: 3.5rem;
     font-weight: 800;
     line-height: 1;
-    margin-bottom: 0.5rem;
-    text-align: center;
 }
 
-.text-white { color: white; }
+.text-white { color: #ffffff; }
 .text-scan { color: #63cd4e; }
 
 .subtitle {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-family: 'Nunito', sans-serif;
-    text-align: center;
 }
 
-.login-form {
-    background-color: white;
-    border-radius: 1.5rem;
-    padding: 2rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+/* Tarjeta del Formulario */
+.form-container {
+    background-color: #F7FDF5 !important; /* Mantiene tu tono sutil verdoso */
+    transition: all 0.3s ease-in-out;
 }
 
-.label-text {
-    display: block;
-    color: #4b5563;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
+/* Entrada de Código CCT */
 .input-codigo {
-    width: 87%;
-    padding: 1.25rem;
-    text-align: center;
-    font-size: 1.5rem;
-    border: 2px solid #f3f4f6;
-    background-color: #f9fafb;
-    border-radius: 1rem;
     font-family: 'Baloo 2', sans-serif;
-    outline: none;
-    transition: all 0.3s;
+    font-size: 1.35rem;
+    letter-spacing: 1px;
+    border-color: #e5e7eb;
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
 }
 
 .input-codigo:focus {
-    border-color: #4ECDC4;
-    right: 4px rgba(78, 205, 196, 0.2);
+    background-color: #ffffff;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25) !important;
 }
 
+.input-codigo::placeholder {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    opacity: 0.6;
+}
+
+/* Forzar mayúsculas estéticas en el CCT */
+.uppercase-input {
+    text-transform: uppercase;
+}
+
+/* Botón Entrar / Validar */
 .btn-entrar {
-    width: 100%;
-    margin-top: 1rem;
-    background-color: #4CAF50;
-    color: white;
-    padding: 1.25rem;
-    border-radius: 1rem;
+    background-color: #4CAF50 !important;
+    border: none !important;
+    color: white !important;
     font-family: 'Baloo 2', sans-serif;
     font-weight: 700;
-    font-size: 1.25rem;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
+    font-size: 1.2rem;
+    border-radius: 12px;
 }
 
 .btn-entrar:hover {
-    background-color: #4CAF50;
-    transform: scale(1.02);
+    background-color: #43a047 !important;
 }
 
-.link-footer {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: underline;
-    font-size: 0.875rem;
-    cursor: pointer;
+/* Opciones secundarias inferiores */
+.btn-opcion {
+    color: #F57C00 !important;
+    font-size: 0.95rem;
+    transition: color 0.2s, transform 0.2s;
 }
 
-.link-footer:hover {
-    color: white;
+.btn-opcion:hover {
+    color: #FFB74D !important;
+    text-decoration: underline !important;
 }
 
-.footer{
-    margin-top: 25px;
-    text-align: center;
-}
-.opciones-secundarias {
-    margin-top: 1.5rem;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+/* Animaciones y Microinteracciones útiles */
+.transition-transform {
+    transition: transform 0.2s ease;
 }
 
-.btn-link {
-    background: none;
-    border: none;
-    color: #F57C00; 
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    transition: color 0.2s;
-    opacity: 0.8;
+.transition-transform:hover {
+    transform: scale(1.03);
 }
 
-.btn-link:hover {
-    color: #FFB74D;
-    opacity: 1;
-    text-decoration: underline;
-}
-
-.separador {
-    color: #e5e7eb;
-    font-weight: 300;
-}
-
-.form-container {
-    background-color: #F7FDF5;
-    padding: 2rem;
-    border-radius: 1.5rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+.icon-circle {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12) !important;
 }
 
 #nombre-institucion {
-    background: #F7FDF5;
-    padding: 5px 15px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 10px;
-    font-size: 1rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-
-.input-codigo::placeholder {
-    font-size: 1.1rem;
-    opacity: 0.5;
-}
-
-.login-form hr {
-    opacity: 0.3;
-}
-
-.input-codigo::placeholder {
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.9rem;
-}
-
-.opciones-secundarias .btn-link {
-    color: #F57C00;
-    font-weight: 700;
+    background-color: #FFF3CD !important; 
+    color: #856404 !important;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.08);
 }

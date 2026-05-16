@@ -7,7 +7,6 @@ async function ejecutarPeticion(archivoPHP, datos) {
         const params = new URLSearchParams();
         for (let key in datos) params.append(key, datos[key]);
 
-        // --- CONEXIÓN PHP: Modificado para apuntar a la carpeta logic/ ---
         const response = await fetch(`logic/${archivoPHP}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -25,73 +24,109 @@ async function ejecutarPeticion(archivoPHP, datos) {
 
 /**
  * LOGIN STAFF (Maestros y Directores)
- * Valida las credenciales contra la base de datos MySQL
+ * Valida las credenciales y añade CCT obligatoriamente si es Maestro
  */
 async function validarLoginStaff(rol) {
-    // Obtenemos los elementos del DOM basándonos en tus HTML
     const inputUsuario = document.getElementById('user-staff');
     const inputPass = document.getElementById('pass-staff');
+    const inputCCT = document.getElementById('cct-input'); // Captura el input CCT si existe
+    const btnEntrar = document.getElementById('btn-entrar-staff');
     
-    // Recuperamos el CCT (ahora puede estar vacío para ambos roles sin problema)
-    const cctActual = localStorage.getItem('institucion_cct') || '';
+    if (!inputUsuario || !inputPass) return;
 
     const usuario = inputUsuario.value.trim();
     const password = inputPass.value.trim();
+    let cctValue = "";
 
-    // Validación básica de cliente (UX)
+    // NUEVA VALIDACIÓN: Si es maestro, el campo CCT es obligatorio a nivel JS
+    if (rol === 'maestro') {
+        if (!inputCCT) {
+            alert("Error del sistema: No se encontró el campo de código CCT.");
+            return;
+        }
+        cctValue = inputCCT.value.trim().toUpperCase();
+        if (!cctValue) {
+            alert("Por favor, ingresa el código CCT de la escuela.");
+            inputCCT.focus();
+            return;
+        }
+    }
+
+    // Validación de credenciales básicas
     if (!usuario || !password) {
-        alert("Por favor, completa todos los campos requeridos.");
+        alert("Por favor, completa todos los campos.");
         return;
     }
 
-    // --- Ejecución de la petición al nuevo archivo PHP ---
-    const data = await ejecutarPeticion('login_staff.php', { 
-        identificador: usuario, 
-        pass: password, 
-        rol: rol, // 'maestro' o 'director'
-        cct: cctActual // Enviará vacío si no hay, y el backend ya no lo exigirá para el maestro
-    });
+    // Efecto dinámico: Añadir spinner de Bootstrap al botón y deshabilitarlo
+    const textoOriginalBtn = btnEntrar.innerHTML;
+    btnEntrar.disabled = true;
+    btnEntrar.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Autenticando...`;
+
+    // Empaquetamos los datos de envío
+    const datosEnvio = {
+        usuario: usuario,
+        password: password,
+        rol: rol
+    };
+
+    // Si el rol es maestro, inyectamos el CCT validado a la petición
+    if (rol === 'maestro') {
+        datosEnvio.cct = cctValue;
+    }
+
+    const data = await ejecutarPeticion('login_staff.php', datosEnvio);
 
     if (data.success) {
-        // Persistencia de sesión
-        localStorage.setItem('sesion_activa', 'true');
-        localStorage.setItem('rol_usuario', rol);
+        // Almacenamos datos de sesión administrativa en LocalStorage
+        localStorage.setItem('usuario_rol', rol);
         localStorage.setItem('usuario_nombre', data.nombre_usuario);
         
-        // Opcional: Guardamos el ID del usuario por si lo necesitas para otras consultas (ej. buscar sus salones)
         if (data.id_usuario) localStorage.setItem('usuario_id', data.id_usuario);
+        
+        // Si es maestro, también actualizamos su CCT institucional local
+        if (rol === 'maestro') {
+            localStorage.setItem('institucion_cct', cctValue);
+            if (data.nombre_institucion) {
+                localStorage.setItem('institucion_nombre', data.nombre_institucion);
+            }
+        }
 
-        // Redirección basada en el rol
+        // Redirección directa basada en el rol
         if (rol === 'director') {
             window.location.href = "dashboard_director.php";
         } else {
             window.location.href = "dashboard_maestro.php"; 
         }
     } else {
-        // Mostramos el error devuelto por PHP
+        // Mostramos el error devuelto por tu backend PHP
         alert(data.message || "Error de autenticación. Verifica tus datos.");
+        
+        // Restablecer botón en caso de error
+        btnEntrar.disabled = false;
+        btnEntrar.innerHTML = textoOriginalBtn;
     }
 }
 
 /**
  * INICIALIZADOR DE INTERFAZ
- * Se ejecuta cuando el HTML termina de cargar
  */
 document.addEventListener('DOMContentLoaded', () => {
-    // Recuperamos el nombre de la institución para mostrarlo en pantalla
-    const nombreInstitucion = localStorage.getItem('institucion_nombre');
-    const labelInstitucion = document.getElementById('nombre-institucion');
-
-    if (labelInstitucion && nombreInstitucion) {
-        labelInstitucion.innerText = nombreInstitucion;
+    // Si estamos en la pantalla de maestro, podemos precargar el CCT si ya existía en LocalStorage
+    const inputCCT = document.getElementById('cct-input');
+    if (inputCCT) {
+        const cctGuardado = localStorage.getItem('institucion_cct');
+        if (cctGuardado) {
+            inputCCT.value = cctGuardado;
+        }
     }
 
-    // Permitir login al presionar "Enter"
-    const inputs = document.querySelectorAll('.input-codigo');
+    // Escucha de la tecla "Enter" en los inputs para ejecutar el inicio de sesión cómodamente
+    const inputs = document.querySelectorAll('.input-codigo, input[type="password"], input[type="email"]');
     inputs.forEach(input => {
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                const btn = document.querySelector('.btn-entrar');
+                const btn = document.getElementById('btn-entrar-staff');
                 if (btn) btn.click();
             }
         });

@@ -1,12 +1,13 @@
 // public/JS/Validacion_Institucional.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Limpieza de datos al cargar
+    // Limpieza total de datos al cargar la pantalla de validación
     localStorage.removeItem('institucion_cct');
     localStorage.removeItem('institucion_nombre');
     
     const inputCCT = document.getElementById('cct-input');
     if (inputCCT) {
+        // Al presionar Enter en el input, solo valida si es para alumnos
         inputCCT.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 procesarAcceso();
@@ -15,32 +16,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Esta función queda EXCLUSIVA para el flujo de Alumnos
 async function procesarAcceso() {
     const cctInput = document.getElementById('cct-input').value.trim();
+    const btnPrincipal = document.getElementById('btn-principal');
 
     if (!cctInput) {
         alert("Por favor, ingresa el código CCT de la escuela.");
         return;
     }
 
+    // Efecto dinámico de carga en el botón (Bootstrap)
+    const textoOriginalBtn = btnPrincipal.innerHTML;
+    btnPrincipal.disabled = true;
+    btnPrincipal.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Validando...`;
+
     try {
         const params = new URLSearchParams();
         params.append('cct', cctInput);
 
-        // Intentamos contactar al archivo con el error tipográfico 'validad'
         const response = await fetch('logic/validad_institucion.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: params
         });
 
-        // Verificamos si la respuesta es exitosa (HTTP 200)
         if (!response.ok) {
             alert(`Error del servidor: ${response.status} ${response.statusText}\nVerifica que el archivo public/logic/validad_institucion.php existe.`);
+            btnPrincipal.disabled = false;
+            btnPrincipal.innerHTML = textoOriginalBtn;
             return;
         }
 
-        // Intentamos leer el JSON
         const data = await response.json();
 
         if (data.success) {
@@ -51,19 +58,23 @@ async function procesarAcceso() {
             window.location.href = 'Iniciodesesion_Alumno.php';
         } else {
             alert(data.message || "CCT no encontrado.");
+            btnPrincipal.disabled = false;
+            btnPrincipal.innerHTML = textoOriginalBtn;
         }
     } catch (error) {
         console.error("Error de conexión:", error);
         alert("Error crítico: El servidor envió una respuesta inválida (posible error de PHP) o el archivo no existe.");
+        btnPrincipal.disabled = false;
+        btnPrincipal.innerHTML = textoOriginalBtn;
     }
 }
 
-// Función para maestros (usada en la misma pantalla)
+// ACCESO DIRECTO PARA MAESTROS (Se salta por completo la validación de CCT)
 function mostrarLoginMaestro() {
-    // Se eliminaron las ~30 líneas de validación. Ahora solo redirige.
     window.location.href = 'iniciodesesion_Maestro.php';
 }
 
+// ACCESO DIRECTO PARA DIRECTORES (Se salta por completo la validación de CCT)
 function mostrarLoginDirector() {
     window.location.href = 'iniciodesesion_Director.php';
 }
