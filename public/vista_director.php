@@ -1,3 +1,42 @@
+<?php
+// public/vista_director.php
+session_start();
+
+// Simulación de inicio de sesión si estás probando directamente (eliminar en producción)
+if (!isset($_SESSION['id_usuario'])) {
+    $_SESSION['id_usuario'] = 1;
+    $_SESSION['rol'] = 'Director';
+}
+
+if (!isset($_SESSION['id_usuario']) || $_SESSION['rol'] !== 'Director') {
+    header("Location: login.php");
+    exit();
+}
+
+try {
+    // Importamos tu conexión (un nivel arriba de public)
+    require_once '../config/conexion.php';
+    
+    // Obtener datos de la institución usando la variable $pdo de tu archivo de conexión
+    $stmt = $pdo->prepare("
+        SELECT i.nombre_centro, i.id_mined 
+        FROM Usuarios u 
+        JOIN Instituciones i ON u.id_mined = i.id_mined 
+        WHERE u.id_usuario = ?
+    ");
+    $stmt->execute([$_SESSION['id_usuario']]);
+    $institucion = $stmt->fetch();
+
+    if ($institucion) {
+        $_SESSION['id_mined'] = $institucion['id_mined'];
+        $nombre_escuela = $institucion['nombre_centro'];
+    } else {
+        $nombre_escuela = "Institución No Asignada";
+    }
+} catch (PDOException $e) {
+    $nombre_escuela = "Error de Configuración Interna";
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,13 +51,12 @@
     <div class="container">
         <header class="main-header">
             <div class="titles">
-                <h1 id="school-name">Panel de Director</h1>
+                <h1 id="school-name"><?php echo htmlspecialchars($nombre_escuela); ?></h1>
                 <p>Vista general de la institución</p>
             </div>
             <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Salir</button>
         </header>
 
-        <!-- Estadísticas Dinámicas -->
         <section class="stats-grid">
             <div class="stat-card orange">
                 <div class="stat-icon"><i class="fa-solid fa-school"></i> Total clases</div>
@@ -34,22 +72,19 @@
             </div>
         </section>
 
-        <!-- SECCIÓN DE GESTIÓN -->
         <section class="management-section ranking-section">
             <div class="section-header">
                 <h3><i class="fa-solid fa-plus-circle"></i> Gestión de Clases y Docentes</h3>
             </div>
             <div class="form-management-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <!-- Crear Salón -->
                 <div class="form-box" style="background: #f8fafc; padding: 20px; border-radius: 15px;">
                     <h4 style="margin-bottom:10px">Registrar Nueva Clase</h4>
                     <input type="text" id="nombre-clase" placeholder="Ej: 3ro Primaria - A" class="input-estilo">
                     <button onclick="crearClase()" class="btn-accion">Crear Clase</button>
                 </div>
-                <!-- Asignar Docente -->
                 <div class="form-box" style="background: #f8fafc; padding: 20px; border-radius: 15px;">
                     <h4 style="margin-bottom:10px">Asignar Docente a Clase</h4>
-                    <select id="select-clases" class="input-estilo"><option>Cargando clases...</option></select>
+                    <select id="select-clases" class="input-estilo"><option value="">Cargando clases...</option></select>
                     <input type="text" id="nombre-docente" placeholder="Nombre del Profesor" class="input-estilo">
                     <input type="password" id="pass-docente" placeholder="Contraseña Docente" class="input-estilo">
                     <button onclick="asignarDocente()" class="btn-accion">Asignar Docente</button>
@@ -57,13 +92,11 @@
             </div>
         </section>
 
-        <!-- Ranking Dinámico -->
         <section class="ranking-section">
             <div class="section-header">
                 <h3><i class="fa-solid fa-trophy"></i> Ranking de Clases</h3>
             </div>
             <div class="ranking-list" id="ranking-container">
-                <!-- Se llena con JS -->
                 <p style="text-align:center; color: #999;">Cargando ranking de la institución...</p>
             </div>
         </section>
@@ -79,6 +112,6 @@
         </section>
     </div>
 
-    <script src="JS/Panel_Director.js"></script>
+    <script src="JS/vista_director.js"></script>
 </body>
 </html>

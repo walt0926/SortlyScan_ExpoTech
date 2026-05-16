@@ -61,11 +61,11 @@ async function validarLoginStaff(rol) {
         // Opcional: Guardamos el ID del usuario por si lo necesitas para otras consultas (ej. buscar sus salones)
         if (data.id_usuario) localStorage.setItem('usuario_id', data.id_usuario);
 
-        // Redirección basada en el rol
+        // --- REDIRECCIÓN CORREGIDA ---
         if (rol === 'director') {
-            window.location.href = "dashboard_director.php";
+            window.location.href = "Vista_Director.php";
         } else {
-            window.location.href = "dashboard_maestro.php"; 
+            window.location.href = "Vista_Maestro.php"; 
         }
     } else {
         // Mostramos el error devuelto por PHP

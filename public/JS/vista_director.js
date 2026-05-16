@@ -1,153 +1,151 @@
-// director.js - Adaptado al estándar de SortlyScan
-const API_URL = "http://localhost/sortlyscan/api/director.php";
-const instId = localStorage.getItem('inst_id');
-const schoolName = localStorage.getItem('inst_nombre');
+// public/JS/vista_director.js
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Verificación de seguridad inicial
-    if (!instId) {
-        window.location.href = "ValidarInstitucion.html";
-        return;
-    }
-    
-    document.getElementById('school-name').innerText = schoolName;
+document.addEventListener("DOMContentLoaded", () => {
     cargarDashboard();
+    cargarSelectorClases();
 });
 
-// ==========================================
-// 1. CARGAR DATOS DEL DASHBOARD
-// ==========================================
-async function cargarDashboard() {
-    try {
-        // REGLA: Usamos fetch con credentials para mantener la sesión de PHP si es necesario
-        const response = await fetch(`${API_URL}?action=get_data&inst_id=${instId}`, {
-            method: 'GET',
-            credentials: 'include'
-        });
+// Carga contadores estadísticos y lista del ranking institucional
+function cargarDashboard() {
+    fetch('logic/api_datos_director.php?action=get_dashboard')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                console.error("Error del servidor:", data.error);
+                return;
+            }
 
-        const data = await response.json();
+            // Actualizar tarjetas superiores
+            document.getElementById('stat-clases').textContent = data.stats.total_clases;
+            document.getElementById('stat-alumnos').textContent = data.stats.total_alumnos;
+            document.getElementById('stat-puntos').textContent = data.stats.total_puntos;
 
-        if (data.stats) {
-            // Actualizar Estadísticas
-            document.getElementById('stat-clases').innerText = data.stats.total_clases;
-            document.getElementById('stat-alumnos').innerText = data.stats.total_alumnos;
-            document.getElementById('stat-puntos').innerText = data.stats.total_puntos;
-        }
+            // Actualizar contenedor del ranking
+            const container = document.getElementById('ranking-container');
+            container.innerHTML = '';
 
-        // Llenar Select de Clases
-        const select = document.getElementById('select-clases');
-        if (select && data.clases) {
-            select.innerHTML = '<option value="">Selecciona una clase</option>';
+            if (data.ranking.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color: #999; padding: 15px;">No hay salones registrados en esta escuela.</p>';
+                return;
+            }
+
+            data.ranking.forEach((clase, index) => {
+                const item = document.createElement('div');
+                item.className = 'rank-item';
+                item.style.display = 'flex';
+                item.style.justifyContent = 'space-between';
+                item.style.padding = '12px 20px';
+                item.style.background = '#fff';
+                item.style.marginBottom = '8px';
+                item.style.borderRadius = '10px';
+                item.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)';
+                
+                item.innerHTML = `
+                    <div>
+                        <strong style="color: #f97316; margin-right: 15px;">#${index + 1}</strong>
+                        <span>${clase.nombre_salon}</span>
+                    </div>
+                    <span style="font-weight: bold; color: #10b981;">${clase.puntos_clase} pts</span>
+                `;
+                container.appendChild(item);
+            });
+        })
+        .catch(err => console.error("Error al procesar el dashboard:", err));
+}
+
+// Llena dinámicamente el campo de selección <select> con las clases creadas
+function cargarSelectorClases() {
+    fetch('logic/api_datos_director.php?action=get_clases')
+        .then(response => response.json())
+        .then(data => {
+            const select = document.getElementById('select-clases');
+            select.innerHTML = '';
+
+            if (!data.success || data.clases.length === 0) {
+                select.innerHTML = '<option value="">Sin clases disponibles</option>';
+                return;
+            }
+
+            select.innerHTML = '<option value="">-- Seleccione una clase --</option>';
             data.clases.forEach(clase => {
-                select.innerHTML += `<option value="${clase.id}">${clase.nombre_salon}</option>`;
+                const opt = document.createElement('option');
+                opt.value = clase.id_salon;
+                opt.textContent = clase.nombre_salon;
+                select.appendChild(opt);
             });
-        }
-
-        // Generar Ranking
-        const rankingContainer = document.getElementById('ranking-container');
-        if (rankingContainer && data.clases) {
-            rankingContainer.innerHTML = '';
-            data.clases.forEach((clase, index) => {
-                const medalla = index === 0 ? 'gold' : index === 1 ? 'silver' : 'teal';
-                rankingContainer.innerHTML += `
-                    <div class="ranking-item">
-                        <div class="class-info">
-                            <div class="rank-circle ${medalla}"><i class="fa-solid fa-trophy"></i></div>
-                            <div>
-                                <h4>${clase.nombre_salon}</h4>
-                                <p>Docente: ${clase.docente || 'Sin asignar'} • ${clase.num_alumnos} estudiantes</p>
-                            </div>
-                        </div>
-                        <div class="points">
-                            <span class="points-num">${clase.puntos}</span>
-                            <span class="points-label">puntos</span>
-                        </div>
-                    </div>`;
-            });
-        }
-    } catch (error) {
-        console.error("Error cargando dashboard:", error);
-    }
+        })
+        .catch(err => console.error("Error cargando selector:", err));
 }
 
-// ==========================================
-// 2. CREAR NUEVA CLASE
-// ==========================================
-async function crearClase() {
-    const nombre = document.getElementById('nombre-clase').value;
-    if (!nombre) return alert("Por favor, ingresa el nombre de la clase");
+// Ejecuta el envío de datos para crear un nuevo salón
+function crearClase() {
+    const input = document.getElementById('nombre-clase');
+    const nombreClase = input.value.trim();
 
-    // REGLA: Uso de FormData para compatibilidad con $_POST en PHP
-    const formData = new FormData();
-    formData.append('action', 'crear_clase');
-    formData.append('nombre', nombre);
-    formData.append('inst_id', instId);
-
-    try {
-        const res = await fetch(API_URL, { 
-            method: 'POST', 
-            body: formData,
-            credentials: 'include' 
-        });
-        const data = await res.json();
-
-        if (data.success) { 
-            alert("Clase creada con éxito"); 
-            cargarDashboard(); 
-            document.getElementById('nombre-clase').value = ""; // Limpiar input
-        } else {
-            alert("Error: " + data.message);
-        }
-    } catch (error) {
-        console.error("Error al crear clase:", error);
-    }
-}
-
-// ==========================================
-// 3. ASIGNAR DOCENTE A CLASE
-// ==========================================
-async function asignarDocente() {
-    const claseId = document.getElementById('select-clases').value;
-    const nombre = document.getElementById('nombre-docente').value;
-    const pass = document.getElementById('pass-docente').value;
-
-    if (!claseId || !nombre || !pass) {
-        return alert("Completa todos los campos del docente");
+    if (nombreClase === '') {
+        alert("Por favor, ingresa el nombre de la clase.");
+        return;
     }
 
     const formData = new FormData();
-    formData.append('action', 'asignar_docente');
-    formData.append('clase_id', claseId);
-    formData.append('nombre_docente', nombre);
-    formData.append('password', pass);
+    formData.append('nombre_clase', nombreClase);
 
-    try {
-        const res = await fetch(API_URL, { 
-            method: 'POST', 
-            body: formData,
-            credentials: 'include'
-        });
-        const data = await res.json();
-
-        if (data.success) { 
-            alert("Docente asignado correctamente"); 
-            cargarDashboard(); 
-            // Limpiar campos
-            document.getElementById('nombre-docente').value = "";
-            document.getElementById('pass-docente').value = "";
+    fetch('logic/api_datos_director.php?action=crear_clase', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            input.value = '';
+            // Refrescar datos visuales reflejando los cambios
+            cargarDashboard();
+            cargarSelectorClases();
         } else {
-            alert("Error: " + data.message);
+            alert("Error: " + data.error);
         }
-    } catch (error) {
-        console.error("Error al asignar docente:", error);
-    }
+    })
+    .catch(err => console.error("Error creando clase:", err));
 }
 
-// ==========================================
-// 4. CERRAR SESIÓN
-// ==========================================
+// Ejecuta la acción de registrar un docente y asignarle un salón
+function asignarDocente() {
+    const idSalon = document.getElementById('select-clases').value;
+    const nombreDocente = document.getElementById('nombre-docente').value.trim();
+    const passDocente = document.getElementById('pass-docente').value.trim();
+
+    if (!idSalon || nombreDocente === '' || passDocente === '') {
+        alert("Todos los campos para la asignación son requeridos.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('id_salon', idSalon);
+    formData.append('nombre_docente', nombreDocente);
+    formData.append('pass_docente', passDocente);
+
+    fetch('logic/api_datos_director.php?action=asignar_docente', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            document.getElementById('nombre-docente').value = '';
+            document.getElementById('pass-docente').value = '';
+            cargarDashboard();
+        } else {
+            alert("Error: " + data.error);
+        }
+    })
+    .catch(err => console.error("Error asignando docente:", err));
+}
+
+// Cierra de forma segura la sesión activa del usuario
 function cerrarSesion() {
-    // Aquí podrías agregar un fetch a logout.php si quieres destruir la sesión en servidor
-    localStorage.clear();
-    window.location.href = "ValidarInstitucion.html";
+    if (confirm("¿Estás seguro que deseas salir del sistema?")) {
+        window.location.href = 'logout.php';
+    }
 }
