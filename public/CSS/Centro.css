@@ -1,15 +1,15 @@
 :root {
-    --primary-green: #8BC34A;
-    --green-light: #AED581;
-    --green-dark: #689F38;
+    --primary-green: #4CAF50;
+    --accent-orange: #F57C00;
+    --light-orange: #FFB74D;
+    --cyan-blue: #00BCD4;
+    --bone-white: #F7FDF5;
 
     --dark: #0B0B0B;
     --dark-soft: #121212;
     --dark-card: #181818;
 
     --border: #2A2A2A;
-
-    --white: #FFFFFF;
     --gray: #BDBDBD;
 }
 
@@ -43,7 +43,7 @@ body {
     width: 410px;
     min-width: 410px;
     height: 100vh;
-    background: #0b0b0b;
+    background:  #F7FDF5;
     border-right: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     flex-direction: column;
@@ -137,7 +137,7 @@ body {
 }
 
 .search-group input:focus {
-    border-color: rgba(139, 195, 74, .55);
+    border-color:#4CAF50(139, 195, 74, .55);
     box-shadow: 0 0 0 4px rgba(139, 195, 74, .12);
 }
 
@@ -152,12 +152,12 @@ body {
     padding: 0 20px;
     margin-left: 0 !important;
     border-radius: 18px;
-    background: #8bc34a;
+    background: #4CAF50;
     color: #101010;
     font-weight: 900;
     cursor: pointer;
     transition: .25s;
-    box-shadow: 0 10px 20px rgba(139, 195, 74, .25);
+    box-shadow: 0 10px 20px#4CAF50(139, 195, 74, .25);
 }
 
 .btn-location:hover {
@@ -170,9 +170,9 @@ body {
     height: 54px;
     border: none;
     border-radius: 18px;
-    background: rgba(24, 24, 24, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    color: #8BC34A;
+    background: #4CAF50 (24, 24, 24, 0.8);
+    border: 1px solid #4CAF50(255, 255, 255, 0.06);
+    color:  #F7FDF5 ;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -181,8 +181,8 @@ body {
 }
 
 .back-button-inline:hover {
-    background: #181818;
-    color: #AED581;
+    background: #4CAF50;
+    color: #F7FDF5;
     transform: translateX(-2px);
 }
 
@@ -311,12 +311,12 @@ body {
     border: none;
     padding: 0 18px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #8BC34A, #AED581);
+    background: linear-gradient(135deg, #4CAF50, #4CAF50);
     color: #111;
     font-weight: 900;
     cursor: pointer;
     transition: .25s;
-    box-shadow: 0 8px 18px rgba(139, 195, 74, .25);
+    box-shadow: 0 8px 18px #4CAF50(139, 195, 74, .25);
 }
 
 .btn-directions:hover {
@@ -401,7 +401,7 @@ body {
     left: 410px; /* Alineado justo al terminar el panel lateral */
     width: 52px;
     height: 130px;
-    background: linear-gradient(180deg, #8BC34A, #689F38);
+    background: linear-gradient(180deg, #4CAF50, #4CAF50);
     border-radius: 0 18px 18px 0;
     display: none;
     align-items: center;
@@ -445,7 +445,7 @@ body {
 .btn-clear-route {
     height: 62px;
     border: none;
-    background: linear-gradient(135deg, #C62828, #EF5350);
+    background: linear-gradient(135deg, #F57C00, #FFB74D);
     color: white;
     font-size: .96rem;
     font-weight: 900;
