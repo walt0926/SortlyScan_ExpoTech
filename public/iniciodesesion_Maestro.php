@@ -19,16 +19,12 @@
                     <p class="subtitle">Ingresa tus credenciales de docente</p>
                 </div>
 
-                 <div id="form-acceso">
-                    <div class="form-container">
-                        <label class="block mb-4">
+                <div class="form-container">
+                    <label class="block mb-4">
                             <span class="label-text">Código CCT de la Escuela</span>
                             <input type="text" id="cct-input" placeholder="Ej: 15EPR0001X" class="input-codigo">
                         </label>
-                    </div>
-                </div>
 
-                <div class="form-container">
                     <label class="block mb-4">
                         <span class="label-text">Usuario o No. de Nómina</span>
                         <input type="text" id="user-staff" placeholder="Ej: MAE12345" class="input-codigo">
