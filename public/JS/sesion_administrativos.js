@@ -70,9 +70,9 @@ async function validarLoginStaff(rol) {
 
         // Redirección basada en el rol
         if (rol === 'director') {
-            window.location.href = "dashboard_director.php";
+            window.location.href = "vista_director.php";
         } else {
-            window.location.href = "dashboard_maestro.php"; 
+            window.location.href = "Vista_docente.php"; 
         }
     } else {
         // Mostramos el error devuelto por PHP

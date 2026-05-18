@@ -52,11 +52,18 @@ try {
     }
 
     $stmt->execute();
-    $usuario = $stmt->fetch();
+    // Añadimos PDO::FETCH_ASSOC para asegurarnos de traer un arreglo limpio
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // 6. Verificamos si se encontró al usuario
     if ($usuario) {
-        if ($password_input === $usuario['password']) {
+        $db_password = $usuario['password'];
+
+        /* * LÓGICA DE VALIDACIÓN MEJORADA
+         * Intentamos verificar primero si es un hash de PHP.
+         * Si falla o no es un hash, intentamos una comparación exacta de texto plano.
+         */
+        if (password_verify($password_input, $db_password) || $password_input === $db_password) {
             // Éxito: Todo coincide
             echo json_encode([
                 "success" => true,
