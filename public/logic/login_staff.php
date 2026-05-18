@@ -49,8 +49,23 @@ try {
 
     // 6. Verificamos si se encontró al usuario
     if ($usuario) {
-        // SOLUCIÓN: Usar password_verify para validar el hash de la base de datos
+        // Usar password_verify para validar el hash de la base de datos
         if (password_verify($password_input, $usuario['password'])) {
+            
+            // ========================================================
+            // SOLUCIÓN: INICIALIZAR Y GUARDAR LA SESIÓN EN EL SERVIDOR
+            // ========================================================
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            
+            $_SESSION['id_usuario'] = $usuario['id_usuario'];
+            $_SESSION['nombre_completo'] = $usuario['nombre_completo'];
+            
+            // Estandarizamos el rol para que coincida con tu ENUM de la base de datos ('Director', 'Maestro')
+            $_SESSION['rol'] = ($rol === 'director') ? 'Director' : 'Maestro';
+            // ========================================================
+
             // Éxito: Todo coincide
             echo json_encode([
                 "success" => true,
