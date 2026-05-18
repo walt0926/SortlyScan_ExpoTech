@@ -25,7 +25,7 @@
 
             <div class="sidebar-header">
                 <div class="logo-wrapper">
-                    <img src="img/logo3.png" alt="SortlyScan" class="brand-logo">
+                    <img src="img/logo2.png" alt="SortlyScan" class="brand-logo">
                 </div>
 
                 <div class="search-group">
