@@ -1,3 +1,5 @@
+// public/JS/sesion_administrativos.js
+
 /**
  * MOTOR DE PETICIONES ASÍNCRONAS
  * Centraliza la comunicación con el servidor PHP/MySQL
@@ -63,10 +65,10 @@ async function validarLoginStaff(rol) {
     btnEntrar.disabled = true;
     btnEntrar.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Autenticando...`;
 
-    // Empaquetamos los datos de envío
+    // SOLUCIÓN: Empaquetamos los datos con las claves EXACTAS que espera el PHP
     const datosEnvio = {
-        usuario: usuario,
-        password: password,
+        identificador: usuario, // Se cambió 'usuario' por 'identificador'
+        pass: password,         // Se cambió 'password' por 'pass'
         rol: rol
     };
 
@@ -88,7 +90,7 @@ async function validarLoginStaff(rol) {
         if (rol === 'director') {
             window.location.href = "Vista_Director.php";
         } else {
-            window.location.href = "Vista_Maestro.php"; 
+            window.location.href = "Vista_docente.php"; 
         }
     } else {
         // Mostramos el error devuelto por tu backend PHP
