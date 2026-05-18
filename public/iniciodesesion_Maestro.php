@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/styleIniciodeSesion.css">
-    <title>SortlyScan - Acceso Maestro</title>
+    <title>SortlyScan - Teacher Access</title>
 </head>
 <body>
     <div class="tailwind">
@@ -13,28 +13,28 @@
                 
                 <div class="text-center mb-8 popi">
                     <h1 class="titulo-principal">
-                        <span class="text-white">Acceso</span><span class="text-scan">Maestro</span>
+                        <span class="text-white">Teacher</span><span class="text-scan">Access</span>
                     </h1>
                     <p id="nombre-institucion" class="subtitle" style="color: #F57C00; font-weight: bold;"></p>
-                    <p class="subtitle">Ingresa tus credenciales de docente</p>
+                    <p class="subtitle">Enter your teacher credentials</p>
                 </div>
 
                 <div class="form-container">
                     <label class="block mb-4">
-                        <span class="label-text">Usuario o No. de Nómina</span>
-                        <input type="text" id="user-staff" placeholder="Ej: MAE12345" class="input-codigo">
+                        <span class="label-text">Username or Payroll No.</span>
+                        <input type="text" id="user-staff" placeholder="e.g., TCH12345" class="input-codigo">
                     </label>
 
                     <label class="block mb-4">
-                        <span class="label-text">Contraseña</span>
+                        <span class="label-text">Password</span>
                         <input type="password" id="pass-staff" placeholder="••••••••" class="input-codigo">
                     </label>
 
                     <!-- Pasamos 'maestro' como argumento -->
-                    <button onclick="validarLoginStaff('maestro')" class="btn-entrar">Iniciar Sesión</button>
+                    <button onclick="validarLoginStaff('maestro')" class="btn-entrar">Log In</button>
                     
                     <div class="footer">
-                        <button onclick="window.location.href='index.html'" class="link-footer">Cambiar de institución</button>
+                        <button onclick="window.location.href='index.html'" class="link-footer">Change school</button>
                     </div>
                 </div>
 

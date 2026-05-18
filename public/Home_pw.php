@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es" style="--canvas-color: rgba(30, 30, 30, 1);"> 
+<html lang="en" style="--canvas-color: rgba(30, 30, 30, 1);"> 
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <meta charset="UTF-8">
     <title>SortlyScan</title>
-    <meta name="description" content="Sitio web del proyecto SortlyScan.">
+    <meta name="description" content="SortlyScan project website.">
     <link rel="stylesheet" href="home.css">
 </head>
 <body class="fullscreen_view">
@@ -21,13 +21,13 @@
                     <span class="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">SortlyScan</span>
                 </a>
                 <nav class="hidden md:flex items-center gap-6">
-                    <a href="#inicio" class="transition-colors text-green-600 font-medium">Inicio</a>
-                    <a href="#sobre nosotros" class="transition-colors text-gray-700 hover:text-green-600">Sobre Nosotros</a>
-                    <a href="#beneficios" class="transition-colors text-gray-700 hover:text-green-600">Beneficios</a>
-                    <a href="#unite" class="transition-colors text-gray-700 hover:text-green-600">Registro</a>
+                    <a href="#inicio" class="transition-colors text-green-600 font-medium">Home</a>
+                    <a href="#sobre nosotros" class="transition-colors text-gray-700 hover:text-green-600">About Us</a>
+                    <a href="#beneficios" class="transition-colors text-gray-700 hover:text-green-600">Benefits</a>
+                    <a href="#unite" class="transition-colors text-gray-700 hover:text-green-600">Register</a>
                 </nav>
                 <div class="hidden md:flex items-center gap-3">
-                    <button onclick="window.location.href='ValidarInstitucion.php'"  data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600" >Iniciar Sesión / Registrarse</button>
+                    <button onclick="window.location.href='ValidarInstitucion.php'"  data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600" >Log In / Register</button>
                 </div>
                 <button class="md:hidden p-2 rounded-lg hover:bg-gray-100">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu h-6 w-6">
@@ -54,36 +54,36 @@
                                     <path d="M4 17v2"></path>
                                     <path d="M5 18H3"></path>
                                 </svg>
-                                <span class="text-sm font-medium">Tecnología + Educación Ambiental</span>
+                                <span class="text-sm font-medium">Technology + Environmental Education</span>
                             </div>
                             <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                                Enseñando a reciclar con
-                                <span class="block text-yellow-300">tecnología y diversión</span>
+                                Teaching how to recycle with
+                                <span class="block text-yellow-300">technology and fun</span>
                             </h1>
                             <p class="text-xl mb-8 text-green-50">
-                              Una solución que convierte preguntas y acciones pequeñas en una experiencia que cambia el futuro.
+                                A solution that transforms questions and small actions into an experience that changes the future.
                             </p>
                             <div class="flex flex-col sm:flex-row gap-4">
-                                <button data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-10 rounded-md px-6 has-[>svg]:px-4 bg-transparent border-2 border-white text-white hover:bg-white/10">Registrarse ahora</button>
+                                <button data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-10 rounded-md px-6 has-[>svg]:px-4 bg-transparent border-2 border-white text-white hover:bg-white/10">Register now</button>
                             </div>
                             <div class="grid grid-cols-3 gap-6 mt-12">
                                 <div class="text-center">
                                     <div class="text-3xl font-bold mb-1">7-12</div>
-                                    <div class="text-green-100 text-sm">Años de edad</div>
+                                    <div class="text-green-100 text-sm">Years of age</div>
                                 </div>
                                 <div class="text-center">
                                     <div class="text-3xl font-bold mb-1">100%</div>
-                                    <div class="text-green-100 text-sm">Interactivo</div>
+                                    <div class="text-green-100 text-sm">Interactive</div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-3xl font-bold mb-1">IA</div>
-                                    <div class="text-green-100 text-sm">Que ayuda.</div>
+                                    <div class="text-3xl font-bold mb-1">AI</div>
+                                    <div class="text-green-100 text-sm">That helps.</div>
                                 </div>
                             </div>
                         </div>
                         <div class="relative">
                             <div class="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl blur-3xl opacity-20"></div>
-                            <img src="https://www.prensalibre.com/wp-content/uploads/2022/05/BV-17052022-TECNO-Y-RECICLAJE-02_67685413.jpg" alt="Robot SortlyScan" class="relative rounded-3xl shadow-2xl w-full h-[500px] object-cover">
+                            <img src="https://www.prensalibre.com/wp-content/uploads/2022/05/BV-17052022-TECNO-Y-RECICLAJE-02_67685413.jpg" alt="SortlyScan Robot" class="relative rounded-3xl shadow-2xl w-full h-[500px] object-cover">
                         </div>
                     </div>
                 </div>
@@ -91,12 +91,12 @@
             <section id="sobre nosotros" class="py-20 bg-white">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-16">
-                        <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">¿Qué es SortlyScan?</h2>
+                        <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">What is SortlyScan?</h2>
                         <div class="max-w-4xl mx-auto">
                             <p class="text-xl text-gray-700 leading-relaxed">
-                                Según el Ministerio de Medio Ambiente y Recursos Naturales (MARN), El Salvador recicla menos del 5% de sus residuos. Cada día se generan más de 4000 toneladas de desechos y la mayoría de estas terminan siendo contaminantes de ríos, quebrasas y calles.
-                                La causa principal es la falta de educación ambiental.  <br> SortlyScan es un innovador proyecto educativo que combina tecnología y conciencia ambiental para enseñar a los niños de 7 a 12 años el hábito del reciclaje de forma divertida e interactiva. <br>
-                                Ayudamos a centros escolares públicos de El Salvador a formar hábitos sostenibles reales en sus estudiantes, mediante una plataforma con escaneo inteligente y gamificación.
+                                According to the Ministry of Environment and Natural Resources (MARN), El Salvador recycles less than 5% of its waste. Every day, more than 4,000 tons of waste are generated, and most of it ends up polluting rivers, streams, and streets.
+                                The main cause is the lack of environmental education. <br> SortlyScan is an innovative educational project that combines technology and environmental awareness to teach children aged 7 to 12 the habit of recycling in a fun and interactive way. <br>
+                                We help public schools in El Salvador build real sustainable habits in their students through a platform featuring smart scanning and gamification.
                            </p>
                         </div>
                     </div>                      
@@ -104,7 +104,7 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div>
-                            <img src="https://images.unsplash.com/photo-1732187821884-56dc80ec9367?crop=entro…aWxpdHklMjBwbGFuZXR8ZW58MXx8fHwxNzc2MjczMDA1fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Planeta verde" class="rounded-3xl shadow-2xl w-full h-[400px] object-cover">
+                            <img src="https://images.unsplash.com/photo-1732187821884-56dc80ec9367?crop=entro…aWxpdHklMjBwbGFuZXR8ZW58MXx8fHwxNzc2MjczMDA1fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Green planet" class="rounded-3xl shadow-2xl w-full h-[400px] object-cover">
                         </div>
                         <div>
                           <div class="mb-10">
@@ -116,10 +116,10 @@
                                   <circle cx="12" cy="12" r="2"></circle>
                                 </svg>
                               </div>
-                              <h2 class="text-3xl font-bold text-green-900">Nuestra Misión</h2>
+                              <h2 class="text-3xl font-bold text-green-900">Our Mission</h2>
                             </div>
                             <p class="text-lg text-gray-700 leading-relaxed">
-                              Fomentar en los niños de primero a sexto grado la conciencia y práctica del reciclaje mediante una plataforma educativa digital, que inspire hábitos sostenibles desde temprana edad y contribuya a la construcción de un futuro más limpio y responsable. 
+                              To foster environmental awareness and the practice of recycling in children from first to sixth grade through a digital educational platform, inspiring sustainable habits from an early age and contributing to the building of a cleaner and more responsible future. 
                             </p>
                           </div>
                           <div>
@@ -130,10 +130,10 @@
                                   <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
                               </div>
-                              <h2 class="text-3xl font-bold text-emerald-900">Nuestra Visión</h2>
+                              <h2 class="text-3xl font-bold text-emerald-900">Our Vision</h2>
                             </div>
                             <p class="text-lg text-gray-700 leading-relaxed">
-                              Convertirnos en el referente nacional en educación ambiental digital para la niñez, logrando que el reciclaje sea parte natural de la vida cotidiana y formando generaciones comprometidas con la protección del planeta. 
+                              To become the national benchmark in digital environmental education for children, making recycling a natural part of daily life and shaping generations committed to protecting the planet. 
                             </p>
                           </div>
                           <div>
@@ -144,13 +144,13 @@
                                   <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
                               </div>
-                              <h2 class="text-3xl font-bold text-emerald-900">Nuestros Valores</h2>
+                              <h2 class="text-3xl font-bold text-emerald-900">Our Values</h2>
                             </div>
                             <ol class="text-lg text-gray-700 leading-relaxed">
-                              <li>Sostenibilidad: promover acciones que aseguren el cuidado del medio ambiente para las futuras generaciones. </li>
-                              <li>Enseñanza: transmitir conocimientos de manera clara, divertida y accesible para los niños.</li>
-                              <li>Resiliencia ambiental: impulsar la capacidad de adaptarse y responder positivamente a los retos ecológicos. </li>
-                              <li>Compromiso: mantener una dedicación constante hacia la educación y la transformación social a través del reciclaje.</li>
+                              <li>Sustainability: promote actions that ensure environmental care for future generations. </li>
+                              <li>Teaching: convey knowledge in a clear, fun, and accessible way for children.</li>
+                              <li>Environmental Resilience: drive the ability to adapt and respond positively to ecological challenges. </li>
+                              <li>Commitment: maintain a constant dedication to education and social transformation through recycling.</li>
                               </ol>
                           </div>
                         </div>
@@ -160,8 +160,8 @@
             <section id="beneficios" class="py-20 bg-gradient-to-br from-orange-50 to-yellow-50">
               <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                  <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-orange-600 to-yellow-500 bg-clip-text text-transparent">Beneficios para Instituciones Educativas</h2>
-                  <p class="text-xl text-gray-600 max-w-3xl mx-auto">SortlyScan transforma el reciclaje en una experiencia competitiva y motivadora</p>
+                  <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-orange-600 to-yellow-500 bg-clip-text text-transparent">Benefits for Educational Institutions</h2>
+                  <p class="text-xl text-gray-600 max-w-3xl mx-auto">SortlyScan transforms recycling into a competitive and motivating experience</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div data-slot="card" class="text-card-foreground flex flex-col gap-6 rounded-xl bg-white border-2 border-orange-100 hover:border-orange-300 transition-all hover:shadow-xl">
@@ -176,8 +176,8 @@
                           <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
                         </svg>
                       </div>
-                      <h3 class="text-lg font-bold mb-2 text-orange-900">Competencias entre Grados</h3>
-                      <p class="text-gray-600">Fomenta la sana competencia entre diferentes niveles escolares</p>
+                      <h3 class="text-lg font-bold mb-2 text-orange-900">Inter-Grade Competitions</h3>
+                      <p class="text-gray-600">Fosters healthy competition between different school grade levels</p>
                     </div>
                   </div>
                   <div data-slot="card" class="text-card-foreground flex flex-col gap-6 rounded-xl bg-white border-2 border-yellow-100 hover:border-yellow-300 transition-all hover:shadow-xl">
@@ -188,8 +188,8 @@
                           <circle cx="12" cy="8" r="6"></circle>
                         </svg>
                       </div>
-                      <h3 class="text-lg font-bold mb-2 text-yellow-900">Sistema de Rankings</h3>
-                      <p class="text-gray-600">Tablas de posiciones que motivan la participación activa</p>
+                      <h3 class="text-lg font-bold mb-2 text-yellow-900">Leaderboard System</h3>
+                      <p class="text-gray-600">Rankings that drive active participation</p>
                     </div>
                   </div>
                   <div data-slot="card" class="text-card-foreground flex flex-col gap-6 rounded-xl bg-white border-2 border-green-100 hover:border-green-300 transition-all hover:shadow-xl">
@@ -199,8 +199,8 @@
                           <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
                         </svg>
                       </div>
-                      <h3 class="text-lg font-bold mb-2 text-green-900">Métricas de Progreso</h3>
-                      <p class="text-gray-600">Reportes detallados del impacto ambiental generado</p>
+                      <h3 class="text-lg font-bold mb-2 text-green-900">Progress Metrics</h3>
+                      <p class="text-gray-600">Detailed reports of the generated environmental impact</p>
                     </div>
                   </div>
                   <div data-slot="card" class="text-card-foreground flex flex-col gap-6 rounded-xl bg-white border-2 border-blue-100 hover:border-blue-300 transition-all hover:shadow-xl">
@@ -211,20 +211,20 @@
                           <circle cx="12" cy="10" r="3"></circle>
                         </svg>
                       </div>
-                      <h3 class="text-lg font-bold mb-2 text-blue-900">Centros de Acopio</h3>
-                      <p class="text-gray-600">Mapa interactivo con puntos de reciclaje cercanos</p>
+                      <h3 class="text-lg font-bold mb-2 text-blue-900">Collection Centers</h3>
+                      <p class="text-gray-600">Interactive map with nearby recycling points</p>
                     </div>
                   </div>
                 </div>
                 <div class="mt-16 bg-white rounded-3xl shadow-xl p-8 md:p-12">
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div>
-                      <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?crop=entropy&…b29tJTIwbGVhcm5pbmd8ZW58MXx8fHwxNzc2MjczMDA0fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Niños aprendiendo" class="rounded-2xl w-full h-[300px] object-cover">
+                      <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?crop=entropy&…b29tJTIwbGVhcm5pbmd8ZW58MXx8fHwxNzc2MjczMDA0fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Children learning" class="rounded-2xl w-full h-[300px] object-cover">
                     </div>
                     <div>
-                      <h3 class="text-3xl font-bold mb-4 text-gray-900">Motivación Constante</h3>
+                      <h3 class="text-3xl font-bold mb-4 text-gray-900">Constant Motivation</h3>
                       <p class="text-lg text-gray-600 mb-6">
-                        El sistema de puntos y rankings mantiene a los estudiantes entusiasmados y comprometidos. Cada escaneo suma puntos, cada logro se celebra, y cada salón puede ver su progreso en tiempo real.
+                        The points and ranking system keeps students excited and engaged. Every scan adds points, every milestone is celebrated, and each classroom can see their progress in real time.
                       </p>
                       <ul class="space-y-3">
                         <li class="flex items-start gap-3">
@@ -233,7 +233,7 @@
                               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
                           </div>
-                          <span class="text-gray-700">Fomenta el trabajo en equipo</span>
+                          <span class="text-gray-700">Encourages teamwork</span>
                         </li>
                         <li class="flex items-start gap-3">
                           <div class="bg-green-500 rounded-full p-1 mt-1">
@@ -241,7 +241,7 @@
                               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
                           </div>
-                          <span class="text-gray-700">Desarrolla hábitos sostenibles</span>
+                          <span class="text-gray-700">Develops sustainable habits</span>
                         </li>
                         <li class="flex items-start gap-3">
                           <div class="bg-green-500 rounded-full p-1 mt-1">
@@ -249,7 +249,7 @@
                               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
                           </div>
-                          <span class="text-gray-700">Crea conciencia ambiental duradera</span>
+                          <span class="text-gray-700">Creates lasting environmental awareness</span>
                         </li>
                       </ul>
                     </div>
@@ -259,12 +259,12 @@
             </section>
             <section id="unite" class="py-20 bg-gradient-to-br from-green-600 to-emerald-600 text-white">
               <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">¿Listo para transformar la educación ambiental?</h2>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to transform environmental education?</h2>
                 <p class="text-xl mb-8 text-green-50">
-                  Únete a SortlyScan y sé parte del cambio. Registra tu institución hoy y comienza a enseñar reciclaje de forma innovadora.
+                  Join SortlyScan and be part of the change. Register your institution today and start teaching recycling in an innovative way.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button onclick='registroinstitucional.php' data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-10 rounded-md px-6 has-[>svg]:px-4 bg-white text-green-600 hover:bg-green-50 shadow-xl">Crear cuenta ahora</button>
+                  <button onclick='registroinstitucional.php' data-slot="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-10 rounded-md px-6 has-[>svg]:px-4 bg-white text-green-600 hover:bg-green-50 shadow-xl">Create account now</button>
                 </div>
               </div>
             </section>
@@ -284,7 +284,7 @@
               <span class="text-2xl font-bold">SortlyScan</span>
             </div>
             <p class="text-green-100 mb-4">
-              Enseñando a las nuevas generaciones a cuidar el planeta mediante tecnología innovadora y educación divertida.
+              Teaching new generations to take care of the planet through innovative technology and fun education.
             </p>
             <div class="flex gap-3">
               <a href="#" class="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors">
@@ -307,24 +307,24 @@
             </div>
           </div>
           <div>
-            <h3 class="font-semibold mb-4">Enlaces Rápidos</h3>
+            <h3 class="font-semibold mb-4">Quick Links</h3>
             <ul class="space-y-2">
               <li>
-                <a class="text-green-100 hover:text-white transition-colors" href="/" data-discover="true">Inicio</a>
+                <a class="text-green-100 hover:text-white transition-colors" href="/" data-discover="true">Home</a>
               </li>
               <li>
-                <a href="#sobre-nosotros" class="text-green-100 hover:text-white transition-colors">Sobre Nosotros</a>
+                <a href="#sobre-nosotros" class="text-green-100 hover:text-white transition-colors">About Us</a>
               </li>
               <li>
-                <a href="#beneficios" class="text-green-100 hover:text-white transition-colors">Beneficios</a>
+                <a href="#beneficios" class="text-green-100 hover:text-white transition-colors">Benefits</a>
               </li>
               <li>
-                <a href="#unite" class="text-green-100 hover:text-white transition-colors">Únete</a>
+                <a href="#unite" class="text-green-100 hover:text-white transition-colors">Join Us</a>
               </li>
             </ul>
           </div>
           <div>
-            <h3 class="font-semibold mb-4">Contacto</h3>
+            <h3 class="font-semibold mb-4">Contact</h3>
             <ul class="space-y-3">
               <li class="flex items-start gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail h-5 w-5 text-green-300 mt-0.5">
@@ -351,7 +351,7 @@
         </div>
         <div class="border-t border-white/10 mt-8 pt-8 text-center text-green-100">
           <p>
-            © 2026 SortlyScan. Todos los derechos reservados. Un proyecto para un futuro más verde.
+            © 2026 SortlyScan. All rights reserved. A project for a greener future.
           </p>
         </div>
       </div>
