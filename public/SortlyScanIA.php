@@ -1,9 +1,9 @@
 <?php
-// Iniciamos sesión para obtener el ID del alumno que está usando la plataforma.
+// We start the session to get the ID of the student using the platform.
 session_start();
 
-// Validamos si existe el ID del alumno en la sesión. 
-// Si no, asignamos un 1 por defecto para evitar errores durante tus pruebas.
+// We validate if the student ID exists in the session.
+// If not, we assign a default value of 1 to prevent errors during your testing.
 $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1; 
 ?>
 <!DOCTYPE html>
@@ -11,7 +11,7 @@ $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clasificador de basura</title>
+    <title>Waste Classifier</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.2/dist/coco-ssd.min.js"></script>
@@ -22,15 +22,15 @@ $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1;
     <input type="hidden" id="studentId" value="<?php echo htmlspecialchars($id_alumno_actual); ?>">
 
     <div id="arduinoStatus" class="arduino-status-conecting" style="display:none;">
-        🔌 Arduino Desconectado
+        🔌 Arduino Disconnected
     </div>
 
     <div id="loadingScreen" class="loading-screen">
         <div class="loading-container">
             <div class="loading-spinner"></div>
-            <div class="loading-text">Cargando modelo de IA</div>
+            <div class="loading-text">Loading AI Model</div>
             <div class="loading-details" id="loadingDetails">
-                Inicializando TensorFlow.js y MobileNet para integracion de Arduino...
+                Initializing TensorFlow.js and MobileNet for Arduino integration...
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@ $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1;
     <div id="mainInterface" class="main-container" style="display: none;">
         <div class="header">
             <div class="header-card">
-                <h1 class="header-title">Escaner de SortlyScan</h1>
+                <h1 class="header-title">SortlyScan Scanner</h1>
             </div>
         </div>
 
@@ -52,14 +52,14 @@ $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1;
         </div>
 
         <div id="autoIndicator" class="auto-indicator">
-            🔄 AUTODETECTANDO...
+            🔄 AUTODETECTING...
         </div>
     
         <div class="controls-panel" style="display: block;" >
-            <button id="connectArduino" class="control-button arduino" style="display: none;">🔌 Conectar Arduino</button>
-            <button id="startBtn" class="control-button primary">🎥 Iniciar</button>
-            <button id="stopBtn" class="control-button danger" disabled>⏹️ Parar</button>
-            <button id="detectBtn" class="control-button" disabled>🔍 Detectar</button>
+            <button id="connectArduino" class="control-button arduino" style="display: none;">🔌 Connect Arduino</button>
+            <button id="startBtn" class="control-button primary">🎥 Start</button>
+            <button id="stopBtn" class="control-button danger" disabled>⏹️ Stop</button>
+            <button id="detectBtn" class="control-button" disabled>🔍 Detect</button>
             <div class="auto-toggle"  style="display: none;">
                 <span class="auto-toggle-label">Auto</span>
                 <label class="toggle-switch">
@@ -73,18 +73,18 @@ $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1;
         <div id="infoPanel" class="info-panel">
             <div class="waste-category-display">
                 <div class="waste-category-large unknown" id="wasteCategoryLarge">
-                    ¡Listo!
+                    Ready!
                 </div>
             </div>
            
             <div class="info-details">
                 <div class="info-item">
                     <div class="info-value" id="confidenceValue">--</div>
-                    <div class="info-label">Viabilidad</div>
+                    <div class="info-label">Confidence</div>
                 </div>
                 <div class="info-item" style="display:none;">
                     <div class="info-value" id="processingValue">--</div>
-                    <div class="info-label">Tiempo (s)</div>
+                    <div class="info-label">Time (s)</div>
                 </div>
                 <div class="info-item">
                     <div class="info-value" id="totalCount">0</div>
@@ -92,40 +92,40 @@ $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1;
                 </div>
                 <div class="info-item" style="display:none;">
                     <div class="info-value" id="accuracyValue">--</div>
-                    <div class="info-label">Promedio</div>
+                    <div class="info-label">Average</div>
                 </div>
             </div>
         </div>
 
         <div class="serial-panel" style="display: none;">
-            <h3 class="serial-title">📡 Monitor Serial</h3>
+            <h3 class="serial-title">📡 Serial Monitor</h3>
             <div id="serialLog" class="serial-log">
-                > Monitor Serial de arduino<br>
-                > Esperando conexión...<br>
+                > Arduino Serial Monitor<br>
+                > Waiting for connection...<br>
             </div>
             <div class="serial-commands">
                 <div class="command-item">
-                    <span>Orgánica:</span>
+                    <span>Organic:</span>
                     <span class="command-code">'w'</span>
                 </div>
                 <div class="command-item">
-                    <span>Papel:</span>
+                    <span>Paper:</span>
                     <span class="command-code">'p'</span>
                 </div>
                 <div class="command-item">
-                    <span>Plástico:</span>
+                    <span>Plastic:</span>
                     <span class="command-code">'l'</span>
                 </div>
                 <div class="command-item">
-                    <span>Vidrio:</span>
+                    <span>Glass:</span>
                     <span class="command-code">'g'</span>
                 </div>
                 <div class="command-item">
-                    <span>Electrónico:</span>
+                    <span>Electronic:</span>
                     <span class="command-code">'e'</span>
                 </div>
                 <div class="command-item">
-                    <span>Aluminio:</span>
+                    <span>Aluminum:</span>
                     <span class="command-code">'c'</span>
                 </div>
             </div>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/styleIniciodeSesion.css">
-    <title>SortlyScan - Acceso Institucional</title>
+    <title>SortlyScan - Institutional Access</title>
 </head>
 <body>
     <div class="tailwind">
@@ -18,23 +18,23 @@
                     <h1 class="titulo-principal">
                         <span class="text-white">Sortly</span><span class="text-scan">Scan</span>
                     </h1>
-                    <p id="setup-subtitle" class="subtitle">Identifica tu institución</p>
+                    <p id="setup-subtitle" class="subtitle">Identify your school</p>
                 </div>
 
                 <div id="form-acceso">
                     <div class="form-container">
                         <label class="block mb-4">
-                            <span class="label-text">Código CCT de la Escuela</span>
-                            <input type="text" id="cct-input" placeholder="Ej: 15EPR0001X" class="input-codigo">
+                            <span class="label-text">School CCT Code</span>
+                            <input type="text" id="cct-input" placeholder="e.g., 15EPR0001X" class="input-codigo">
                         </label>
-                        <button onclick="procesarAcceso()" id="btn-principal" class="btn-entrar">Validar Institución</button>
+                        <button onclick="procesarAcceso()" id="btn-principal" class="btn-entrar">Validate School</button>
                     </div>
                 </div>
 
                 <div class="opciones-secundarias">
-                    <button onclick="mostrarLoginMaestro()" class="btn-link">Acceso Maestro</button>
+                    <button onclick="mostrarLoginMaestro()" class="btn-link">Teacher Access</button>
                     <span class="separador">|</span>
-                    <button onclick="mostrarLoginDirector()" class="btn-link">Acceso Director</button>
+                    <button onclick="mostrarLoginDirector()" class="btn-link">Principal Access</button>
                 </div>
             </div>
         </div>
