@@ -20,6 +20,12 @@
                 </div>
 
                 <div class="form-container">
+
+                     <label class="block mb-4">
+                            <span class="label-text">School CCT Code</span>
+                            <input type="text" id="cct-input" placeholder="e.g., 15EPR0001X" class="input-codigo">
+                        </label>
+                        
                     <label class="block mb-4">
                         <span class="label-text">Username or Payroll No.</span>
                         <input type="text" id="user-staff" placeholder="e.g., TCH12345" class="input-codigo">
