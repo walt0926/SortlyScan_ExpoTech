@@ -1,17 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .login-screen {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    background: linear-gradient(135deg, #b8ffa3 0%, #4CAF50 100%);
+    background-color:#4CAF50  ;
     font-family: 'Nunito', sans-serif;
 }
 
 .login-card-container {
     width: 100%;
     max-width: 448px;
+    background-color: #ffffff;
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 25px -5px rgba(10, 26, 11, 0.05);
+    border: 1px solid rgba(0, 188, 212, 0.2);
+}
+
+.popi {
+    display: flex;
+    flex-direction: column;
 }
 
 .icon-circle {
@@ -21,175 +38,120 @@
     justify-content: center;
     width: 6rem;
     height: 6rem;
-    background-color: white;
+    background-color: #F7FDF5;
     border-radius: 9999px;
-    box-shadow: 0 20px 30px -6px rgba(0, 0, 0, 0.1);
     margin-bottom: 1.5rem;
+    border: 2px solid #00BCD4;
 }
 
-.popi{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.icon-school {
-    color: #4CAF50;
-}
-
-.titulo-principal {
+h1 {
     font-family: 'Baloo 2', sans-serif;
-    font-size: 3.75rem;
     font-weight: 800;
-    line-height: 1;
+    font-size: 2.2rem;
+    color: #0A1A0B;
+    text-align: center;
     margin-bottom: 0.5rem;
-    text-align: center;
 }
 
-.text-white { color: white; }
-.text-scan { color: #63cd4e; }
-
-.subtitle {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.25rem;
+p {
     font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    color: #6b7280;
     text-align: center;
+    margin-bottom: 2rem;
 }
 
-.login-form {
-    background-color: white;
-    border-radius: 1.5rem;
-    padding: 2rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+#formRegistroEscuela {
+    width: 100%;
 }
 
 .label-text {
     display: block;
-    color: #4b5563;
+    width: 100%;
+    text-align: left;
+    font-family: 'Nunito', sans-serif;
     font-weight: 600;
+    font-size: 0.95rem;
+    color: #0A1A0B;
     margin-bottom: 0.5rem;
 }
 
 .input-codigo {
-    width: 87%;
-    padding: 1.25rem;
-    text-align: center;
-    font-size: 1.5rem;
-    border: 2px solid #f3f4f6;
-    background-color: #f9fafb;
-    border-radius: 1rem;
-    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #F7FDF5;
+    border: 1px solid rgba(10, 26, 11, 0.15);
+    border-radius: 0.75rem;
+    font-family: 'Nunito', sans-serif;
+    color: #0A1A0B;
     outline: none;
-    transition: all 0.3s;
+    transition: all 0.2s ease;
 }
 
 .input-codigo:focus {
-    border-color: #4ECDC4;
-    right: 4px rgba(78, 205, 196, 0.2);
+    border-color: #00BCD4;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.15);
 }
 
 .btn-entrar {
     width: 100%;
-    margin-top: 1rem;
-    background-color: #4CAF50;
-    color: white;
-    padding: 1.25rem;
-    border-radius: 1rem;
-    font-family: 'Baloo 2', sans-serif;
+    padding: 0.85rem;
+    background-color: #00BCD4;
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     border: none;
+    border-radius: 0.75rem;
     cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
+    transition: all 0.2s ease;
+    margin-top: 1.5rem;
 }
 
 .btn-entrar:hover {
-    background-color: #4CAF50;
-    transform: scale(1.02);
+    background-color: #00acc1;
+    transform: translateY(-1px);
 }
 
-.link-footer {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: underline;
-    font-size: 0.875rem;
-    cursor: pointer;
+.btn-entrar:active {
+    transform: translateY(0);
 }
 
-.link-footer:hover {
-    color: white;
-}
-
-.footer{
+.footer {
     margin-top: 25px;
     text-align: center;
-}
-.opciones-secundarias {
-    margin-top: 1.5rem;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+    width: 100%;
 }
 
 .btn-link {
     background: none;
     border: none;
-    color: #F57C00; 
+    color: #4CAF50;
     font-family: 'Nunito', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
     transition: color 0.2s;
-    opacity: 0.8;
 }
 
 .btn-link:hover {
-    color: #FFB74D;
-    opacity: 1;
+    color: #00BCD4;
     text-decoration: underline;
 }
 
+.opciones-secundarias {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    text-align: center;
+}
+
 .separador {
-    color: #e5e7eb;
+    color: #FFEB3B ;
     font-weight: 300;
-}
-
-.form-container {
-    background-color: #F7FDF5;
-    padding: 2rem;
-    border-radius: 1.5rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-#nombre-institucion {
-    background: #F7FDF5;
-    padding: 5px 15px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 10px;
-    font-size: 1rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-
-.input-codigo::placeholder {
-    font-size: 1.1rem;
-    opacity: 0.5;
-}
-
-.login-form hr {
-    opacity: 0.3;
-}
-
-.input-codigo::placeholder {
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.9rem;
-}
-
-.opciones-secundarias .btn-link {
-    color: #F57C00;
-    font-weight: 700;
 }

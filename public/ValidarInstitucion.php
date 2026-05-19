@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="opciones-secundarias">
+                <div class="opciones-secundarias ">
                     <button onclick="mostrarLoginMaestro()" class="btn-link">Teacher Access</button>
                     <span class="separador">|</span>
                     <button onclick="mostrarLoginDirector()" class="btn-link">Principal Access</button>
