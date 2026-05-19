@@ -31,11 +31,19 @@ async function validarLoginStaff(rol) {
     // Obtenemos los elementos del DOM basándonos en tus HTML
     const inputUsuario = document.getElementById('user-staff');
     const inputPass = document.getElementById('pass-staff');
+    const inputCCT = document.getElementById('cct-input'); // <-- NUEVO: Buscamos el input del CCT
     
-    // Recuperamos el CCT que guardamos en la pantalla anterior (puede estar vacío para el director)
-    const cctActual = localStorage.getItem('institucion_cct') || '';
+    // CORRECCIÓN: Si el input de CCT existe (pantalla maestro), tomamos su valor. Si no (pantalla director), usamos el guardado o lo dejamos vacío.
+    const cctActual = inputCCT ? inputCCT.value.trim().toUpperCase() : (localStorage.getItem('institucion_cct') || '');
 
-    // AHORA: Solo le exigimos el CCT al maestro. El director pasa aunque sea null o vacío.
+    // Validación específica para el maestro: el CCT no puede estar vacío
+    if (rol === 'maestro' && !cctActual) {
+        alert("Por favor, ingresa el código CCT de tu escuela.");
+        if (inputCCT) inputCCT.focus();
+        return;
+    }
+
+    // Validación de seguridad de respaldo
     if (rol !== 'director' && !cctActual) {
         alert("Sesión inválida. Por favor, vuelve a ingresar el código de tu escuela.");
         window.location.href = "ValidarInstitucion.php";
@@ -51,12 +59,12 @@ async function validarLoginStaff(rol) {
         return;
     }
 
-    // --- Ejecución de la petición al nuevo archivo PHP ---
+    // --- Ejecución de la petición al archivo PHP ---
     const data = await ejecutarPeticion('login_staff.php', { 
         identificador: usuario, 
         pass: password, 
         rol: rol, // 'maestro' o 'director'
-        cct: cctActual // Para el director enviará vacío (''), ¡y está bien!
+        cct: cctActual // Enviamos el CCT que el maestro escribió
     });
 
     if (data.success) {
@@ -64,8 +72,9 @@ async function validarLoginStaff(rol) {
         localStorage.setItem('sesion_activa', 'true');
         localStorage.setItem('rol_usuario', rol);
         localStorage.setItem('usuario_nombre', data.nombre_usuario);
+        localStorage.setItem('institucion_cct', cctActual); // <-- NUEVO: Guardamos el CCT validado
         
-        // Opcional: Guardamos el ID del usuario por si lo necesitas para otras consultas (ej. buscar sus salones)
+        // Opcional: Guardamos el ID del usuario por si lo necesitas para otras consultas
         if (data.id_usuario) localStorage.setItem('usuario_id', data.id_usuario);
 
         // Redirección basada en el rol
