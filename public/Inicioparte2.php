@@ -1,3 +1,5 @@
+<!--Esta es la página donde los estudiantes seleccionan su nombre de entre la lista de alumnos del salón.-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

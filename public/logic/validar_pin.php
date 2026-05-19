@@ -6,8 +6,9 @@ error_reporting(0);
 ini_set('display_errors', 0);
 header('Content-Type: application/json; charset=utf-8');
 
-// Iniciamos el buffer
+// Iniciamos el buffer y la sesión de PHP
 ob_start();
+session_start(); // <-- AÑADIDO: Iniciamos sesión para poder guardar datos en el servidor
 
 try {
     // 2. Conexión a la base de datos
@@ -27,15 +28,19 @@ try {
         throw new Exception("Faltan datos de validación.");
     }
 
-    // 4. Consulta a la tabla Alumnos (según tu database/estructura.sql)
+    // 4. Consulta a la tabla Alumnos
     $query = "SELECT pin FROM Alumnos WHERE id_alumno = :id LIMIT 1";
     $stmt = $pdo->prepare($query);
     $stmt->execute([':id' => $alumno_id]);
     $alumno = $stmt->fetch();
 
     if ($alumno) {
-        // 5. Comparamos el PIN (asegurándonos de que ambos sean cadenas de texto sin espacios extra)
+        // 5. Comparamos el PIN
         if (trim((string)$alumno['pin']) === (string)$pin_input) {
+            
+            // <-- AÑADIDO: Guardamos el ID del alumno real en la sesión antes de avisar a JS
+            $_SESSION['id_alumno'] = $alumno_id; 
+
             $respuesta = [
                 "success" => true,
                 "message" => "Acceso concedido"
