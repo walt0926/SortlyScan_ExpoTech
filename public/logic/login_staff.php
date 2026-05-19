@@ -1,85 +1,108 @@
 <?php
 // public/logic/login_staff.php
+
+// 1. Blindaje: Evitamos que cualquier advertencia de PHP rompa el formato JSON esperado por JS
+error_reporting(0);
+ini_set('display_errors', 0);
 header('Content-Type: application/json; charset=utf-8');
 
-// 1. Conexión a la base de datos
-try {
-    require_once __DIR__ . '/../../config/conexion.php';
-} catch (Exception $e) {
-    echo json_encode(["success" => false, "message" => "Error de conexión al servidor."]);
-    exit;
-}
-
-// 2. Validación de método
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(["success" => false, "message" => "Método no permitido."]);
-    exit;
-}
-
-// 3. Recepción de datos desde el JS
-$identificador = $_POST['identificador'] ?? ''; // Para maestros es username, para directores es email
-$password_input = $_POST['pass'] ?? '';
-$rol = $_POST['rol'] ?? ''; // 'maestro' o 'director'
-$cct = $_POST['cct'] ?? ''; // El id_mined de la institución
-
-// 4. Validación de campos obligatorios
-if (empty($identificador) || empty($password_input) || empty($rol)) {
-    echo json_encode(["success" => false, "message" => "Usuario y contraseña son obligatorios."]);
-    exit;
-}
-
-// Validación diferenciada: El maestro SÍ requiere CCT, el director NO.
-if ($rol === 'maestro' && empty($cct)) {
-    echo json_encode(["success" => false, "message" => "Falta el CCT de la institución para el maestro."]);
-    exit;
-}
+// Iniciamos el buffer para atrapar cualquier salida inesperada
+ob_start();
 
 try {
-    // 5. Preparamos la consulta SQL
+    // 2. Conexión a la base de datos
+    $config_path = __DIR__ . '/../../config/conexion.php';
+    if (!file_exists($config_path)) {
+        throw new Exception("Archivo de conexión no encontrado.");
+    }
+    
+    require_once $config_path;
+
+    if (!isset($pdo)) {
+        throw new Exception("La variable de conexión \$pdo no está definida.");
+    }
+
+    // 3. Validación de método
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        throw new Exception("Método de solicitud no válido.");
+    }
+
+    // 4. Recepción de datos (Modificado a 'isset' para total compatibilidad con PHP viejo)
+    $identificador  = isset($_POST['identificador']) ? trim($_POST['identificador']) : ''; 
+    $password_input = isset($_POST['pass'])          ? trim($_POST['pass'])          : '';
+    $rol            = isset($_POST['rol'])           ? trim($_POST['rol'])           : ''; 
+    $cct            = isset($_POST['cct'])           ? trim($_POST['cct'])           : ''; 
+
+    // 5. Validación de campos obligatorios
+    if (empty($identificador) || empty($password_input) || empty($rol)) {
+        throw new Exception("Usuario y contraseña son obligatorios.");
+    }
+
+    if ($rol === 'maestro' && empty($cct)) {
+        throw new Exception("Falta el CCT de la institución para el maestro.");
+    }
+
+    // 6. Preparamos la consulta SQL basándonos en tu estructura de base de datos
     if ($rol === 'director') {
-        // Al director solo lo buscamos por email, sin importar el CCT
+        // Buscamos en la tabla 'Usuarios' por la columna 'email' y rol 'Director'
         $query = "SELECT id_usuario, nombre_completo, password FROM Usuarios 
                   WHERE email = :identificador AND rol = 'Director' LIMIT 1";
         $stmt = $pdo->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta del director.");
+        }
         $stmt->bindParam(':identificador', $identificador, PDO::PARAM_STR);
     } else {
-        // Al maestro sí lo filtramos por su escuela (CCT)
+        // Para maestros buscamos por 'username' e 'id_mined'
         $query = "SELECT id_usuario, nombre_completo, password FROM Usuarios 
                   WHERE username = :identificador AND rol = 'Maestro' AND id_mined = :cct LIMIT 1";
         $stmt = $pdo->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta del maestro.");
+        }
         $stmt->bindParam(':identificador', $identificador, PDO::PARAM_STR);
         $stmt->bindParam(':cct', $cct, PDO::PARAM_STR);
     }
 
     $stmt->execute();
-    // Añadimos PDO::FETCH_ASSOC para asegurarnos de traer un arreglo limpio
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // 6. Verificamos si se encontró al usuario
+    // 7. Verificamos las credenciales
     if ($usuario) {
         $db_password = $usuario['password'];
 
-        /* * LÓGICA DE VALIDACIÓN MEJORADA
-         * Intentamos verificar primero si es un hash de PHP.
-         * Si falla o no es un hash, intentamos una comparación exacta de texto plano.
-         */
+        // Soporta tanto contraseñas encriptadas con hash como texto plano para tus pruebas
         if (password_verify($password_input, $db_password) || $password_input === $db_password) {
-            // Éxito: Todo coincide
-            echo json_encode([
+            $respuesta = array(
                 "success" => true,
                 "nombre_usuario" => $usuario['nombre_completo'],
                 "id_usuario" => $usuario['id_usuario'] 
-            ]);
+            );
         } else {
-            // Error: Contraseña incorrecta
-            echo json_encode(["success" => false, "message" => "Contraseña incorrecta."]);
+            $respuesta = array(
+                "success" => false, 
+                "message" => "Contraseña incorrecta."
+            );
         }
     } else {
-        // Error: Usuario no encontrado
-        echo json_encode(["success" => false, "message" => "Usuario no encontrado."]);
+        $respuesta = array(
+            "success" => false, 
+            "message" => "Usuario no encontrado. Verifica el correo ingresado."
+        );
     }
 
-} catch (PDOException $e) {
-    echo json_encode(["success" => false, "message" => "Error al consultar la base de datos."]);
+} catch (Exception $e) {
+    // Cambiado de 'Throwable' a 'Exception' para que no rompa versiones viejas de PHP
+    $respuesta = array(
+        "success" => false,
+        "message" => "Error interno en el servidor: " . $e->getMessage()
+    );
 }
+
+// Limpiamos el buffer y enviamos la respuesta estructurada
+ob_clean();
+echo json_encode($respuesta);
+exit;
 ?>
