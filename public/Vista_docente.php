@@ -7,6 +7,45 @@
     <link rel="stylesheet" href="style_panel.css">
     <link rel="stylesheet" href="CSS/Vista_docente.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        .pin-wrapper {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-left: 20px; /* Para separarlo del nombre Luis */
+            border: 1px solid #e2e8f0;
+        }
+        
+        .pin-input {
+            border: none;
+            background: transparent;
+            font-weight: bold;
+            font-size: 1.1rem;
+            letter-spacing: 0.15rem;
+            color: #334155;
+            width: 4.5rem; /* Ancho justo para 4 dígitos */
+            padding: 0;
+            text-align: center;
+            margin-right: 8px;
+            font-family: 'Courier New', monospace; /* Para que '••••' se vea uniforme */
+        }
+        
+        .pin-input:focus { outline: none; }
+        
+        .toggle-pin-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #94a3b8;
+            padding: 0;
+            font-size: 1rem;
+        }
+        
+        .toggle-pin-btn:hover { color: #64748b; }
+    </style>
 </head>
 <body>
 
@@ -37,6 +76,27 @@
                 <p style="text-align:center; color: #999; padding: 20px;">Loading students...</p>
             </div>
         </main>
+    </div>
+
+    <div id="modal-alumno" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); box-sizing: border-box;">
+            <h3 style="margin-top: 0; margin-bottom: 20px; color: #333; font-size: 1.4rem;"><i class="fa-solid fa-user-plus" style="color: #4CAF50;"></i> Add New Student</h3>
+            
+            <form id="form-nuevo-alumno">
+                <label style="display: block; margin-bottom: 5px; color: #666; font-weight: bold; font-size: 0.9rem;">Student's Display Name</label>
+                <input type="text" id="modal-nombre" placeholder="e.g., John Doe" maxlength="50" required 
+                       style="width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; box-sizing: border-box;">
+
+                <label style="display: block; margin-bottom: 5px; color: #666; font-weight: bold; font-size: 0.9rem;">Access PIN (4 digits)</label>
+                <input type="text" id="modal-pin" placeholder="1234" maxlength="4" required 
+                       style="width: 100%; padding: 12px; margin-bottom: 25px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1.2rem; font-weight: bold; letter-spacing: 0.2rem; box-sizing: border-box;">
+
+                <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                    <button type="button" onclick="cerrarModal()" style="padding: 12px 20px; border: none; background: #e2e8f0; color: #4a5568; border-radius: 10px; font-weight: bold; cursor: pointer;">Cancel</button>
+                    <button type="submit" style="padding: 12px 20px; border: none; background: #4CAF50; color: white; border-radius: 10px; font-weight: bold; cursor: pointer;">Save Student</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="JS/Panel_Docente.js"></script>
