@@ -13,59 +13,32 @@
     <div class="container">
         <header class="main-header">
             <div class="titles">
-                <h1>Teacher Panel</h1>
-                <p>Manage your class and your students' points</p>
+                <h1 id="panel-title">Teacher Panel</h1>
+                <p id="teacher-welcome">Welcome!</p>
             </div>
-            <button class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
+            <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
         </header>
 
         <section class="class-code-card">
             <div class="code-info">
                 <span>Class code</span>
-                <h2 id="class-code">ABC123</h2>
+                <h2 id="class-code">---</h2>
             </div>
             <button class="copy-btn" onclick="copyCode()"><i class="fa-regular fa-copy"></i> Copy</button>
         </section>
 
         <main class="students-section">
             <div class="section-header">
-                <h3><i class="fa-solid fa-trophy"></i> Students (5)</h3>
-                <button class="add-student-btn"><i class="fa-solid fa-plus"></i> Add student</button>
+                <h3 id="student-count"><i class="fa-solid fa-users"></i> Students (0)</h3>
+                <button class="add-student-btn" onclick="agregarAlumno()"><i class="fa-solid fa-plus"></i> Add student</button>
             </div>
 
-            <div class="student-list">
-                <div class="student-item">
-                    <div class="student-info">
-                        <div class="rank-icon gold"><i class="fa-solid fa-trophy"></i></div>
-                        <div>
-                            <h4>María González</h4>
-                            <p>250 points</p>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <button class="edit-btn"><i class="fa-solid fa-pen"></i></button>
-                        <button class="delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-                    </div>
-                </div>
-
-                <div class="student-item">
-                    <div class="student-info">
-                        <div class="rank-icon silver"><i class="fa-solid fa-trophy"></i></div>
-                        <div>
-                            <h4>Juan Pérez</h4>
-                            <p>230 points</p>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <button class="edit-btn"><i class="fa-solid fa-pen"></i></button>
-                        <button class="delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-                    </div>
-                </div>
-
+            <div class="student-list" id="student-list-container">
+                <p style="text-align:center; color: #999; padding: 20px;">Loading students...</p>
             </div>
         </main>
     </div>
 
-    <script src="script_panel.js"></script>
+    <script src="JS/Panel_Docente.js"></script>
 </body>
 </html>
