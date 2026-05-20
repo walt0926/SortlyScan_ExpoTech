@@ -10,19 +10,14 @@ let autoDetectInterval = null;
 let totalDetections = 0;
 let totalConfidence = 0;
 
-// Variables de Control Anti-Spam para la Base de Datos
+// Anti-Spam Control Variables for Database
 let lastSavedCategory = '';
 let lastSavedTime = 0;
-const SAVE_COOLDOWN_MS = 5000; // Espera 5 segundos antes de volver a dar puntos por la misma categoría
-
-// Serial communication variables
-let serialPort = null;
-let writer = null;
-let isArduinoConnected = false;
+const SAVE_COOLDOWN_MS = 5000; // Wait 5 seconds before awarding points for the same category again
 
 // Waste classification mapping
 const wasteClassification = {
-    // Wet Waste
+    // Wet Waste (Orgánico)
     'banana': 'wet', 'apple': 'wet', 'orange': 'wet', 'broccoli': 'wet', 'carrot': 'wet',
     'hot dog': 'wet', 'pizza': 'wet', 'donut': 'wet', 'cake': 'wet', 'avocado': 'wet',
     'lemon': 'wet', 'sandwich': 'wet', 'food': 'wet', 'fruit': 'wet', 'vegetable': 'wet',
@@ -31,25 +26,23 @@ const wasteClassification = {
 
     // Paper Waste
     'book': 'paper', 'paper': 'paper', 'notebook': 'paper', 'newspaper': 'paper',
+    'envelope': 'paper', 'carton': 'paper', 'cardboard': 'paper', 'magazine': 'paper',
 
     // Plastic Waste
     'bottle': 'plastic', 'plastic': 'plastic', 'plastic bag': 'plastic',
+    'water bottle': 'plastic', 'pill bottle': 'plastic', 'pop bottle': 'plastic',
 
     // Glass Waste
     'wine glass': 'glass', 'cup': 'glass', 'glass': 'glass', 'bowl': 'glass',
+    'beer bottle': 'glass', 'whiskey bottle': 'glass', 'goblet': 'glass',
 
     // Electronic Waste
-    'cell phone': 'electronic', 'laptop': 'electronic', 'mouse': 'electronic', 'keyboard': 'electronic',
+    'cell phone': 'electronic', 'laptop': 'electronic', 'mouse': 'electronic', 
+    'keyboard': 'electronic', 'cellular telephone': 'electronic', 'ipod': 'electronic',
 
-    // Can Waste
+    // Can Waste (Metales)
     'can': 'can', 'aluminum': 'can', 'metal': 'can', 'soda can': 'can',
-
-    // Unknown / Other
-    'car': 'unknown', 'bicycle': 'unknown', 'bus': 'unknown', 'train': 'unknown',
-    'truck': 'unknown', 'boat': 'unknown', 'traffic light': 'unknown', 'fire hydrant': 'unknown',
-    'stop sign': 'unknown', 'parking meter': 'unknown', 'bench': 'unknown', 'bird': 'unknown',
-    'cat': 'unknown', 'dog': 'unknown', 'horse': 'unknown', 'sheep': 'unknown', 'cow': 'unknown',
-    'elephant': 'unknown', 'bear': 'unknown', 'zebra': 'unknown', 'giraffe': 'unknown'
+    'tin can': 'can', 'beverage can': 'can'
 };
 
 // Initialize when page loads
@@ -57,7 +50,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     await loadAIModels();
     initializeElements();
     setupEventListeners();
-    checkSerialSupport();
 });
 
 async function loadAIModels() {
@@ -72,7 +64,7 @@ async function loadAIModels() {
         document.getElementById('mainInterface').style.display = 'block';
         document.getElementById('mainInterface').classList.add('fade-in');
         
-        updateStatus('✨ AI Models loaded! Connect Arduino and start camera.', 'success');
+        updateStatus('✨ AI Models loaded! Start the camera to begin scanning.', 'success');
         
     } catch (error) {
         console.error('Error loading AI models:', error);
@@ -87,8 +79,8 @@ function initializeElements() {
 }
 
 function setupEventListeners() {
-    document.getElementById('connectArduino').addEventListener('click', connectToArduino);
-    document.getElementById('startBtn').addEventListener('click', startCamera);
+    // El botón Start ahora sirve tanto para encender la cámara por primera vez como para reanudar el escaneo automático
+    document.getElementById('startBtn').addEventListener('click', handleStartBtn);
     document.getElementById('stopBtn').addEventListener('click', stopCamera);
     document.getElementById('detectBtn').addEventListener('click', detectNow);
     document.getElementById('autoToggle').addEventListener('change', toggleAutoDetect);
@@ -96,73 +88,23 @@ function setupEventListeners() {
     document.addEventListener('keydown', function(e) {
         if (e.code === 'Space' && !e.target.matches('input, textarea, button')) {
             e.preventDefault();
-            detectNow();
+            // La barra espaciadora reanuda el escaneo continuo o ejecuta una detección forzada
+            if (stream && !autoDetectInterval) {
+                startAutoDetection();
+            } else {
+                detectNow();
+            }
         }
     });
 }
 
-function checkSerialSupport() {
-    if ('serial' in navigator) {
-        logSerial('✅ Web Serial API supported');
-        updateArduinoStatus('Arduino Ready to Connect', 'connecting');
+// Función manejadora para el botón Start
+function handleStartBtn() {
+    if (!stream) {
+        startCamera(); // Si la cámara está apagada, la enciende
     } else {
-        logSerial('❌ Web Serial API not supported');
-        updateArduinoStatus('Serial API Not Supported', 'disconnected');
-        document.getElementById('connectArduino').disabled = true;
+        startAutoDetection(); // Si ya está encendida pero pausada, reanuda el escaneo continuo
     }
-}
-
-async function connectToArduino() {
-    try {
-        updateArduinoStatus('Connecting...', 'connecting');
-        logSerial('> Requesting serial port...');
-        
-        serialPort = await navigator.serial.requestPort();
-        
-        await serialPort.open({ baudRate: 9600 });
-        
-        writer = serialPort.writable.getWriter();
-        
-        isArduinoConnected = true;
-        updateArduinoStatus('Arduino Connected', 'connected');
-        logSerial('✅ Arduino connected successfully');
-        logSerial('> Ready to send commands');
-        
-        document.getElementById('connectArduino').textContent = '🔗 Connected';
-        document.getElementById('connectArduino').disabled = true;
-        
-    } catch (error) {
-        console.error('Arduino connection error:', error);
-        updateArduinoStatus('Connection Failed', 'disconnected');
-        logSerial('❌ Connection failed: ' + error.message);
-    }
-}
-
-async function sendToArduino(command) {
-    if (!isArduinoConnected) {
-        logSerial('⚠️ Not connected to Arduino. Command not sent.');
-        return;
-    }
-    try {
-        const encoder = new TextEncoder();
-        await writer.write(encoder.encode(command));
-        logSerial(`➡️ Command sent: '${command}'`);
-    } catch (error) {
-        console.error('Error sending data to Arduino:', error);
-        logSerial('❌ Failed to send command: ' + error.message);
-    }
-}
-
-function logSerial(message) {
-    const serialLog = document.getElementById('serialLog');
-    serialLog.innerHTML += message + '<br>';
-    serialLog.scrollTop = serialLog.scrollHeight;
-}
-
-function updateArduinoStatus(message, status) {
-    const statusElement = document.getElementById('arduinoStatus');
-    statusElement.textContent = `🔌 ${message}`;
-    statusElement.className = `arduino-status ${status}`;
 }
 
 async function startCamera() {
@@ -188,14 +130,16 @@ async function startCamera() {
             detectionCanvas.style.width = '100%';
             detectionCanvas.style.height = '100%';
             
-            document.getElementById('startBtn').disabled = true;
+            document.getElementById('startBtn').disabled = true; // Se bloquea mientras escanea automáticamente
             document.getElementById('stopBtn').disabled = false;
             document.getElementById('detectBtn').disabled = false;
             
             document.getElementById('wasteCategoryLarge').textContent = 'CAMERA READY';
             updateStatus('✅ Camera started! Show items for detection.', 'success');
             
-            logSerial('📹 Camera started - ready for detection');
+            if (document.getElementById('autoToggle').checked) {
+                startAutoDetection();
+            }
         };
         
     } catch (error) {
@@ -210,16 +154,12 @@ function stopCamera() {
         stream = null;
     }
     
-    if (autoDetectInterval) {
-        clearInterval(autoDetectInterval);
-        autoDetectInterval = null;
-        document.getElementById('autoToggle').checked = false;
-        document.getElementById('autoIndicator').style.display = 'none';
-    }
+    stopAutoDetection();
     
     detectionCtx.clearRect(0, 0, detectionCanvas.width, detectionCanvas.height);
     
     document.getElementById('startBtn').disabled = false;
+    document.getElementById('startBtn').innerHTML = '🎥 Start'; // Restablece texto original
     document.getElementById('stopBtn').disabled = true;
     document.getElementById('detectBtn').disabled = true;
     
@@ -229,7 +169,6 @@ function stopCamera() {
     document.getElementById('processingValue').textContent = '--';
     
     updateStatus('📱 Camera stopped', 'info');
-    logSerial('📹 Camera stopped');
 }
 
 function detectNow() {
@@ -240,7 +179,6 @@ function detectNow() {
 
 function toggleAutoDetect() {
     const isChecked = document.getElementById('autoToggle').checked;
-    
     if (isChecked && stream) {
         startAutoDetection();
     } else {
@@ -255,11 +193,11 @@ function startAutoDetection() {
         if (stream && !isDetecting) {
             detectCurrentFrame();
         }
-    }, 3000);
+    }, 2000);
     
+    document.getElementById('startBtn').disabled = true; // Deshabilitado mientras esté en modo activo automático
     document.getElementById('autoIndicator').style.display = 'block';
-    updateStatus('🔄 Auto-detection enabled - analyzing every 3 seconds', 'success');
-    logSerial('🔄 Auto-detection enabled');
+    updateStatus('🔄 Auto-detection enabled - analyzing continuously', 'success');
 }
 
 function stopAutoDetection() {
@@ -267,10 +205,9 @@ function stopAutoDetection() {
         clearInterval(autoDetectInterval);
         autoDetectInterval = null;
     }
-    
+    document.getElementById('startBtn').disabled = false; // Habilitamos Start para que sirva como "Reanudar"
+    document.getElementById('startBtn').innerHTML = '🔄 Scan Again'; // Cambia dinámicamente el texto del botón sin tocar el HTML
     document.getElementById('autoIndicator').style.display = 'none';
-    updateStatus('⏸️ Auto-detection disabled', 'info');
-    logSerial('⏸️ Auto-detection disabled');
 }
 
 async function detectCurrentFrame() {
@@ -287,47 +224,51 @@ async function detectCurrentFrame() {
         const detections = await cocoSsdModel.detect(video);
 
         const processingTime = (performance.now() - startTime) / 1000;
-        
         const result = processAIResults(classifications, detections, processingTime);
         
+        // Si no detecta nada válido, sigue buscando de manera fluida
+        if (result.wasteCategory === 'UNKNOWN') {
+            updateStatus('🔍 Buscando un objeto válido...', 'info');
+            document.getElementById('wasteCategoryLarge').textContent = 'RE-SCANNING...';
+            isDetecting = false; 
+            document.getElementById('infoPanel').classList.remove('detection-animation');
+            return; 
+        }
+        
+        // =========================================================================
+        // ¡ÉXITO! Objeto Reciclable Detectado
+        // =========================================================================
         updateResults(result);
         updateStatistics(result);
         
-        // 1. Enviar comando a Arduino
-        await sendWasteCommand(result.wasteCategory);
-
-        // 2. Lógica de Puntuación (Guardar en Base de Datos)
         const categoriasReciclables = ['PAPER', 'PLASTIC', 'GLASS', 'CAN', 'ELECTRONIC', 'WET'];
         
         if (categoriasReciclables.includes(result.wasteCategory)) {
+            // DETENCIÓN ANTI-SPAM INMEDIATA: Detiene el intervalo continuo apenas encuentra un residuo correcto
+            stopAutoDetection();
+            
             const currentTime = new Date().getTime();
             
-            // Verificación Anti-Spam
             if (result.wasteCategory !== lastSavedCategory || (currentTime - lastSavedTime) > SAVE_COOLDOWN_MS) {
                 await saveScanToDatabase(result.wasteCategory, 1); 
                 
                 lastSavedCategory = result.wasteCategory;
                 lastSavedTime = currentTime;
-                updateStatus(`🎯 Detectado: ${result.wasteCategory} → Arduino y Guardado en BD (+1 Punto)`, 'success');
+                updateStatus(`🎯 ¡Éxito! Guardado: ${result.wasteCategory}. Presiona "Scan Again" para continuar.`, 'success');
             } else {
-                updateStatus(`🎯 Detectado: ${result.wasteCategory} → Enfriamiento para evitar spam de puntos`, 'info');
+                updateStatus(`🎯 Detectado: ${result.wasteCategory} (En enfriamiento anti-spam). Presiona "Scan Again".`, 'info');
             }
-        } else {
-            updateStatus(`🎯 Detectado: ${result.wasteCategory} → Arduino (Sin puntos)`, 'success');
         }
         
     } catch (error) {
         console.error('Detection error:', error);
-        updateStatus('❌ Detection failed', 'error');
-        document.getElementById('wasteCategoryLarge').textContent = 'ERROR';
-        document.getElementById('wasteCategoryLarge').className = 'waste-category-large unknown';
+        updateStatus('❌ Error técnico en la detección', 'error');
     } finally {
         isDetecting = false;
         document.getElementById('infoPanel').classList.remove('detection-animation');
     }
 }
 
-// NUEVA FUNCIÓN: Enviar los datos del escaneo a PHP (¡Ruta actualizada a logic/!)
 async function saveScanToDatabase(categoria, puntos) {
     const studentIdInput = document.getElementById('studentId');
     if (!studentIdInput) return;
@@ -335,7 +276,6 @@ async function saveScanToDatabase(categoria, puntos) {
     const idAlumno = studentIdInput.value;
 
     try {
-        // AQUÍ SE ACTUALIZÓ LA RUTA:
         const response = await fetch('logic/guardar_escaneo.php', {
             method: 'POST',
             headers: {
@@ -359,26 +299,6 @@ async function saveScanToDatabase(categoria, puntos) {
     }
 }
 
-async function sendWasteCommand(wasteCategory) {
-    const commands = {
-        'WET': 'w',
-        'PAPER': 'p',
-        'PLASTIC': 'l',
-        'GLASS': 'g',
-        'ELECTRONIC': 'e',
-        'CAN': 'c',
-        'UNKNOWN': 'u'
-    };
-    
-    const command = commands[wasteCategory] || 'u';
-    
-    if (isArduinoConnected) {
-        await sendToArduino(command);
-    } else {
-        logSerial('⚠️ Arduino not connected. Command not sent.');
-    }
-}
-
 function processAIResults(classifications, detections, processingTime) {
     let detectedObject = 'unknown';
     let confidence = 0;
@@ -387,25 +307,23 @@ function processAIResults(classifications, detections, processingTime) {
         const topDetection = detections.reduce((prev, current) =>
             (prev.score > current.score) ? prev : current
         );
-        detectedObject = topDetection.class.toLowerCase();
+        detectedObject = topDetection.class.toLowerCase().trim();
         confidence = topDetection.score;
     } else if (classifications.length > 0) {
         const topClassification = classifications[0];
-        detectedObject = topClassification.className.split(',')[0].toLowerCase();
+        detectedObject = topClassification.className.toLowerCase().trim();
         confidence = topClassification.probability;
     }
 
     let wasteCategory = 'UNKNOWN';
-    const mappedCategory = wasteClassification[detectedObject];
     
-    if (mappedCategory) {
-        wasteCategory = mappedCategory.toUpperCase();
-    } else {
-        for (const [key, value] of Object.entries(wasteClassification)) {
-            if (detectedObject.includes(key) || key.includes(detectedObject)) {
-                wasteCategory = value.toUpperCase();
-                break;
+    for (const [key, value] of Object.entries(wasteClassification)) {
+        if (detectedObject.includes(key) || key.includes(detectedObject)) {
+            wasteCategory = value.toUpperCase();
+            if (detectedObject.includes(key)) {
+                detectedObject = key; 
             }
+            break;
         }
     }
 
@@ -421,21 +339,9 @@ function updateResults(result) {
     const wasteCategoryElement = document.getElementById('wasteCategoryLarge');
     wasteCategoryElement.textContent = result.wasteCategory;
     
-    if (result.wasteCategory === 'WET') {
-        wasteCategoryElement.className = 'waste-category-large wet';
-    } else if (result.wasteCategory === 'PAPER') {
-        wasteCategoryElement.className = 'waste-category-large paper';
-    } else if (result.wasteCategory === 'PLASTIC') {
-        wasteCategoryElement.className = 'waste-category-large plastic';
-    } else if (result.wasteCategory === 'GLASS') {
-        wasteCategoryElement.className = 'waste-category-large glass';
-    } else if (result.wasteCategory === 'ELECTRONIC') {
-        wasteCategoryElement.className = 'waste-category-large electronic';
-    } else if (result.wasteCategory === 'CAN') {
-        wasteCategoryElement.className = 'waste-category-large can';
-    } else {
-        wasteCategoryElement.className = 'waste-category-large unknown';
-    }
+    wasteCategoryElement.className = 'waste-category-large';
+    const categoryClass = result.wasteCategory.toLowerCase();
+    wasteCategoryElement.classList.add(categoryClass);
     
     document.getElementById('confidenceValue').textContent = (result.confidence * 100).toFixed(0) + '%';
     document.getElementById('processingValue').textContent = result.processingTime.toFixed(2);
@@ -453,51 +359,8 @@ function updateStatistics(result) {
 
 function updateStatus(message, type) {
     const statusIndicator = document.getElementById('statusIndicator');
-    statusIndicator.textContent = message;
-    statusIndicator.className = `status-indicator ${type}`;
+    if(statusIndicator) {
+        statusIndicator.textContent = message;
+        statusIndicator.className = `status-indicator ${type}`;
+    }
 }
-
-// Handle page unload
-window.addEventListener('beforeunload', async () => {
-    if (writer) {
-        await writer.close();
-    }
-    if (serialPort) {
-        await serialPort.close();
-    }
-});
-
-// --- SECCIÓN DE SALIDA: NO MODIFICA LO ANTERIOR, SOLO AGREGA FUNCIONALIDAD ---
-
-(function() {
-    // Esperamos a que el DOM esté listo
-    window.addEventListener('load', () => {
-        const btnSalir = document.getElementById('btnSalir');
-        
-        if (btnSalir) {
-            btnSalir.addEventListener('click', async function() {
-                // Usamos las variables globales que ya declaraste (totalDetections, etc.)
-                const idAlumno = document.getElementById('studentId')?.value || 'Desconocido';
-
-                try {
-                    // Enviamos un registro de "Cierre de Sesión" a tu PHP para persistir la actividad
-                    await fetch('logic/guardar_escaneo.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            id_alumno: idAlumno,
-                            tipo_residuo: 'SESSION_END',
-                            puntos_obtenidos: 0,
-                            detecciones_totales: totalDetections // Usando tu variable global
-                        })
-                    });
-                } catch (error) {
-                    console.error('Error al guardar reporte final:', error);
-                } finally {
-                    // Redirigir siempre, incluso si falla el guardado
-                    window.location.href = 'Vista_Estudiante.php';
-                }
-            });
-        }
-    });
-})();
