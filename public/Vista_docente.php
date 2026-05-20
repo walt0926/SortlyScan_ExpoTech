@@ -55,7 +55,12 @@
                 <h1 id="panel-title">Teacher Panel</h1>
                 <p id="teacher-welcome">Welcome!</p>
             </div>
-            <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="settings-btn" onclick="location.href='AjustesDocente.php'">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+                <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket\"></i> Log Out</button>
+            </div>
         </header>
 
         <section class="class-code-card">
