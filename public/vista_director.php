@@ -63,9 +63,9 @@
             <div class="section-header">
                 <h3><i class="fa-solid fa-trophy"></i> Class Ranking</h3>
             </div>
-            <button class="ranking-list" id="ranking-container" onclick="location.href='__'">
-                <p style="text-align:center; color: #999;">Loading school ranking...</p>
-            </button>
+            <div class="ranking-list" id="ranking-container" style="background: #ffffff; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <p style="text-align:center; color: #999; padding: 20px;">Loading school ranking...</p>
+            </div>
         </section>
 
         <section class="acopio-section">
@@ -77,6 +77,67 @@
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
         </section>
+    </div>
+
+    <div id="modal-ver-alumnos" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px;">
+        <div style="background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 500px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.2); box-sizing: border-box;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0; color: #333; font-size: 1.3rem;"><i class="fa-solid fa-users" style="color: #00BCD4;"></i> Students: <span id="txt-modal-aula-nombre" style="font-weight: 800;"></span></h3>
+                <button onclick="cerrarModalAlumnos()" style="background: transparent; border: none; font-size: 1.2rem; cursor: pointer; color: #94a3b8;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="lista-alumnos-clase" style="overflow-y: auto; flex-grow: 1; padding-right: 5px;">
+                </div>
+        </div>
+    </div>
+
+    <div id="modal-editar-salon" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px;">
+        <div style="background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); box-sizing: border-box;">
+            <h3 style="margin-top:0; margin-bottom: 20px; color: #333; font-size: 1.3rem;"><i class="fa-solid fa-chalkboard-user" style="color: #00BCD4;"></i> Edit Classroom Details</h3>
+            <form id="form-editar-salon">
+                <input type="hidden" id="edit-salon-id">
+                
+                <label style="display:block; margin-bottom:5px; font-weight:bold; font-size:0.85rem; color:#4a5568;">Classroom Name</label>
+                <input type="text" id="edit-salon-nombre" class="input-estilo" style="margin-bottom:15px;" required>
+
+                <div style="border-top: 1px dashed #e2e8f0; margin: 15px 0; padding-top: 15px;">
+                    <h5 style="margin: 0 0 10px 0; color:#00BCD4; font-size:0.9rem;">Assigned Teacher Settings</h5>
+                </div>
+
+                <label style="display:block; margin-bottom:5px; font-weight:bold; font-size:0.85rem; color:#4a5568;">Teacher's Full Name</label>
+                <input type="text" id="edit-docente-nombre" class="input-estilo" style="margin-bottom:15px;" placeholder="No teacher assigned yet" required>
+
+                <label style="display:block; margin-bottom:5px; font-weight:bold; font-size:0.85rem; color:#4a5568;">Teacher's Username</label>
+                <input type="text" id="edit-docente-user" class="input-estilo" style="margin-bottom:15px;" placeholder="e.g., miguel" required>
+
+                <label style="display:block; margin-bottom:5px; font-weight:bold; font-size:0.85rem; color:#4a5568;">New Password <span style="font-weight:normal; color:#94a3b8;">(Optional)</span></label>
+                <input type="password" id="edit-docente-pass" class="input-estilo" style="margin-bottom:20px;" placeholder="Leave blank to keep current password">
+
+                <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                    <button type="button" onclick="cerrarModalEditarSalon()" style="padding: 10px 18px; border: none; background: #e2e8f0; color: #4a5568; border-radius: 10px; font-weight: bold; cursor: pointer;">Cancel</button>
+                    <button type="submit" style="padding: 10px 18px; border: none; background: #00BCD4; color: white; border-radius: 10px; font-weight: bold; cursor: pointer;">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-eliminar-salon" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px;">
+        <div style="background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); box-sizing: border-box;">
+            <h3 style="margin-top: 0; margin-bottom: 15px; color: #ef4444; font-size: 1.3rem;"><i class="fa-solid fa-triangle-exclamation"></i> Delete Classroom</h3>
+            <p style="color: #4a5568; font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px;">
+                Are you sure you want to completely delete <strong id="del-salon-nombre-text"></strong>? All students, accumulative stars, and recycle logs inside it will be permanently lost.
+            </p>
+            <form id="form-eliminar-salon">
+                <input type="hidden" id="del-salon-id">
+                <label style="display: block; margin-bottom: 8px; color: #4a5568; font-weight: bold; font-size: 0.85rem;">Type <span style="color: #ef4444; font-weight: 800;">ELIMINAR</span> to confirm action:</label>
+                <input type="text" id="del-salon-confirmacion" placeholder="ELIMINAR" required autocomplete="off"
+                       style="width: 100%; padding: 12px; margin-bottom: 25px; border: 2px solid #ef4444; border-radius: 10px; font-size: 1rem; box-sizing: border-box; font-weight: bold; text-align: center; color: #ef4444;">
+
+                <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                    <button type="button" onclick="cerrarModalEliminarSalon()" style="padding: 12px 20px; border: none; background: #e2e8f0; color: #4a5568; border-radius: 10px; font-weight: bold; cursor: pointer;">Cancel</button>
+                    <button type="submit" id="btn-del-salon-submit" disabled style="padding: 12px 20px; border: none; background: #ef4444; color: white; border-radius: 10px; font-weight: bold; cursor: not-allowed; opacity: 0.5; transition: all 0.2s;">Delete Forever</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="JS/Panel_Director.js"></script>

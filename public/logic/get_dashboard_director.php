@@ -1,30 +1,26 @@
 <?php
 // public/logic/get_dashboard_director.php
 
-// 1. Blindaje: Evitamos que cualquier advertencia de PHP rompa el formato JSON esperado por JS
 error_reporting(0);
 ini_set('display_errors', 0);
 header('Content-Type: application/json; charset=utf-8');
 
-// Iniciamos el buffer para asegurar una respuesta limpia
 ob_start();
 
 try {
-    // 2. Conexión a la base de datos
     $config_path = __DIR__ . '/../../config/conexion.php';
     if (!file_exists($config_path)) {
         throw new Exception("Error de conexión al servidor.");
     }
     require_once $config_path;
 
-    // 3. Recepción de datos (Compatibilidad total con PHP antiguo)
     $id_director = isset($_POST['id_director']) ? trim($_POST['id_director']) : '';
 
     if (empty($id_director)) {
         throw new Exception("ID de director no proporcionado.");
     }
 
-    // 4. A) Obtener el CCT (id_mined) del director
+    // A) Obtener el CCT
     $stmt_dir = $pdo->prepare("SELECT id_mined FROM Usuarios WHERE id_usuario = :id LIMIT 1");
     $stmt_dir->execute(array(':id' => $id_director));
     $director = $stmt_dir->fetch(PDO::FETCH_ASSOC);
@@ -35,19 +31,19 @@ try {
 
     $cct = $director['id_mined'];
 
-    // 4. B) Obtener nombre de la Institución
+    // B) Obtener nombre de la Institución
     $stmt_escuela = $pdo->prepare("SELECT nombre_centro FROM Instituciones WHERE id_mined = :cct LIMIT 1");
     $stmt_escuela->execute(array(':cct' => $cct));
     $escuela = $stmt_escuela->fetch(PDO::FETCH_ASSOC);
     $nombre_escuela = $escuela ? $escuela['nombre_centro'] : 'Mi Institución';
 
-    // 4. C) Obtener el total de Salones
+    // C) Obtener el total de Salones
     $stmt_salones_total = $pdo->prepare("SELECT COUNT(*) as total FROM Salones WHERE id_mined = :cct");
     $stmt_salones_total->execute(array(':cct' => $cct));
     $total_salones = $stmt_salones_total->fetch(PDO::FETCH_ASSOC);
     $total_salones = $total_salones['total'];
 
-    // 4. D) Obtener el total de Alumnos (INNER JOIN con los salones de esa escuela)
+    // D) Obtener el total de Alumnos
     $stmt_alumnos = $pdo->prepare("
         SELECT COUNT(*) as total 
         FROM Alumnos a 
@@ -58,30 +54,31 @@ try {
     $total_alumnos = $stmt_alumnos->fetch(PDO::FETCH_ASSOC);
     $total_alumnos = $total_alumnos['total'];
 
-    // 4. E) Obtener los Salones para el Ranking y Select (sumando los puntos de sus alumnos)
+    // E) MODIFICADO: Traer salones junto con la información de sus maestros asignados
     $stmt_ranking = $pdo->prepare("
-        SELECT s.id_salon, s.nombre_salon, COALESCE(SUM(a.puntos_totales), 0) as puntos 
+        SELECT s.id_salon, s.nombre_salon, s.codigo_aula, s.id_maestro,
+               u.nombre_completo as nombre_maestro, u.username as user_maestro,
+               COALESCE(SUM(a.puntos_totales), 0) as puntos 
         FROM Salones s
+        LEFT JOIN Usuarios u ON s.id_maestro = u.id_usuario
         LEFT JOIN Alumnos a ON s.id_salon = a.id_salon
         WHERE s.id_mined = :cct
-        GROUP BY s.id_salon
+        GROUP BY s.id_salon, s.id_maestro, u.nombre_completo, u.username
         ORDER BY puntos DESC
     ");
     $stmt_ranking->execute(array(':cct' => $cct));
     $salones = $stmt_ranking->fetchAll(PDO::FETCH_ASSOC);
 
-    // 4. F) Calcular puntos totales sumando el ranking
+    // F) Calcular puntos totales
     $total_puntos = 0;
     foreach ($salones as $s) {
         $total_puntos += (int)$s['puntos'];
     }
 
-    // 5. Estructurar respuesta exitosa
-    // CORRECCIÓN: Ahora incluimos la variable "escuela_cct" en el JSON de salida
     $respuesta = array(
         "success" => true,
         "escuela_nombre" => $nombre_escuela,
-        "escuela_cct"    => $cct, 
+        "escuela_cct" => $cct, 
         "stats" => array(
             "total_clases" => $total_salones,
             "total_alumnos" => $total_alumnos,
@@ -97,7 +94,6 @@ try {
     );
 }
 
-// Limpiamos el buffer y enviamos solo el JSON impecable
 ob_clean();
 echo json_encode($respuesta);
 exit;
