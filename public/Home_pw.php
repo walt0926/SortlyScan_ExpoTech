@@ -37,8 +37,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <a class="flex items-center gap-2 group" href="#">
-                    <img src="img/logo2" alt="SortlyScan Logo" class="h-10 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='img/logo2.png'; this.onerror=null;">
-                    <span class="text-2xl font-baloo font-extrabold text-brand-green-dark">SortlyScan</span>
+                    <img src="img/logo2.png" alt="SortlyScan Logo" class="h-10 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='img/logo2.png'; this.onerror=null;">
                 </a>
                 
                 <nav class="hidden md:flex items-center gap-6">
@@ -75,21 +74,21 @@
                             A solution that transforms questions and small actions into an experience that changes the future.
                         </p>
                         <div class="mb-10">
-                            <button class="bg-brand-cyan text-white hover:bg-opacity-90 px-6 py-2.5 rounded-xl font-bold transition-all shadow-md">
+                            <button class="bg-brand-cyan text-white hover:bg-opacity-90 px-6 py-2.5 rounded-xl font-bold transition-all shadow-md" onclick="window.location.href='registroinstitucional.php'">
                                 Register Now
                             </button>
                         </div>
                         <div class="grid grid-cols-3 text-center gap-4 border-t border-white/20 pt-6 max-w-md">
                             <div>
-                                <div class="text-3xl font-baloo font-bold text-brand-cyan">7-12</div>
+                                <div class="text-3xl font-baloo font-bold text-brand-white">7-12</div>
                                 <div class="text-xs text-white/75">Years Old</div>
                             </div>
                             <div>
-                                <div class="text-3xl font-baloo font-bold text-brand-cyan">100%</div>
+                                <div class="text-3xl font-baloo font-bold text-brand-white">100%</div>
                                 <div class="text-xs text-white/75">Interactive</div>
                             </div>
                             <div>
-                                <div class="text-3xl font-mono font-bold text-brand-cyan">AI</div>
+                                <div class="text-3xl font-mono font-bold text-brand-whites">AI</div>
                                 <div class="text-xs text-white/75">Assisted</div>
                             </div>
                         </div>
@@ -225,8 +224,8 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
                 <div class="md:col-span-6">
                     <h3 class="text-xl font-baloo font-bold mb-3 flex items-center gap-2">
-                        <img src="img/logo2" alt="SortlyScan Logo" class="h-6 w-auto object-contain" onerror="this.src='img/logo2.png'; this.onerror=null;">
-                        SortlyScan
+                        <img src="img/logo3.png" alt="SortlyScan Logo" class="h-6 w-auto object-contain" onerror="this.src='img/logo3.png'; this.onerror=null;">
+                        <span></span>
                     </h3>
                     <p class="text-sm text-gray-400 max-w-md">Educating the new generations of El Salvador to take care of the planet through adaptive and fun technological dynamics.</p>
                 </div>
