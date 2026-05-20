@@ -56,10 +56,10 @@
                 <p id="teacher-welcome">Welcome!</p>
             </div>
             <div style="display: flex; align-items: center; gap: 12px;">
-                <button class="settings-btn" onclick="location.href='AjustesDocente.php'">
+                <button class="settings-btn" onclick="abrirModalAjustesMaestro()">
                     <i class="fa-solid fa-gear"></i>
                 </button>
-                <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket\"></i> Log Out</button>
+                <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
             </div>
         </header>
 
@@ -219,6 +219,36 @@
                 <div style="display: flex; gap: 15px; justify-content: flex-end;">
                     <button type="button" onclick="cerrarModalEliminar()" style="padding: 12px 20px; border: none; background: #e2e8f0; color: #4a5568; border-radius: 10px; font-weight: bold; cursor: pointer;">Cancel</button>
                     <button type="submit" id="btn-confirmar-eliminar" disabled style="padding: 12px 20px; border: none; background: #ef4444; color: white; border-radius: 10px; font-weight: bold; cursor: not-allowed; opacity: 0.5; transition: all 0.2s;">Delete Forever</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-ajustes-maestro" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px;">
+        <div style="background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); box-sizing: border-box;">
+            <h3 style="margin-top:0; margin-bottom: 20px; color: #333; font-size: 1.4rem;"><i class="fa-solid fa-user-gear" style="color: #16a34a;"></i> Teacher Profile Settings</h3>
+            <form id="form-ajustes-maestro">
+                
+                <label style="display:block; margin-bottom:5px; color:#666; font-weight:bold; font-size:0.9rem;">Assigned Classroom</label>
+                <input type="text" id="ajustes-maestro-aula" style="width:100%; padding:12px; margin-bottom:15px; border:2px solid #e2e8f0; border-radius:10px; font-size:1rem; box-sizing:border-box; background: #f1f5f9; color: #64748b; cursor: not-allowed;" readonly>
+
+                <label style="display:block; margin-bottom:5px; color:#666; font-weight:bold; font-size:0.9rem;">Class Code</label>
+                <input type="text" id="ajustes-maestro-codigo" style="width:100%; padding:12px; margin-bottom:15px; border:2px solid #e2e8f0; border-radius:10px; font-size:1.1rem; box-sizing:border-box; background: #f1f5f9; color: #64748b; cursor: not-allowed; font-family: monospace; font-weight: bold; letter-spacing: 1px;" readonly>
+
+                <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 15px 0;">
+
+                <label style="display:block; margin-bottom:5px; color:#666; font-weight:bold; font-size:0.9rem;">Your Full Name</label>
+                <input type="text" id="ajustes-maestro-nombre" style="width:100%; padding:12px; margin-bottom:15px; border:2px solid #e2e8f0; border-radius:10px; font-size:1rem; box-sizing:border-box;" required>
+
+                <label style="display:block; margin-bottom:5px; color:#666; font-weight:bold; font-size:0.9rem;">Login Username</label>
+                <input type="text" id="ajustes-maestro-user" style="width:100%; padding:12px; margin-bottom:15px; border:2px solid #e2e8f0; border-radius:10px; font-size:1rem; box-sizing:border-box;" required autocomplete="off">
+
+                <label style="display:block; margin-bottom:5px; color:#666; font-weight:bold; font-size:0.9rem;">Change Password <span style="font-weight:normal; color:#94a3b8;">(Optional)</span></label>
+                <input type="password" id="ajustes-maestro-pass" placeholder="Leave blank to keep current password" style="width:100%; padding:12px; margin-bottom:20px; border:2px solid #e2e8f0; border-radius:10px; font-size:1rem; box-sizing:border-box;">
+
+                <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                    <button type="button" onclick="cerrarModalAjustesMaestro()" style="padding: 12px 20px; border: none; background: #e2e8f0; color: #4a5568; border-radius: 10px; font-weight: bold; cursor: pointer;">Cancel</button>
+                    <button type="submit" style="padding: 12px 20px; border: none; background: #16a34a; color: white; border-radius: 10px; font-weight: bold; cursor: pointer;">Save Settings</button>
                 </div>
             </form>
         </div>

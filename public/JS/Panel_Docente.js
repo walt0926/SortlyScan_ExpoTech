@@ -35,6 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
         formEliminar.addEventListener('submit', guardarEliminarAlumno);
     }
 
+    // NUEVO: Configurar el formulario de ajustes de perfil del maestro
+    const formAjustes = document.getElementById('form-ajustes-maestro');
+    if(formAjustes) {
+        formAjustes.addEventListener('submit', guardarAjustesMaestro);
+    }
+
     // 6. Escuchar en tiempo real lo que se escribe en la confirmación de borrado
     const inputConfirm = document.getElementById('delete-modal-confirmacion');
     if(inputConfirm) {
@@ -78,6 +84,14 @@ async function cargarDatosAula(idMaestro) {
 
         if (data.success) {
             window.alumnosActuales = data.alumnos;
+
+            // NUEVO: Mapeo completo global de variables de perfil del maestro
+            window.perfilMaestro = {
+                aula_nombre: data.aula_nombre,
+                aula_codigo: data.aula_codigo,
+                maestro_nombre: data.maestro_nombre,
+                maestro_user: data.maestro_user
+            };
 
             document.getElementById('panel-title').textContent = `Panel - ${data.aula_nombre}`;
             document.getElementById('class-code').textContent = data.aula_codigo;
@@ -153,6 +167,62 @@ async function cargarDatosAula(idMaestro) {
         }
     } catch (error) {
         console.error("Error al cargar datos del docente:", error);
+    }
+}
+
+// --- NUEVO: CONTROL INTERACTIVO DE AJUSTES MAESTRO ---
+function abrirModalAjustesMaestro() {
+    if (!window.perfilMaestro) return;
+
+    document.getElementById('ajustes-maestro-aula').value = window.perfilMaestro.aula_nombre;
+    document.getElementById('ajustes-maestro-codigo').value = window.perfilMaestro.aula_codigo;
+    document.getElementById('ajustes-maestro-nombre').value = window.perfilMaestro.maestro_nombre;
+    document.getElementById('ajustes-maestro-user').value = window.perfilMaestro.maestro_user;
+    document.getElementById('ajustes-maestro-pass').value = ''; 
+
+    document.getElementById('modal-ajustes-maestro').style.display = 'flex';
+    document.getElementById('ajustes-maestro-nombre').focus();
+}
+
+function cerrarModalAjustesMaestro() {
+    document.getElementById('modal-ajustes-maestro').style.display = 'none';
+}
+
+async function guardarAjustesMaestro(e) {
+    e.preventDefault();
+    const idMaestro = localStorage.getItem('usuario_id');
+
+    const nombre = document.getElementById('ajustes-maestro-nombre').value.trim();
+    const username = document.getElementById('ajustes-maestro-user').value.trim().toLowerCase();
+    const password = document.getElementById('ajustes-maestro-pass').value.trim();
+
+    const formData = new FormData();
+    formData.append('id_maestro', idMaestro);
+    formData.append('nombre_maestro', nombre);
+    formData.append('user_maestro', username);
+    formData.append('pass_maestro', password);
+
+    try {
+        const response = await fetch('logic/editar_ajustes_maestro.php', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            alert("¡Tu perfil ha sido actualizado con éxito!");
+            
+            // Sincronizamos localStorage inmediatamente sin forzar cierres de sesión
+            localStorage.setItem('usuario_nombre', nombre);
+            document.getElementById('teacher-welcome').textContent = `Hello, ${nombre}! General overview of your classroom.`;
+            
+            cerrarModalAjustesMaestro();
+            cargarDatosAula(idMaestro); 
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (error) {
+        alert("Ocurrió un error al procesar la actualización.");
     }
 }
 

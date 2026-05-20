@@ -1,7 +1,6 @@
 <?php
 // public/logic/get_dashboard_docente.php
 
-// 1. Blindaje contra salidas inesperadas de texto
 error_reporting(0);
 ini_set('display_errors', 0);
 header('Content-Type: application/json; charset=utf-8');
@@ -16,11 +15,20 @@ try {
     }
     require_once $config_path;
 
-    // 3. Recepción del ID del Maestro (Sintaxis compatible PHP 5.6)
+    // 3. Recepción del ID del Maestro
     $id_maestro = isset($_POST['id_maestro']) ? trim($_POST['id_maestro']) : '';
 
     if (empty($id_maestro)) {
         throw new Exception("ID de docente no proporcionado.");
+    }
+
+    // NUEVO: Obtener información del perfil del maestro
+    $stmt_user = $pdo->prepare("SELECT nombre_completo, username FROM Usuarios WHERE id_usuario = :id LIMIT 1");
+    $stmt_user->execute(array(':id' => $id_maestro));
+    $user_info = $stmt_user->fetch(PDO::FETCH_ASSOC);
+
+    if (!$user_info) {
+        throw new Exception("Usuario maestro no encontrado.");
     }
 
     // 4. Buscar el salón que le pertenece a este maestro en la tabla Salones
@@ -41,7 +49,6 @@ try {
     $id_salon = $salon['id_salon'];
 
     // 5. Consultar los alumnos exclusivos de este salón ordenados por ranking
-    // MODIFICACIÓN SQL: Se agregó 'pin' a la selección
     $stmt_alumnos = $pdo->prepare("
         SELECT id_alumno, nombre_display, puntos_totales, pin 
         FROM Alumnos 
@@ -51,11 +58,13 @@ try {
     $stmt_alumnos->execute(array(':id_salon' => $id_salon));
     $alumnos = $stmt_alumnos->fetchAll(PDO::FETCH_ASSOC);
 
-    // 6. Construcción de la respuesta estructurada
+    // 6. Construcción de la respuesta estructurada incluyendo datos de perfil
     $respuesta = array(
         "success" => true,
         "aula_nombre" => $salon['nombre_salon'],
         "aula_codigo" => $salon['codigo_aula'],
+        "maestro_nombre" => $user_info['nombre_completo'],
+        "maestro_user"   => $user_info['username'],
         "alumnos"     => $alumnos
     );
 
@@ -66,7 +75,6 @@ try {
     );
 }
 
-// Despejamos buffer y enviamos JSON limpio
 ob_clean();
 echo json_encode($respuesta);
 exit;
