@@ -60,7 +60,7 @@
             <div class="section-header">
                 <h3><i class="fa-solid fa-trophy"></i> Class Ranking</h3>
             </div>
-            <button class="ranking-list" id="ranking-container">
+            <button class="ranking-list" id="ranking-container" onclick="location.href='__'">
                 <p style="text-align:center; color: #999;">Loading school ranking...</p>
             </button>
 
