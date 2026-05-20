@@ -12,17 +12,19 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     id_mined VARCHAR(20) NOT NULL,
     email VARCHAR(100) UNIQUE NULL, 
-    username VARCHAR(50) UNIQUE NULL, 
+    username VARCHAR(50) NULL, -- Quitamos el candado UNIQUE de aquí
     password VARCHAR(255) NOT NULL,
     rol ENUM('Director', 'Maestro') NOT NULL,
     nombre_completo VARCHAR(100) NOT NULL,
-    FOREIGN KEY (id_mined) REFERENCES Instituciones(id_mined) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_mined) REFERENCES Instituciones(id_mined) ON DELETE CASCADE ON UPDATE CASCADE,
+    -- NUEVO: Restricción compuesta para permitir el mismo usuario en diferentes escuelas
+    CONSTRAINT usuario_por_escuela UNIQUE (id_mined, username)
 );
 
 CREATE TABLE IF NOT EXISTS Salones (
     id_salon INT AUTO_INCREMENT PRIMARY KEY,
     id_mined VARCHAR(20) NOT NULL,
-    id_maestro INT NOT NULL,
+    id_maestro INT DEFAULT NULL, -- Corregido a NULL por defecto
     nombre_salon VARCHAR(50) NOT NULL,
     codigo_aula VARCHAR(10) UNIQUE NOT NULL,
     FOREIGN KEY (id_mined) REFERENCES Instituciones(id_mined) ON DELETE CASCADE ON UPDATE CASCADE,

@@ -19,7 +19,7 @@
                 <label class="label-text">School CCT Code</label>
                 <input type="text" id="cct-input" placeholder="e.g., 15EPR0001X" class="input-codigo" style="font-size: 1.1rem; margin-bottom: 1rem;">
                     
-                <label class="label-text">Username or Payroll No.</label>
+                <label class="label-text">Username</label>
                 <input type="text" id="user-staff" placeholder="e.g., TCH12345" class="input-codigo" style="font-size: 1.1rem; margin-bottom: 1rem;">
 
                 <label class="label-text">Password</label>
@@ -28,7 +28,7 @@
                 <button onclick="validarLoginStaff('maestro')" class="btn-entrar">Log In</button>
                 
                 <div class="footer">
-                    <button onclick="window.location.href='index.html'" class="btn-link">Change school</button>
+                    <button onclick="window.location.href='ValidarInstitucion.php'" class="btn-link">Back to home</button>
                 </div>
             </div>
         </div>

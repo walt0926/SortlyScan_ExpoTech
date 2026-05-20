@@ -6,6 +6,27 @@
             box-sizing: border-box;
         }
 
+        .icon-exit-btn {
+            position: absolute; 
+            top: 120px;          
+            right: 120px;       
+            background: transparent;
+            border: none;
+            color: #00cfeb; 
+            cursor: pointer;
+            z-index: 100;     
+            transition: transform 0.3s ease;
+        }
+
+        .icon-exit-btn:hover {
+            transform: scale(1.1);
+            color: #ff4b2b;
+        }
+
+        .icon-exit-btn svg {
+            display: block;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: #4CAF50CF;

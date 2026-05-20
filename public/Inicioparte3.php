@@ -14,10 +14,17 @@
             <p class="subtitle">Enter your account security password</p>
 
             <div class="form-container" style="width: 100%;">
-                <input type="password" id="pin-input" placeholder="••••••••" class="input-codigo" style="font-size: 1.5rem; text-align: center; margin-bottom: 1.5rem;">
-                
-                <button onclick="validarPIN()" class="btn-entrar">Access</button>
-            </div>
+    <input type="text" 
+           id="pin-input" 
+           maxlength="4" 
+           inputmode="numeric" 
+           oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+           placeholder="••••" 
+           class="input-codigo" 
+           style="font-size: 1.5rem; text-align: center; margin-bottom: 1.5rem;">
+    
+    <button onclick="validarPIN()" class="btn-entrar">Access</button>
+</div>
         </div>
     </div>
     <script src="JS/inicio_de_sesion.js"></script>

@@ -1,7 +1,6 @@
 // public/JS/Panel_Director.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Verificamos que el director haya iniciado sesión
     const idDirector = localStorage.getItem('usuario_id');
     
     if (!idDirector) {
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // 2. Cargamos los datos del Dashboard
     cargarDatosDashboard(idDirector);
 });
 
@@ -19,7 +17,6 @@ async function cargarDatosDashboard(idDirector) {
         const formData = new FormData();
         formData.append('id_director', idDirector);
 
-        // Hacemos la petición a la BD
         const response = await fetch('logic/get_dashboard_director.php', {
             method: 'POST',
             body: formData
@@ -28,30 +25,22 @@ async function cargarDatosDashboard(idDirector) {
         const data = await response.json();
 
         if (data.success) {
-            // --- ACTUALIZAMOS LA INTERFAZ ---
-
-            // 1. Nombre de la escuela
             const tituloEscuela = document.getElementById('school-name');
-            if (tituloEscuela && data.escuela_nombre) {
-                tituloEscuela.textContent = data.escuela_nombre;
-            }
+            if (tituloEscuela && data.escuela_nombre) tituloEscuela.textContent = data.escuela_nombre;
 
-            // 2. Estadísticas
             document.getElementById('stat-clases').textContent = data.stats.total_clases;
             document.getElementById('stat-alumnos').textContent = data.stats.total_alumnos;
             document.getElementById('stat-puntos').textContent = data.stats.total_puntos;
 
-            // 3. Select de asignación de docentes
             const selectClases = document.getElementById('select-clases');
             selectClases.innerHTML = '<option value="">Selecciona un salón...</option>';
             data.salones.forEach(salon => {
                 selectClases.innerHTML += `<option value="${salon.id_salon}">${salon.nombre_salon}</option>`;
             });
 
-            // 4. Ranking de Salones
             const rankingContainer = document.getElementById('ranking-container');
             if (data.salones.length > 0) {
-                rankingContainer.innerHTML = ''; // Limpiamos el mensaje de carga
+                rankingContainer.innerHTML = ''; 
                 data.salones.forEach((salon, index) => {
                     rankingContainer.innerHTML += `
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #e2e8f0;">
@@ -68,21 +57,87 @@ async function cargarDatosDashboard(idDirector) {
             } else {
                 rankingContainer.innerHTML = '<p style="text-align:center; color: #999; padding: 20px;">Aún no hay salones registrados en esta institución.</p>';
             }
-        } else {
-            console.error("Error del servidor:", data.message);
         }
     } catch (error) {
         console.error("Error de red al cargar dashboard:", error);
     }
 }
 
-// Funciones vacías para gestión
-function crearClase() {
-    alert("Función para crear salón en construcción...");
+async function crearClase() {
+    const idDirector = localStorage.getItem('usuario_id');
+    const nombreClase = document.getElementById('nombre-clase').value.trim();
+
+    if (!nombreClase) {
+        alert("Por favor ingresa un nombre para el salón (Ej: 3rd Grade - A).");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('id_director', idDirector);
+    formData.append('nombre_clase', nombreClase);
+
+    try {
+        const response = await fetch('logic/crear_clase.php', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            alert(`¡Salón creado! Código de aula generado: ${data.codigo_aula}`);
+            document.getElementById('nombre-clase').value = ''; 
+            cargarDatosDashboard(idDirector); 
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Ocurrió un error al contactar al servidor.");
+    }
 }
 
-function asignarDocente() {
-    alert("Función para asignar docente en construcción...");
+// MODIFICADO: Ahora captura el usuario ingresado por el director
+async function asignarDocente() {
+    const idDirector = localStorage.getItem('usuario_id');
+    const idSalon = document.getElementById('select-clases').value;
+    const nombreDocente = document.getElementById('nombre-docente').value.trim();
+    const userDocente = document.getElementById('user-docente').value.trim().toLowerCase(); // A minúsculas
+    const passDocente = document.getElementById('pass-docente').value.trim();
+
+    if (!idSalon || !nombreDocente || !userDocente || !passDocente) {
+        alert("Por favor completa todos los campos para asignar al maestro.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('id_director', idDirector);
+    formData.append('id_salon', idSalon);
+    formData.append('nombre_docente', nombreDocente);
+    formData.append('user_docente', userDocente); // Mandamos el nuevo campo
+    formData.append('pass_docente', passDocente);
+
+    try {
+        const response = await fetch('logic/asignar_docente.php', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            alert(`¡Docente asignado con éxito!\nEl maestro iniciará sesión con el usuario: ${userDocente}`);
+            
+            // Limpiamos los inputs
+            document.getElementById('select-clases').value = '';
+            document.getElementById('nombre-docente').value = '';
+            document.getElementById('user-docente').value = '';
+            document.getElementById('pass-docente').value = '';
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Ocurrió un error al contactar al servidor.");
+    }
 }
 
 function cerrarSesion() {

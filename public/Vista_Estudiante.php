@@ -85,7 +85,13 @@ try {
             </div>
             <i class="fa-solid fa-star decorative-star"></i>
         </section>
-
+        <div class="scan-button-container">
+            <button class="btn-scan-block" onclick="location.href='SortlyScanIA.php'">
+                <i class="fa-solid fa-camera icon-left"></i>
+                <span class="text-right">Scan</span>
+            </button>
+        </div>
+        </div>
         <section class="ranking-container">
             <h3><i class="fa-solid fa-trophy"></i> Class Ranking</h3>
             
@@ -93,7 +99,7 @@ try {
                 <?php 
                 if (!empty($ranking_salon)): 
                     foreach ($ranking_salon as $index => $alum): 
-                        // Asignamos la medalla visual del CSS según su lugar
+                        // Mantenemos la lógica intacta del backend para asignar las medallas
                         $rankClass = "";
                         if ($index === 0) $rankClass = "gold";
                         elseif ($index === 1) $rankClass = "silver";
@@ -105,7 +111,7 @@ try {
                                     <?php if ($index < 3): ?>
                                         <i class="fa-solid fa-trophy"></i>
                                     <?php else: ?>
-                                        <span style="font-size: 0.9rem; font-weight: bold; color: #666;"><?php echo $index + 1; ?></span>
+                                        <span style="font-size: 0.9rem; font-weight: bold; color: #6b7280;"><?php echo $index + 1; ?></span>
                                     <?php endif; ?>
                                 </div>
                                 <span class="name"><?php echo htmlspecialchars($alum['nombre_display']); ?></span>
@@ -118,14 +124,10 @@ try {
                     endforeach; 
                 else: 
                 ?>
-                    <p style="text-align:center; color: #999; padding: 15px;">No students registered in this classroom.</p>
+                    <p style="text-align:center; color: #6b7280; padding: 15px; font-family: 'Nunito', sans-serif;">No students registered in this classroom.</p>
                 <?php endif; ?>
             </div>
         </section>
-
-        <button class="fab-camera" onclick="location.href='SortlyScanIA.php'">
-            <i class="fa-solid fa-camera"></i>
-        </button>
     </div>
 
 </body>
