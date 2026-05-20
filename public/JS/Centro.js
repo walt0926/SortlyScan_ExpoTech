@@ -1,56 +1,97 @@
-class SortlyApp{
+class SortlyApp {
 
-    constructor(){
+    constructor() {
 
         this.centers = [
 
             {
-                id:1,
-                name:"Recicla 503",
-                lat:13.702,
-                lon:-89.208,
-                img:"https://lh3.googleusercontent.com/p/AF1QipMng6S5K0S38a4tXS8A3isEO8VrPg3UPZxD4-bH=s680-w680-h510-rw"
+                id: 1,
+                name: "Recicla 503",
+                lat: 13.702,
+                lon: -89.208,
+                img: "https://lh3.googleusercontent.com/p/AF1QipMng6S5K0S38a4tXS8A3isEO8VrPg3UPZxD4-bH=s680-w680-h510-rw"
             },
 
             {
-                id:2,
-                name:"Ayala Center",
-                lat:13.715,
-                lon:-89.225,
-                img:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAG3bj4hK6tYpbNnkiWZz5kfSFU_Ys24K0cZiLC_px5wjpqCwnZ5Z0DJVkhITTDl4KJbjIYKKakvaIJyrT-qvBmrHs2Mk4Z_gQ7-q5yUAD82YDwNhxr5ek_9wKvizw9SimrEhUWJJZz_mXAx=s680-w680-h510-rw"
+                id: 2,
+                name: "Ayala Center",
+                lat: 13.715,
+                lon: -89.225,
+                img: "https://lh3.googleusercontent.com/gps-cs-s/APNQkAG3bj4hK6tYpbNnkiWZz5kfSFU_Ys24K0cZiLC_px5wjpqCwnZ5Z0DJVkhITTDl4KJbjIYKKakvaIJyrT-qvBmrHs2Mk4Z_gQ7-q5yUAD82YDwNhxr5ek_9wKvizw9SimrEhUWJJZz_mXAx=s680-w680-h510-rw"
             },
 
             {
-                id:3,
-                name:"RECITODO",
-                lat:13.695,
-                lon:-89.182,
-                img:"https://scontent.fsal3-1.fna.fbcdn.net/v/t39.30808-6/335008077_1034067381330068_7762215020434452190_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=yIukCXOkj5sQ7kNvwE6f9Sp&_nc_oc=AdoZxfSGJ8hh2e3Ov4u90-DFKoNJIKbr25_9UIq24TfLkrGrDYcANwvLqDU7vCkA9qk&_nc_zt=23&_nc_ht=scontent.fsal3-1.fna&_nc_gid=loWf_E36H9T5q8qjZZ9dNA&_nc_ss=7b289&oh=00_Af4FGxYvYPHKWWeNvbrruIXYxkf0aEC2fa0WNCBwe1i1xw&oe=6A0B54CA"
+                id: 3,
+                name: "RECITODO",
+                lat: 13.695,
+                lon: -89.182,
+                img: "https://scontent.fsal3-1.fna.fbcdn.net/v/t39.30808-6/335008077_1034067381330068_7762215020434452190_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=yIukCXOkj5sQ7kNvwE6f9Sp&_nc_oc=AdoZxfSGJ8hh2e3Ov4u90-DFKoNJIKbr25_9UIq24TfLkrGrDYcANwvLqDU7vCkA9qk&_nc_zt=23&_nc_ht=scontent.fsal3-1.fna&_nc_gid=loWf_E36H9T5q8qjZZ9dNA&_nc_ss=7b289&oh=00_Af4FGxYvYPHKWWeNvbrruIXYxkf0aEC2fa0WNCBwe1i1xw&oe=6A0B54CA"
             },
 
             {
-                id:4,
-                name:"CLUSA EL SALVADOR",
+                id: 4,
+                name: "CLUSA EL SALVADOR",
                 lat: 13.704361942348445,
-                lon:-89.24591281642097,
-                img:"https://lh3.googleusercontent.com/gps-cs-s/APNQkAESNHuUtZ5DffrDD-dF79I1RND0qH7io1-sUS60_BIf3q9l6_1BsH3ufI4hlm40P3y77KH3vMGOseYYRH_VtsYysppkfXNBSiFUuvC4Q5z8ITVVNn1yM-cehC7vMhd2l0ErKpW5Pw=w426-h240-k-no"
+                lon: -89.24591281642097,
+                img: "https://lh3.googleusercontent.com/gps-cs-s/APNQkAESNHuUtZ5DffrDD-dF79I1RND0qH7io1-sUS60_BIf3q9l6_1BsH3ufI4hlm40P3y77KH3vMGOseYYRH_VtsYysppkfXNBSiFUuvC4Q5z8ITVVNn1yM-cehC7vMhd2l0ErKpW5Pw=w426-h240-k-no"
             },
 
             {
-                id:5,
-                name:"Recicladora La Centroamericana S.A.",
+                id: 5,
+                name: "Recicladora La Centroamericana S.A.",
                 lat: 13.701696520569248,
                 lon: -89.18419111787341,
-                img:"https://lh3.googleusercontent.com/p/AF1QipPKVG__P6RLXjKvb65XNP_FCYaMRQE6XBiCap9v=s680-w680-h510-rw"
+                img: "https://lh3.googleusercontent.com/p/AF1QipPKVG__P6RLXjKvb65XNP_FCYaMRQE6XBiCap9v=s680-w680-h510-rw"
             },
 
             {
                 id: 6,
-                name:"CONAVE",
+                name: "CONAVE",
                 lat: 13.701369800037481,
                 lon: -89.1667128557993,
                 img: "https://lh3.googleusercontent.com/p/AF1QipNgKc2pvbqsFpHttpHaphFOoRFqf0Iaij7HO1or=s680-w680-h510-rw"
-            }
+            },
+
+            {
+                id: 7,
+                name: "Centro de Reciclaje San Salvador",
+                lat: 13.6989,
+                lon: -89.2125,
+                img: "img/centros/centro1.jpg" 
+            },
+
+            {
+                id: 8,
+                name: "Eco-Acopio Santa Tecla",
+                lat: 13.6767,
+                lon: -89.2797,
+                img: "img/centros/centro2.jpg"
+            },
+
+            {
+                id: 9,
+                name: "EcoSalva - Ecología Salvadoreña",
+                lat: 13.7980,
+                lon: -89.1808,
+                img: "img/centros/ecosalva.jpg"
+            },
+
+            {
+                id: 10,
+                name: "Central de Reciclaje MARCEYA",
+                lat: 13.7977,
+                lon: -89.1810,
+                img: "img/centros/marceya.jpg"
+            },
+
+            {
+                id: 11,
+                name: "Grupo Palacios Recycling",
+                lat: 13.7411,
+                lon: -89.4304,
+                img: "img/centros/grupo_palacios.jpg"
+            } 
+
         ];
 
         this.map = null;
@@ -64,17 +105,17 @@ class SortlyApp{
         this.init();
     }
 
-    init(){
+    init() {
 
-        this.map = L.map('map',{
-            zoomControl:false
-        }).setView([13.69,-89.21],13);
+        this.map = L.map('map', {
+            zoomControl: false
+        }).setView([13.69, -89.21], 13);
 
         L.tileLayer(
             'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
         ).addTo(this.map);
 
-        this.map.on('click',(e)=>{
+        this.map.on('click', (e) => {
 
             this.setUserLocation(
                 e.latlng.lat,
@@ -88,11 +129,11 @@ class SortlyApp{
         this.renderCards(this.centers);
     }
 
-    bindUI(){
+    bindUI() {
 
         document
             .getElementById('busqueda')
-            .addEventListener('keyup',(e)=>{
+            .addEventListener('keyup', (e) => {
 
                 this.search(e.target.value);
 
@@ -100,7 +141,7 @@ class SortlyApp{
 
         document
             .querySelector('.btn-location')
-            .addEventListener('click',()=>{
+            .addEventListener('click', () => {
 
                 this.getMyLocation();
 
@@ -108,7 +149,7 @@ class SortlyApp{
 
         document
             .querySelector('.btn-close')
-            .addEventListener('click',()=>{
+            .addEventListener('click', () => {
 
                 this.togglePanel(false);
 
@@ -116,7 +157,7 @@ class SortlyApp{
 
         document
             .querySelector('.btn-clear-route')
-            .addEventListener('click',()=>{
+            .addEventListener('click', () => {
 
                 this.clearRoute();
 
@@ -124,7 +165,7 @@ class SortlyApp{
 
         document
             .getElementById('panel-tab')
-            .addEventListener('click',()=>{
+            .addEventListener('click', () => {
 
                 this.togglePanel(true);
 
@@ -132,7 +173,7 @@ class SortlyApp{
 
         document
             .getElementById('nextBtn')
-            .addEventListener('click',()=>{
+            .addEventListener('click', () => {
 
                 this.nextCard();
 
@@ -140,7 +181,7 @@ class SortlyApp{
 
         document
             .getElementById('prevBtn')
-            .addEventListener('click',()=>{
+            .addEventListener('click', () => {
 
                 this.prevCard();
 
@@ -148,7 +189,7 @@ class SortlyApp{
 
     }
 
-    renderCards(data){
+    renderCards(data) {
 
         this.filteredCenters = data;
 
@@ -156,7 +197,7 @@ class SortlyApp{
 
         this.updateSlider();
 
-        this.markers.forEach(marker=>{
+        this.markers.forEach(marker => {
 
             this.map.removeLayer(marker);
 
@@ -166,26 +207,26 @@ class SortlyApp{
 
         const centerIcon = L.divIcon({
 
-            className:'custom-marker',
+            className: 'custom-marker',
 
-            html:`
+            html: `
                 <div class="marker-pin">
                     ♻
                 </div>
             `,
 
-            iconSize:[34,34],
-            iconAnchor:[17,17]
+            iconSize: [34, 34],
+            iconAnchor: [17, 17]
 
         });
 
-        data.forEach(center=>{
+        data.forEach(center => {
 
             const marker =
                 L.marker(
-                    [center.lat,center.lon],
+                    [center.lat, center.lon],
                     {
-                        icon:centerIcon
+                        icon: centerIcon
                     }
                 ).addTo(this.map);
 
@@ -199,7 +240,7 @@ class SortlyApp{
 
     }
 
-    updateSlider(){
+    updateSlider() {
 
         const container =
             document.getElementById('cards');
@@ -209,7 +250,7 @@ class SortlyApp{
         const center =
             this.filteredCenters[this.currentIndex];
 
-        if(!center) return;
+        if (!center) return;
 
         const card =
             document.createElement('div');
@@ -236,13 +277,13 @@ class SortlyApp{
             </div>
         `;
 
-        card.addEventListener('click',()=>{
+        card.addEventListener('click', () => {
 
             this.map.flyTo(
-                [center.lat,center.lon],
+                [center.lat, center.lon],
                 15,
                 {
-                    duration:1.5
+                    duration: 1.5
                 }
             );
 
@@ -251,7 +292,7 @@ class SortlyApp{
         const button =
             card.querySelector('.btn-directions');
 
-        button.addEventListener('click',(e)=>{
+        button.addEventListener('click', (e) => {
 
             e.stopPropagation();
 
@@ -266,14 +307,14 @@ class SortlyApp{
 
     }
 
-    nextCard(){
+    nextCard() {
 
         this.currentIndex++;
 
-        if(
+        if (
             this.currentIndex >=
             this.filteredCenters.length
-        ){
+        ) {
             this.currentIndex = 0;
         }
 
@@ -281,11 +322,11 @@ class SortlyApp{
 
     }
 
-    prevCard(){
+    prevCard() {
 
         this.currentIndex--;
 
-        if(this.currentIndex < 0){
+        if (this.currentIndex < 0) {
 
             this.currentIndex =
                 this.filteredCenters.length - 1;
@@ -295,14 +336,14 @@ class SortlyApp{
 
     }
 
-    setUserLocation(lat,lon){
+    setUserLocation(lat, lon) {
 
         this.userCoords = {
             lat,
-            lng:lon
+            lng: lon
         };
 
-        if(this.userMarker){
+        if (this.userMarker) {
 
             this.map.removeLayer(this.userMarker);
 
@@ -310,24 +351,24 @@ class SortlyApp{
 
         const userIcon = L.divIcon({
 
-            className:'user-marker',
+            className: 'user-marker',
 
-            html:`
+            html: `
                 <div class="user-pin">
                     ⬤
                 </div>
             `,
 
-            iconSize:[30,30],
-            iconAnchor:[15,15]
+            iconSize: [30, 30],
+            iconAnchor: [15, 15]
 
         });
 
         this.userMarker =
             L.marker(
-                [lat,lon],
+                [lat, lon],
                 {
-                    icon:userIcon
+                    icon: userIcon
                 }
             )
             .addTo(this.map)
@@ -336,9 +377,9 @@ class SortlyApp{
 
     }
 
-    calculateRoute(destLat,destLon){
+    calculateRoute(destLat, destLon) {
 
-        if(!this.userCoords){
+        if (!this.userCoords) {
 
             alert(
                 'Please select your location on the map first!'
@@ -347,7 +388,7 @@ class SortlyApp{
             return;
         }
 
-        if(this.routingControl){
+        if (this.routingControl) {
 
             this.map.removeControl(this.routingControl);
 
@@ -360,7 +401,7 @@ class SortlyApp{
         this.routingControl =
             L.Routing.control({
 
-                waypoints:[
+                waypoints: [
                     L.latLng(
                         this.userCoords.lat,
                         this.userCoords.lng
@@ -372,36 +413,36 @@ class SortlyApp{
                     )
                 ],
 
-                lineOptions:{
-                    styles:[
+                lineOptions: {
+                    styles: [
                         {
-                            color:'#8BC34A',
-                            weight:6
+                            color: '#8BC34A',
+                            weight: 6
                         }
                     ]
                 },
 
-                createMarker:()=>null,
+                createMarker: () => null,
 
-                addWaypoints:false,
+                addWaypoints: false,
 
-                draggableWaypoints:false,
+                draggableWaypoints: false,
 
-                routeWhileDragging:false,
+                routeWhileDragging: false,
 
-                fitSelectedRoutes:true,
+                fitSelectedRoutes: true,
 
-                show:false,
+                show: false,
 
-                router:L.Routing.osrmv1({
-                    language:'en'
+                router: L.Routing.osrmv1({
+                    language: 'en'
                 })
 
             });
 
         this.routingControl.addTo(this.map);
 
-        this.routingControl.on('routesfound',()=>{
+        this.routingControl.on('routesfound', () => {
 
             const itinerary =
                 this.routingControl._container;
@@ -418,7 +459,7 @@ class SortlyApp{
 
     }
 
-    togglePanel(show){
+    togglePanel(show) {
 
         const panel =
             document.getElementById(
@@ -430,17 +471,17 @@ class SortlyApp{
                 'panel-tab'
             );
 
-        if(show){
+        if (show) {
 
             panel.classList.add('visible');
 
             tab.style.display = 'none';
 
-        }else{
+        } else {
 
             panel.classList.remove('visible');
 
-            if(this.routingControl){
+            if (this.routingControl) {
 
                 tab.style.display = 'flex';
 
@@ -450,9 +491,9 @@ class SortlyApp{
 
     }
 
-    clearRoute(){
+    clearRoute() {
 
-        if(this.routingControl){
+        if (this.routingControl) {
 
             this.map.removeControl(
                 this.routingControl
@@ -476,10 +517,10 @@ class SortlyApp{
 
     }
 
-    search(value){
+    search(value) {
 
         const filtered =
-            this.centers.filter(center=>
+            this.centers.filter(center =>
 
                 center.name
                     .toLowerCase()
@@ -493,11 +534,11 @@ class SortlyApp{
 
     }
 
-    getMyLocation(){
+    getMyLocation() {
 
         navigator.geolocation.getCurrentPosition(
 
-            (pos)=>{
+            (pos) => {
 
                 const lat =
                     pos.coords.latitude;
@@ -511,13 +552,13 @@ class SortlyApp{
                 );
 
                 this.map.flyTo(
-                    [lat,lon],
+                    [lat, lon],
                     15
                 );
 
             },
 
-            ()=>{
+            () => {
 
                 alert('GPS not available');
 

@@ -29,7 +29,6 @@ try {
     $salon = $stmt_salon->fetch(PDO::FETCH_ASSOC);
 
     if (!$salon) {
-        // Respuesta controlada por si el director creó al maestro pero no le ha asignado aula
         $respuesta = array(
             "success" => false,
             "message" => "You don't have an assigned classroom yet. Please contact your Principal."
@@ -41,9 +40,10 @@ try {
 
     $id_salon = $salon['id_salon'];
 
-    // 5. Consultar los alumnos exclusivos de este salón ordenados por ranking de puntos
+    // 5. Consultar los alumnos exclusivos de este salón ordenados por ranking
+    // MODIFICACIÓN SQL: Se agregó 'pin' a la selección
     $stmt_alumnos = $pdo->prepare("
-        SELECT id_alumno, nombre_display, puntos_totales 
+        SELECT id_alumno, nombre_display, puntos_totales, pin 
         FROM Alumnos 
         WHERE id_salon = :id_salon 
         ORDER BY puntos_totales DESC
@@ -66,7 +66,7 @@ try {
     );
 }
 
-// Despejamos buffer y retornamos JSON limpio
+// Despejamos buffer y enviamos JSON limpio
 ob_clean();
 echo json_encode($respuesta);
 exit;

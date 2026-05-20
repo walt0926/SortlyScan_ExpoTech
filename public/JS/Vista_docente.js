@@ -40,6 +40,55 @@ async function eliminarEstudiante(studentId, btn) {
         return;
     }
 
+    /**
+ * Toma el archivo CSV seleccionado por el maestro y lo envía al servidor vía AJAX (Fetch)
+ * @param {HTMLInputElement} input - El elemento input file del DOM
+ */
+async function procesarImportacion(input) {
+    // Si el usuario cancela la selección o no hay archivo, salimos de la función
+    if (input.files.length === 0) return;
+
+    const archivo = input.files[0];
+    const formData = new FormData();
+    
+    // Vinculamos el archivo con la clave 'archivo_alumnos' que espera tu script PHP
+    formData.append('archivo_alumnos', archivo);
+// CORRECCIÓN: Apuntar a la carpeta 'usuarios' y al archivo exacto 'import_students.php'
+const BACKEND_URL = '../usuarios/import_students.php';
+
+try {
+    const response = await fetch(BACKEND_URL, {
+        method: 'POST',
+        body: formData,
+        credentials: 'include'
+    });
+
+    // Clonamos la respuesta para poder leerla en texto plano si no es un JSON válido
+    const responseClone = response.clone();
+    
+    try {
+        const data = await response.json();
+        if (data.success) {
+            alert(`¡Importación exitosa!\n\n• Registrados: ${data.insertados}\n• Ignorados/Duplicados: ${data.ignorados}`);
+            if (typeof cargarDashboard === "function") cargarDashboard(); else location.reload();
+        } else {
+            alert("Error devuelto por PHP: " + data.message);
+        }
+    } catch (jsonError) {
+        // Si PHP da un error de sintaxis o de base de datos, devolverá texto HTML, no un JSON
+        const textoError = await responseClone.text();
+        console.error("Respuesta cruda del servidor:", textoError);
+        alert("El servidor no devolvió una respuesta limpia. Revisa la consola de desarrollador (F12) para ver el error de PHP.");
+    }
+} catch (error) {
+    console.error("Error de conexión:", error);
+    alert("Hubo un fallo de comunicación con el servidor.");
+}
+    } finally {
+        // Limpiamos el valor del input para que deje subir el mismo archivo si se corrigen errores
+        input.value = '';
+    }
+}
     // REGLA: Preparar datos para el backend PHP
     const formData = new FormData();
     formData.append('action', 'eliminar_estudiante');

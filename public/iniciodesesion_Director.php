@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="footer">
-                    <button onclick="window.location.href='registroinstitucional.php'" class="btn-link">Back to home</button>
+                    <button onclick="window.location.href='ValidarInstitucion.php'" class="btn-link">Back to home</button>
                 </div>
             </div>
         </div>
