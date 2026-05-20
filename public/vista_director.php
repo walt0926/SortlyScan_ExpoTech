@@ -19,10 +19,10 @@
                 <p>General overview of the institution</p>
             </div>
             <div style="display: flex; align-items: center; gap: 12px;">
-                <button class="settings-btn" onclick="location.href='AjustesDocente.php'">
+                <button class="settings-btn" onclick="abrirModalAjustes()">
                     <i class="fa-solid fa-gear"></i>
                 </button>
-                <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket\"></i> Log Out</button>
+                <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
             </div>
         </header>
 
@@ -90,8 +90,7 @@
                 <h3 style="margin: 0; color: #333; font-size: 1.3rem;"><i class="fa-solid fa-users" style="color: #00BCD4;"></i> Students: <span id="txt-modal-aula-nombre" style="font-weight: 800;"></span></h3>
                 <button onclick="cerrarModalAlumnos()" style="background: transparent; border: none; font-size: 1.2rem; cursor: pointer; color: #94a3b8;"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div id="lista-alumnos-clase" style="overflow-y: auto; flex-grow: 1; padding-right: 5px;">
-                </div>
+            <div id="lista-alumnos-clase" style="overflow-y: auto; flex-grow: 1; padding-right: 5px;"></div>
         </div>
     </div>
 
@@ -140,6 +139,35 @@
                 <div style="display: flex; gap: 15px; justify-content: flex-end;">
                     <button type="button" onclick="cerrarModalEliminarSalon()" style="padding: 12px 20px; border: none; background: #e2e8f0; color: #4a5568; border-radius: 10px; font-weight: bold; cursor: pointer;">Cancel</button>
                     <button type="submit" id="btn-del-salon-submit" disabled style="padding: 12px 20px; border: none; background: #ef4444; color: white; border-radius: 10px; font-weight: bold; cursor: not-allowed; opacity: 0.5; transition: all 0.2s;">Delete Forever</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-ajustes-director" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px;">
+        <div style="background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 440px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); box-sizing: border-box;">
+            <h3 style="margin-top:0; margin-bottom: 20px; color: #333; font-size: 1.3rem;"><i class="fa-solid fa-sliders" style="color: #4CAF50;"></i> System & Profile Settings</h3>
+            <form id="form-ajustes-director">
+                
+                <label style="display:block; margin-bottom:5px; font-weight:bold; font-size:0.85rem; color:#4a5568;">Infrastructure Number (CCT)</label>
+                <input type="text" id="ajustes-cct" class="input-estilo" style="margin-bottom:15px; background: #f1f5f9; color: #64748b; cursor: not-allowed; font-family: monospace; font-weight: bold;" readonly>
+
+                <label style="display:block; margin-bottom:5px; font-weight:bold; font-size:0.85rem; color:#4a5568;">School Name</label>
+                <input type="text" id="ajustes-escuela-nombre" class="input-estilo" style="margin-bottom:15px;" required>
+
+                <div style="border-top: 1px dashed #e2e8f0; margin: 15px 0; padding-top: 15px;">
+                    <h5 style="margin: 0 0 10px 0; color:#4CAF50; font-size:0.9rem;">Principal's Personal Data</h5>
+                </div>
+
+                <label style="display:block; margin-bottom:5px; font-weight:bold; font-size:0.85rem; color:#4a5568;">Full Name</label>
+                <input type="text" id="ajustes-director-nombre" class="input-estilo" style="margin-bottom:15px;" required>
+
+                <label style="display:block; margin-bottom:5px; font-weight:bold; font-size:0.85rem; color:#4a5568;">Change Password <span style="font-weight:normal; color:#94a3b8;">(Optional)</span></label>
+                <input type="password" id="ajustes-director-pass" class="input-estilo" style="margin-bottom:20px;" placeholder="Leave blank to keep current password">
+
+                <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                    <button type="button" onclick="cerrarModalAjustes()" style="padding: 10px 18px; border: none; background: #e2e8f0; color: #4a5568; border-radius: 10px; font-weight: bold; cursor: pointer;">Cancel</button>
+                    <button type="submit" style="padding: 10px 18px; border: none; background: #4CAF50; color: white; border-radius: 10px; font-weight: bold; cursor: pointer;">Save Settings</button>
                 </div>
             </form>
         </div>

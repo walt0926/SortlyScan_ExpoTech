@@ -20,8 +20,8 @@ try {
         throw new Exception("ID de director no proporcionado.");
     }
 
-    // A) Obtener el CCT
-    $stmt_dir = $pdo->prepare("SELECT id_mined FROM Usuarios WHERE id_usuario = :id LIMIT 1");
+    // A) Obtener el CCT y nombre completo del director
+    $stmt_dir = $pdo->prepare("SELECT id_mined, nombre_completo FROM Usuarios WHERE id_usuario = :id LIMIT 1");
     $stmt_dir->execute(array(':id' => $id_director));
     $director = $stmt_dir->fetch(PDO::FETCH_ASSOC);
 
@@ -54,7 +54,7 @@ try {
     $total_alumnos = $stmt_alumnos->fetch(PDO::FETCH_ASSOC);
     $total_alumnos = $total_alumnos['total'];
 
-    // E) MODIFICADO: Traer salones junto con la información de sus maestros asignados
+    // E) Traer salones junto con la información de sus maestros asignados
     $stmt_ranking = $pdo->prepare("
         SELECT s.id_salon, s.nombre_salon, s.codigo_aula, s.id_maestro,
                u.nombre_completo as nombre_maestro, u.username as user_maestro,
@@ -79,6 +79,7 @@ try {
         "success" => true,
         "escuela_nombre" => $nombre_escuela,
         "escuela_cct" => $cct, 
+        "director_nombre" => $director['nombre_completo'],
         "stats" => array(
             "total_clases" => $total_salones,
             "total_alumnos" => $total_alumnos,

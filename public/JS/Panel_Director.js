@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const formDel = document.getElementById('form-eliminar-salon');
     if(formDel) formDel.addEventListener('submit', guardarEliminarSalon);
 
+    // Escuchador del formulario de ajustes globales del director
+    const formAjustes = document.getElementById('form-ajustes-director');
+    if(formAjustes) formAjustes.addEventListener('submit', guardarAjustesDirector);
+
     // Verificación en tiempo real de la palabra "ELIMINAR"
     const inputConfirm = document.getElementById('del-salon-confirmacion');
     if(inputConfirm) {
@@ -49,7 +53,14 @@ async function cargarDatosDashboard(idDirector) {
         const data = await response.json();
 
         if (data.success) {
-            window.salonesActuales = data.salones; // Guardado global estratégico
+            window.salonesActuales = data.salones; 
+
+            // Almacenamos los datos mapeados del perfil del director
+            window.perfilDirector = {
+                cct: data.escuela_cct,
+                escuela_nombre: data.escuela_nombre,
+                director_nombre: data.director_nombre
+            };
 
             const tituloEscuela = document.getElementById('school-name');
             if (tituloEscuela && data.escuela_nombre) tituloEscuela.textContent = data.escuela_nombre;
@@ -71,7 +82,6 @@ async function cargarDatosDashboard(idDirector) {
             if (data.salones.length > 0) {
                 rankingContainer.innerHTML = ''; 
                 data.salones.forEach((salon, index) => {
-                    // Renderizamos filas independientes con hover controlado y stopPropagation
                     rankingContainer.innerHTML += `
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: all 0.2s;" 
                              onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'"
@@ -108,9 +118,52 @@ async function cargarDatosDashboard(idDirector) {
     }
 }
 
-// ==========================================
-// CONTROL INTERACTIVO DE MODALES (DIRECTOR) 
-// ==========================================
+// --- AJUSTES DEL DIRECTOR ---
+function abrirModalAjustes() {
+    if (!window.perfilDirector) return;
+
+    document.getElementById('ajustes-cct').value = window.perfilDirector.cct;
+    document.getElementById('ajustes-escuela-nombre').value = window.perfilDirector.escuela_nombre;
+    document.getElementById('ajustes-director-nombre').value = window.perfilDirector.director_nombre;
+    document.getElementById('ajustes-director-pass').value = ''; 
+
+    document.getElementById('modal-ajustes-director').style.display = 'flex';
+    document.getElementById('ajustes-escuela-nombre').focus();
+}
+
+function cerrarModalAjustes() {
+    document.getElementById('modal-ajustes-director').style.display = 'none';
+}
+
+async function guardarAjustesDirector(e) {
+    e.preventDefault();
+    const idDirector = localStorage.getItem('usuario_id');
+
+    const formData = new FormData();
+    formData.append('id_director', idDirector);
+    formData.append('nombre_escuela', document.getElementById('ajustes-escuela-nombre').value.trim());
+    formData.append('nombre_director', document.getElementById('ajustes-director-nombre').value.trim());
+    formData.append('pass_director', document.getElementById('ajustes-director-pass').value.trim());
+
+    try {
+        const response = await fetch('logic/editar_ajustes_director.php', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            alert("¡Configuraciones guardadas de forma exitosa!");
+            cerrarModalAjustes();
+            cargarDatosDashboard(idDirector); 
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Ocurrió un error al intentar conectarse al servidor.");
+    }
+}
 
 // --- ACCIÓN: VER ALUMNOS DEL SALÓN ---
 async function verAlumnos(idSalon, nombreSalon) {
@@ -158,7 +211,7 @@ function abrirModalEditarSalon(idSalon) {
         document.getElementById('edit-salon-nombre').value = salon.nombre_salon;
         document.getElementById('edit-docente-nombre').value = salon.nombre_maestro ? salon.nombre_maestro : '';
         document.getElementById('edit-docente-user').value = salon.user_maestro ? salon.user_maestro : '';
-        document.getElementById('edit-docente-pass').value = ''; // Siempre inicia limpio por seguridad hashes
+        document.getElementById('edit-docente-pass').value = ''; 
 
         document.getElementById('modal-editar-salon').style.display = 'flex';
         document.getElementById('edit-salon-nombre').focus();
