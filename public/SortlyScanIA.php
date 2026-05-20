@@ -15,7 +15,7 @@ $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1;
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.2/dist/coco-ssd.min.js"></script>
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/IA_style.css">
     <link rel="stylesheet" href="CSS/barraNavIA.css">
 </head>
 <body>
