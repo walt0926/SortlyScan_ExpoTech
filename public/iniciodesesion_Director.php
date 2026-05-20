@@ -25,11 +25,10 @@
                 <button onclick="validarLoginStaff('director')" class="btn-entrar">Enter Panel</button>
                 
                 <div class="opciones-secundarias">
+                    <p>Your school is not registered yet?
+                    <br>
                     <a href="registroinstitucional.php" class="btn-link">Register School</a>
-                </div>
-
-                <div class="footer">
-                    <button onclick="window.location.href='ValidarInstitucion.php'" class="btn-link">Back to home</button>
+                        <button onclick="window.location.href='ValidarInstitucion.php'" class="btn-link footer">Back to home</button>
                 </div>
             </div>
         </div>
