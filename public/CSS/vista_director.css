@@ -1,10 +1,11 @@
 :root {
     --bg-color: #fdfaf9;
-    --orange: #ff6333;
-    --teal: #48bbad;
-    --green: #58c271;
+    --orange: #FFEB3B;
+    --teal: #00BCD4 ;
+    --green: #4CAF50 ;
     --dark-blue: #1a2b4b;
     --gray-text: #718096;
+    --verde-claro: #CDDC39;
 }
 
 * {
@@ -27,6 +28,34 @@ body {
 }
 
 /* Header */
+/* Nuevo Botón de Ajustes de Perfil */
+.settings-btn {
+    background: white;
+    border: 1px solid #e2e8f0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #718096;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+}
+
+.settings-btn:hover {
+    color: #00BCD4; /* Color Cian del Branding */
+    border-color: rgba(0, 188, 212, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 188, 212, 0.1);
+}
+
+.settings-btn:active {
+    transform: translateY(0);
+}
+
 .main-header {
     display: flex;
     justify-content: space-between;
@@ -61,9 +90,9 @@ body {
     color: white;
 }
 
-.stat-card.orange { background-color: var(--orange); }
-.stat-card.teal { background-color: var(--teal); }
-.stat-card.green { background-color: var(--green); }
+.stat-card.orange { background-color: var(--verde-claro); }
+.stat-card.teal { background-color: var(--green); }
+.stat-card.green { background-color: var(--teal); }
 
 .stat-icon { font-size: 1.1rem; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; }
 .stat-number { font-size: 2.5rem; font-weight: bold; }
