@@ -1,38 +1,63 @@
 <?php
-// 1. SEGURIDAD REQUERIDA (Comentado temporalmente para pruebas)
-// require_once "../auth/verificar_acceso.php";
-// verificarAccesoAPI(['Maestro']); 
-
-require_once("../config/conexion.php");
-
-// Iniciamos sesión manualmente por si acaso
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Si la sesión está vacía por los bloqueos anteriores, le asignamos el ID temporalmente para que corra
-$id_maestro = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1; 
+require_once("../config/conexion.php");
 
+// 1. Capturar el usuario enviado directamente o por sesión por orden de prioridad
+$user_session = 'profe_juan'; // Valor por defecto basado en tu setup.php
+
+if (isset($_POST['id_maestro_directo']) && !empty($_POST['id_maestro_directo'])) {
+    $user_session = $_POST['id_maestro_directo'];
+} elseif (isset($_SESSION['usuario'])) {
+    $user_session = $_SESSION['usuario'];
+} elseif (isset($_SESSION['user_id'])) {
+    $user_session = $_SESSION['user_id'];
+}
 
 try {
-    // 2. Buscar el salón asignado al maestro
-    $stmt_salon = $pdo->prepare("SELECT id_salon FROM Salones WHERE id_maestro = ?");
-    $stmt_salon->execute([$id_maestro]);
-    $salon = $stmt_salon->fetch();
+    $id_salon = null;
+    $codigo_aula = isset($_POST['codigo_aula_interfaz']) ? trim($_POST['codigo_aula_interfaz']) : '';
 
-    if (!$salon) {
-        echo json_encode(["success" => false, "message" => "No tienes un salón asignado aún."]);
+    // 1. Intentar buscar por el código de aula dinámico que viene de la pantalla (SORT26, SORT27, etc.)
+    if (!empty($codigo_aula)) {
+        $stmt_salon = $pdo->prepare("SELECT id_salon FROM Salones WHERE codigo_aula = ? LIMIT 1");
+        $stmt_salon->execute([$codigo_aula]);
+        $salon = $stmt_salon->fetch();
+        if ($salon) {
+            $id_salon = $salon['id_salon'];
+        }
+    }
+
+    // 2. Si no llegó el código, intentar buscar por la sesión del maestro
+    if (!$id_salon && !empty($user_session)) {
+        $stmt_maestro = $pdo->prepare("SELECT id_salon FROM Salones WHERE id_maestro = ? LIMIT 1");
+        $stmt_maestro->execute([$user_session]);
+        $salon = $stmt_maestro->fetch();
+        if ($salon) {
+            $id_salon = $salon['id_salon'];
+        }
+    }
+
+    // 3. Si todo lo anterior falla en entorno local, buscar por coincidencia de usuario del setup.php
+    if (!$id_salon) {
+        $stmt_setup = $pdo->prepare("SELECT id_salon FROM Salones WHERE id_maestro = (SELECT id_usuario FROM Usuarios WHERE usuario = ? LIMIT 1) LIMIT 1");
+        $stmt_setup->execute([$user_session]);
+        $salon = $stmt_setup->fetch();
+        if ($salon) {
+            $id_salon = $salon['id_salon'];
+        }
+    }
+
+    // Si no encontró nada con ninguna regla, lanzar error
+    if (!$id_salon) {
+        echo json_encode(["success" => false, "message" => "No se pudo identificar el salón correspondiente para este panel."]);
         exit;
     }
 
-    $id_salon = $salon['id_salon'];
-
-    // 3. Validar el archivo subido de forma segura
-    if (!isset($_FILES['archivo_alumnos']) || $_FILES['archivo_alumnos']['error'] !== UPLOAD_ERR_OK) {
-        echo json_encode(["success" => false, "message" => "Error al subir el archivo CSV."]);
-        exit;
-    }
-
+    // ASIGNACIÓN CORRECTA Y DINÁMICA
+    // Eliminamos el candado fijo de '6to Grado A' para que use la variable limpia
     $file = $_FILES['archivo_alumnos']['tmp_name'];
     $handle = fopen($file, "r");
     
