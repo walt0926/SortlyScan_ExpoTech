@@ -1,181 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap');
+
 :root {
-    --bg-color: #fdf5f2;
-    --green-main: #58c271;
-    --orange: #ff6333;
-    --dark-text: #2d3748;
-    --gray-text: #718096;
-    --teal-btn: #48bbad;
+    --brand-bg: #F7FDF5;
+    --brand-dark: #0A1A0B;
+    --brand-green-dark: #4CAF50;
+    --brand-cyan: #00BCD4;
+    --brand-card-bg: #ffffff;
+    --text-muted: #6b7280;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
 }
 
 body {
-    background-color: var(--bg-color);
+    background-color: var(--brand-bg);
     min-height: 100vh;
     padding: 30px 20px;
+    font-family: 'Nunito', sans-serif;
+    color: var(--brand-dark);
 }
 
 .container {
     max-width: 500px;
     margin: 0 auto;
     position: relative;
-    padding-bottom: 80px; /* Espacio para el botón flotante */
+    padding-bottom: 40px;
 }
 
-/* Header */
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 30px;
+    align-items: center;
+    margin-bottom: 25px;
 }
 
 .user-welcome h1 {
-    font-size: 1.8rem;
-    color: var(--dark-text);
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--brand-dark);
+    line-height: 1.2;
 }
 
 .user-welcome p {
-    color: var(--gray-text);
-    margin-top: 5px;
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 2px;
 }
 
 .icon-exit-btn {
-    background: white;
-    border: none;
-    width: 45px;
-    height: 45px;
+    background: var(--brand-card-bg);
+    border: 1px solid rgba(10, 26, 11, 0.08);
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(10, 26, 11, 0.04);
     cursor: pointer;
-    color: var(--gray-text);
-    font-size: 1.2rem;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
 }
 
-/* Tarjeta Verde de Puntos */
+.icon-exit-btn:hover {
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.2);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.08);
+}
+
 .points-card {
-    background-color: var(--green-main);
-    border-radius: 30px;
-    padding: 30px;
-    color: white;
+    background-color: var(--brand-green-dark);
+    border-radius: 24px;
+    padding: 25px;
+    color: #ffffff;
     position: relative;
     overflow: hidden;
-    margin-bottom: 40px;
-    box-shadow: 0 10px 20px rgba(88, 194, 113, 0.2);
+    margin-bottom: 35px;
+    box-shadow: 0 10px 20px rgba(76, 175, 80, 0.15);
 }
 
 .points-header {
-    font-size: 1.1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
     display: flex;
     align-items: center;
-    gap: 10px;
-    opacity: 0.9;
+    gap: 8px;
+    opacity: 0.95;
 }
 
 .points-number {
-    font-size: 4rem;
-    font-weight: bold;
-    margin: 10px 0;
+    font-family: 'Nunito', sans-serif;
+    font-size: 4.2rem;
+    font-weight: 800;
+    margin: 4px 0;
+    line-height: 1;
 }
 
 .rank-badge {
-    background-color: var(--orange);
+    background-color: var(--brand-cyan);
+    color: #ffffff;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    box-shadow: 0 4px 6px rgba(0, 188, 212, 0.15);
 }
 
 .decorative-star {
     position: absolute;
-    right: -20px;
-    top: 20px;
-    font-size: 10rem;
-    opacity: 0.15;
+    right: -25px;
+    top: 15px;
+    font-size: 9.5rem;
+    opacity: 0.12;
     transform: rotate(15deg);
+    pointer-events: none;
 }
 
-/* Ranking */
-.ranking-container h3 {
-    margin-bottom: 20px;
-    color: var(--dark-text);
+.scan-button-container {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 35px;
+}
+
+.btn-scan-block {
+    width: 100%;
+    background-color: var(--brand-cyan);
+    color: #ffffff;
+    border: none;
+    border-radius: 24px;
+    padding: 18px 35px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 188, 212, 0.25);
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    transition: all 0.2s ease;
 }
 
-.ranking-container h3 i { color: var(--orange); }
+.btn-scan-block .icon-left {
+    font-size: 1.5rem;
+    display: inline-block;
+}
+
+.btn-scan-block .text-right {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+}
+
+.btn-scan-block:hover {
+    background-color: #00acc1;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 188, 212, 0.35);
+}
+
+.btn-scan-block:active {
+    transform: translateY(0);
+}
+
+.ranking-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 35px auto;
+}
 
 .ranking-list {
-    background: white;
-    border-radius: 25px;
-    padding: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    width: 100%;
+}
+.ranking-container h3 {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--brand-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ranking-container h3 {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--brand-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ranking-container h3 i { 
+    color: var(--brand-cyan); 
+}
+
+.ranking-list {
+    background: var(--brand-card-bg);
+    border-radius: 24px;
+    padding: 10px;
+    border: 1px solid rgba(0, 188, 212, 0.1);
+    box-shadow: 0 6px 16px rgba(10, 26, 11, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .ranking-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 15px;
-    background: #f8fafc;
-    border-radius: 20px;
+    padding: 12px 16px;
+    background: #F7FDF5;
+    border-radius: 16px;
+    border: 1px solid rgba(76, 175, 80, 0.05);
 }
 
 .item-left {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
 }
 
 .rank-icon {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: #ffffff;
+    background-color: rgba(10, 26, 11, 0.05);
 }
 
-.gold { background-color: #f6ad55; }
+/* Colores planos específicos para los medallistas */
+.gold { background-color: #FFC107; }
+.silver { background-color: #9E9E9E; }
+.bronze { background-color: #CD7F32; }
+
+.name {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    color: var(--brand-dark);
+    font-size: 0.95rem;
+}
 
 .item-right {
-    color: var(--green-main);
-    font-weight: bold;
+    color: var(--brand-green-dark);
+    font-weight: 700;
+    font-size: 0.95rem;
     display: flex;
     align-items: center;
     gap: 5px;
-}
-
-/* Botón Flotante (FAB) */
-.fab-camera {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 70px;
-    height: 70px;
-    background-color: var(--teal-btn);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.8rem;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(72, 187, 173, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.2s;
-}
-
-.fab-camera:active {
-    transform: scale(0.9);
 }
