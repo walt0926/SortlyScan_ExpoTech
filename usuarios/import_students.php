@@ -95,7 +95,7 @@ try {
 
         if ($check->rowCount() == 0) {
             // Generar PIN de 4 dígitos (ej: 0521)
-            $pin_automatico = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT);
+            $pin_automatico = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
             
             $insert->execute([$id_salon, $nombre_estudiante, $pin_automatico]);
             $insertados++;
