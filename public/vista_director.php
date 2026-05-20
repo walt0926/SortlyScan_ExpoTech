@@ -12,7 +12,10 @@
     <div class="container">
         <header class="main-header">
             <div class="titles">
-                <h1 id="school-name">Principal Panel</h1>
+                <div style="display: flex; align-items: baseline; gap: 15px;">
+                    <h1 id="school-name">Principal Panel</h1>
+                    <span id="school-cct" style="font-size: 1.1rem; color: #64748b; font-weight: bold; background: #e2e8f0; padding: 4px 12px; border-radius: 12px; font-family: monospace;">---</span>
+                </div>
                 <p>General overview of the institution</p>
             </div>
             <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
@@ -63,6 +66,7 @@
             <button class="ranking-list" id="ranking-container">
                 <p style="text-align:center; color: #999;">Loading school ranking...</p>
             </button>
+        </section>
 
         <section class="acopio-section">
             <div class="section-header">

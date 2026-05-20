@@ -28,6 +28,10 @@ async function cargarDatosDashboard(idDirector) {
             const tituloEscuela = document.getElementById('school-name');
             if (tituloEscuela && data.escuela_nombre) tituloEscuela.textContent = data.escuela_nombre;
 
+            // NUEVO: Mostramos el CCT de la institución
+            const cctEscuela = document.getElementById('school-cct');
+            if (cctEscuela && data.escuela_cct) cctEscuela.textContent = `CCT: ${data.escuela_cct}`;
+
             document.getElementById('stat-clases').textContent = data.stats.total_clases;
             document.getElementById('stat-alumnos').textContent = data.stats.total_alumnos;
             document.getElementById('stat-puntos').textContent = data.stats.total_puntos;
@@ -96,12 +100,11 @@ async function crearClase() {
     }
 }
 
-// MODIFICADO: Ahora captura el usuario ingresado por el director
 async function asignarDocente() {
     const idDirector = localStorage.getItem('usuario_id');
     const idSalon = document.getElementById('select-clases').value;
     const nombreDocente = document.getElementById('nombre-docente').value.trim();
-    const userDocente = document.getElementById('user-docente').value.trim().toLowerCase(); // A minúsculas
+    const userDocente = document.getElementById('user-docente').value.trim().toLowerCase(); 
     const passDocente = document.getElementById('pass-docente').value.trim();
 
     if (!idSalon || !nombreDocente || !userDocente || !passDocente) {
@@ -113,7 +116,7 @@ async function asignarDocente() {
     formData.append('id_director', idDirector);
     formData.append('id_salon', idSalon);
     formData.append('nombre_docente', nombreDocente);
-    formData.append('user_docente', userDocente); // Mandamos el nuevo campo
+    formData.append('user_docente', userDocente); 
     formData.append('pass_docente', passDocente);
 
     try {
@@ -126,7 +129,6 @@ async function asignarDocente() {
         if (data.success) {
             alert(`¡Docente asignado con éxito!\nEl maestro iniciará sesión con el usuario: ${userDocente}`);
             
-            // Limpiamos los inputs
             document.getElementById('select-clases').value = '';
             document.getElementById('nombre-docente').value = '';
             document.getElementById('user-docente').value = '';

@@ -77,9 +77,11 @@ try {
     }
 
     // 5. Estructurar respuesta exitosa
+    // CORRECCIÓN: Ahora incluimos la variable "escuela_cct" en el JSON de salida
     $respuesta = array(
         "success" => true,
         "escuela_nombre" => $nombre_escuela,
+        "escuela_cct"    => $cct, 
         "stats" => array(
             "total_clases" => $total_salones,
             "total_alumnos" => $total_alumnos,
