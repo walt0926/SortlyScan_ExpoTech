@@ -67,10 +67,20 @@
         </section>
 
         <main class="students-section">
-            <div class="section-header">
-                <h3 id="student-count"><i class="fa-solid fa-users"></i> Students (0)</h3>
-                <button class="add-student-btn" onclick="agregarAlumno()"><i class="fa-solid fa-plus"></i> Add student</button>
-            </div>
+<div class="section-header">
+    <h3 id="student-count"><i class="fa-solid fa-users"></i> Students (0)</h3>
+    
+    <div style="display: flex; gap: 10px; align-items: center;">
+        
+        <input type="file" id="excel-file-input" accept=".csv" style="display: none;" onchange="procesarImportacion(this)">
+        
+        <button class="import-excel-btn" onclick="document.getElementById('excel-file-input').click()" style="background-color: #2e7d32; color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-file-excel"></i> Import Excel
+        </button>
+
+        <button class="add-student-btn" onclick="agregarAlumno()"><i class="fa-solid fa-plus"></i> Add student</button>
+    </div>
+</div>
 
             <div class="student-list" id="student-list-container">
                 <p style="text-align:center; color: #999; padding: 20px;">Loading students...</p>
@@ -99,6 +109,57 @@
         </div>
     </div>
 
-    <script src="JS/Panel_Docente.js"></script>
+<script src="JS/Panel_Docente.js"></script>
+
+    <script>
+async function procesarImportacion(input) {
+    if (input.files.length === 0) return;
+
+    const archivo = input.files[0];
+    const formData = new FormData();
+    
+    // 1. Añadimos el archivo que espera leer PHP con $_FILES
+    formData.append('archivo_alumnos', archivo);
+    
+    // 2. REGRESA ESTA REGLA: Le mandamos la acción por si el archivo PHP la valida con $_POST['action']
+    formData.append('action', 'importar_estudiantes'); 
+
+    const BACKEND_URL = '../usuarios/import_students.php';
+
+    try {
+        const response = await fetch(BACKEND_URL, {
+            method: 'POST',
+            body: formData,
+            credentials: 'include' // Esto pasa las cookies de sesión del Maestro para que no dé "Acceso denegado"
+        });
+
+        const responseClone = response.clone();
+        
+        try {
+            const data = await response.json();
+            if (data.success) {
+                alert(`¡Importación exitosa!\n\n• Registrados: ${data.insertados}\n• Ignorados/Duplicados: ${data.ignorados}`);
+                if (typeof cargarDashboard === "function") cargarDashboard(); else location.reload();
+            } else {
+                // Aquí está cayendo el mensaje actual de permisos insuficientes
+                alert("Error devuelto por PHP: " + data.message);
+            }
+        } catch (jsonError) {
+            const textoError = await responseClone.text();
+            console.error("--- DETALLE DEL ERROR EN EL SERVIDOR ---");
+            console.error(textoError);
+            console.error("----------------------------------------");
+            alert("El servidor no devolvió un JSON limpio. Revisa la Consola (F12).");
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        alert("Hubo un fallo de comunicación con el servidor.");
+    } finally {
+        input.value = '';
+    }
+}
+    </script>
+</body>
+
 </body>
 </html>
