@@ -69,6 +69,17 @@ body {
 .stat-number { font-size: 2.5rem; font-weight: bold; }
 
 /* Ranking Section */
+.ranking-list {
+    background: transparent; 
+    border: none;            
+    padding: 0;             
+    font: inherit;
+    text-align: inherit;
+    cursor: pointer;  
+    width: 100%;
+    display: block;
+}
+
 .ranking-section, .acopio-section {
     background: white;
     padding: 30px;

@@ -1,9 +1,6 @@
 <?php
-// We start the session to get the ID of the student using the platform.
 session_start();
 
-// We validate if the student ID exists in the session.
-// If not, we assign a default value of 1 to prevent errors during your testing.
 $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1; 
 ?>
 <!DOCTYPE html>
@@ -15,7 +12,7 @@ $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1;
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.2/dist/coco-ssd.min.js"></script>
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/IA_style.css">
     <link rel="stylesheet" href="CSS/barraNavIA.css">
     <style>
         .icon-exit-btn {
@@ -64,9 +61,9 @@ $id_alumno_actual = isset($_SESSION['id_alumno']) ? $_SESSION['id_alumno'] : 1;
     <div id="loadingScreen" class="loading-screen">
         <div class="loading-container">
             <div class="loading-spinner"></div>
-            <div class="loading-text">Loading AI Model</div>
+            <div class="loading-text">Loading your experience...</div>
             <div class="loading-details" id="loadingDetails">
-                Initializing TensorFlow.js and MobileNet for Arduino integration...
+                Are you ready to start recycling?
             </div>
         </div>
     </div>

@@ -60,10 +60,9 @@
             <div class="section-header">
                 <h3><i class="fa-solid fa-trophy"></i> Class Ranking</h3>
             </div>
-            <div class="ranking-list" id="ranking-container">
+            <button class="ranking-list" id="ranking-container">
                 <p style="text-align:center; color: #999;">Loading school ranking...</p>
-            </div>
-        </section>
+            </button>
 
         <section class="acopio-section">
             <div class="section-header">
