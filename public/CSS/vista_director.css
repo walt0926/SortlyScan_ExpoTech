@@ -78,8 +78,12 @@ body {
     cursor: pointer;  
     width: 100%;
     display: block;
+    transition: background-color 0.2s ease; 
 }
 
+.ranking-list:hover {
+    background-color: rgba(0, 0, 0, 0.05); 
+}
 .ranking-section, .acopio-section {
     background: white;
     padding: 30px;
