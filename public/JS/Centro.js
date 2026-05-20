@@ -57,7 +57,7 @@ class SortlyApp {
                 name: "Centro de Reciclaje San Salvador",
                 lat: 13.6989,
                 lon: -89.2125,
-                img: "img/centros/centro1.jpg" 
+                img: "https://cdn-pro.elsalvador.com/wp-content/uploads/2024/03/2-7.jpg" 
             },
 
             {
@@ -65,7 +65,7 @@ class SortlyApp {
                 name: "Eco-Acopio Santa Tecla",
                 lat: 13.6767,
                 lon: -89.2797,
-                img: "img/centros/centro2.jpg"
+                img: "https://instagram.fsal2-2.fna.fbcdn.net/v/t51.75761-15/501798182_18507338959039983_6091931181941409900_n.webp?_nc_cat=104&ig_cache_key=MzY0MTQzNDE2NTU0MzgwNTEwMg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=GSbUc9Z1n88Q7kNvwGpZ4Cf&_nc_oc=AdoLsE_DBr6JU-5Q6VvSXQdtPPxVtagMjnVjEPT99zKNpCVg1SZf-dym1gDcKHFke4I&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fsal2-2.fna&_nc_gid=VeENdMuy_E3ZNrfW9CLCjg&_nc_ss=7a22e&oh=00_Af7UEN2yKaI3rONVkqyybhnM0QhsujYvYv4JDuVZiEOiuQ&oe=6A13B4B0"
             },
 
             {
@@ -73,23 +73,15 @@ class SortlyApp {
                 name: "EcoSalva - Ecología Salvadoreña",
                 lat: 13.7980,
                 lon: -89.1808,
-                img: "img/centros/ecosalva.jpg"
+                img: "https://ecosalva.com/images/Untitled-2.png"
             },
 
             {
                 id: 10,
-                name: "Central de Reciclaje MARCEYA",
-                lat: 13.7977,
-                lon: -89.1810,
-                img: "img/centros/marceya.jpg"
-            },
-
-            {
-                id: 11,
                 name: "Grupo Palacios Recycling",
                 lat: 13.7411,
                 lon: -89.4304,
-                img: "img/centros/grupo_palacios.jpg"
+                img: "https://scontent.fsal2-2.fna.fbcdn.net/v/t39.30808-6/297734416_107610422050218_3294168199536853704_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=yMs4N4NarbsQ7kNvwGewARM&_nc_oc=Adoc2Xlq3XDhsJLudyI2yZQ4zTwWdKNVgzq5Lp0hMrs96jlHli6sswc-kJmS3DZKWB0&_nc_zt=23&_nc_ht=scontent.fsal2-2.fna&_nc_gid=Q955O01r6l87PQXApKI1xw&_nc_ss=7b2a8&oh=00_Af7hsFhfNsWK645Ng7a_fWlNoJ2EEAVfjDZ4zkLmykepkA&oe=6A13A232"
             } 
 
         ];
