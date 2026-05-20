@@ -169,6 +169,56 @@
         </div>
     </div>
 
+    <div id="modal-editar-alumno" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); box-sizing: border-box;">
+            <h3 style="margin-top: 0; margin-bottom: 20px; color: #333; font-size: 1.4rem;"><i class="fa-solid fa-user-gear" style="color: #00BCD4;"></i> Edit Student Details</h3>
+            
+            <form id="form-editar-alumno">
+                <input type="hidden" id="edit-modal-id">
+
+                <label style="display: block; margin-bottom: 5px; color: #666; font-weight: bold; font-size: 0.9rem;">Student's Display Name</label>
+                <input type="text" id="edit-modal-nombre" maxlength="50" required 
+                       style="width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; box-sizing: border-box;">
+
+                <label style="display: block; margin-bottom: 5px; color: #666; font-weight: bold; font-size: 0.9rem;">Access PIN (4 digits)</label>
+                <input type="text" id="edit-modal-pin" maxlength="4" required 
+                       style="width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1.2rem; font-weight: bold; letter-spacing: 0.2rem; box-sizing: border-box;">
+
+                <label style="display: block; margin-bottom: 5px; color: #666; font-weight: bold; font-size: 0.9rem;">Total Accumulated Points</label>
+                <input type="number" id="edit-modal-puntos" min="0" required 
+                       style="width: 100%; padding: 12px; margin-bottom: 25px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; box-sizing: border-box;">
+
+                <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                    <button type="button" onclick="cerrarModalEditar()" style="padding: 12px 20px; border: none; background: #e2e8f0; color: #4a5568; border-radius: 10px; font-weight: bold; cursor: pointer;">Cancel</button>
+                    <button type="submit" style="padding: 12px 20px; border: none; background: #00BCD4; color: white; border-radius: 10px; font-weight: bold; cursor: pointer;">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-eliminar-alumno" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); box-sizing: border-box;">
+            <h3 style="margin-top: 0; margin-bottom: 15px; color: #ef4444; font-size: 1.4rem;"><i class="fa-solid fa-triangle-exclamation"></i> Delete Student</h3>
+            
+            <p style="color: #4a5568; font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px;">
+                Are you sure you want to completely delete <strong id="delete-modal-nombre-texto"></strong>? All their points and logs will be permanently lost.
+            </p>
+
+            <form id="form-eliminar-alumno">
+                <input type="hidden" id="delete-modal-id">
+                
+                <label style="display: block; margin-bottom: 8px; color: #4a5568; font-weight: bold; font-size: 0.85rem;">Type <span style="color: #ef4444; font-weight: 800;">ELIMINAR</span> to confirm action:</label>
+                <input type="text" id="delete-modal-confirmacion" placeholder="ELIMINAR" required autocomplete="off"
+                       style="width: 100%; padding: 12px; margin-bottom: 25px; border: 2px solid #ef4444; border-radius: 10px; font-size: 1rem; box-sizing: border-box; font-weight: bold; text-align: center; color: #ef4444;">
+
+                <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                    <button type="button" onclick="cerrarModalEliminar()" style="padding: 12px 20px; border: none; background: #e2e8f0; color: #4a5568; border-radius: 10px; font-weight: bold; cursor: pointer;">Cancel</button>
+                    <button type="submit" id="btn-confirmar-eliminar" disabled style="padding: 12px 20px; border: none; background: #ef4444; color: white; border-radius: 10px; font-weight: bold; cursor: not-allowed; opacity: 0.5; transition: all 0.2s;">Delete Forever</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="JS/Panel_Docente.js"></script>
 
     <script>

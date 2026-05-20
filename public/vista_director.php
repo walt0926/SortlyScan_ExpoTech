@@ -18,7 +18,6 @@
             <button class="logout-btn" onclick="cerrarSesion()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
         </header>
 
-        <!-- Dynamic Stats -->
         <section class="stats-grid">
             <div class="stat-card orange">
                 <div class="stat-icon"><i class="fa-solid fa-school"></i> Total classes</div>
@@ -34,41 +33,38 @@
             </div>
         </section>
 
-        <!-- MANAGEMENT SECTION -->
         <section class="management-section ranking-section">
             <div class="section-header">
                 <h3><i class="fa-solid fa-plus-circle"></i> Class & Teacher Management</h3>
             </div>
             <div class="form-management-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <!-- Create Classroom -->
                 <div class="form-box" style="background: #f8fafc; padding: 20px; border-radius: 15px;">
                     <h4 style="margin-bottom:10px">Register New Class</h4>
                     <input type="text" id="nombre-clase" placeholder="e.g., 3rd Grade - A" class="input-estilo">
                     <button onclick="crearClase()" class="btn-accion">Create Class</button>
                 </div>
-                <!-- Assign Teacher -->
                 <div class="form-box" style="background: #f8fafc; padding: 20px; border-radius: 15px;">
                     <h4 style="margin-bottom:10px">Assign Teacher to Class</h4>
                     <select id="select-clases" class="input-estilo"><option>Loading classes...</option></select>
+                    
                     <input type="text" id="nombre-docente" placeholder="Teacher's Name" class="input-estilo">
+                    <input type="text" id="user-docente" placeholder="Teacher's Username (e.g., miguel)" class="input-estilo">
                     <input type="password" id="pass-docente" placeholder="Teacher's Password" class="input-estilo">
+                    
                     <button onclick="asignarDocente()" class="btn-accion">Assign Teacher</button>
                 </div>
             </div>
         </section>
 
-        <!-- Dynamic Ranking -->
         <section class="ranking-section">
             <div class="section-header">
                 <h3><i class="fa-solid fa-trophy"></i> Class Ranking</h3>
             </div>
             <div class="ranking-list" id="ranking-container">
-                <!-- Filled via JS -->
                 <p style="text-align:center; color: #999;">Loading school ranking...</p>
             </div>
         </section>
 
-        <!-- Collection Centers Section -->
         <section class="acopio-section">
             <div class="section-header">
                 <h3><i class="fa-solid fa-house-chimney-window"></i> Collection Centers</h3>

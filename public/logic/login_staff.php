@@ -54,7 +54,7 @@ try {
         }
         $stmt->bindParam(':identificador', $identificador, PDO::PARAM_STR);
     } else {
-        // Para maestros buscamos por 'username' e 'id_mined'
+        // Para maestros buscamos por 'username' e 'id_mined' (CCT) al mismo tiempo
         $query = "SELECT id_usuario, nombre_completo, password FROM Usuarios 
                   WHERE username = :identificador AND rol = 'Maestro' AND id_mined = :cct LIMIT 1";
         $stmt = $pdo->prepare($query);
@@ -87,9 +87,14 @@ try {
             );
         }
     } else {
+        // MODIFICACIÓN: Mensaje de error dinámico según el rol
+        $mensaje_error = ($rol === 'director') 
+            ? "Usuario no encontrado. Verifica el correo ingresado." 
+            : "Maestro no encontrado. Verifica el usuario y el código CCT de la escuela.";
+            
         $respuesta = array(
             "success" => false, 
-            "message" => "Usuario no encontrado. Verifica el correo ingresado."
+            "message" => $mensaje_error
         );
     }
 

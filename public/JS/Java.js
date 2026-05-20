@@ -466,3 +466,38 @@ window.addEventListener('beforeunload', async () => {
         await serialPort.close();
     }
 });
+
+// --- SECCIÓN DE SALIDA: NO MODIFICA LO ANTERIOR, SOLO AGREGA FUNCIONALIDAD ---
+
+(function() {
+    // Esperamos a que el DOM esté listo
+    window.addEventListener('load', () => {
+        const btnSalir = document.getElementById('btnSalir');
+        
+        if (btnSalir) {
+            btnSalir.addEventListener('click', async function() {
+                // Usamos las variables globales que ya declaraste (totalDetections, etc.)
+                const idAlumno = document.getElementById('studentId')?.value || 'Desconocido';
+
+                try {
+                    // Enviamos un registro de "Cierre de Sesión" a tu PHP para persistir la actividad
+                    await fetch('logic/guardar_escaneo.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            id_alumno: idAlumno,
+                            tipo_residuo: 'SESSION_END',
+                            puntos_obtenidos: 0,
+                            detecciones_totales: totalDetections // Usando tu variable global
+                        })
+                    });
+                } catch (error) {
+                    console.error('Error al guardar reporte final:', error);
+                } finally {
+                    // Redirigir siempre, incluso si falla el guardado
+                    window.location.href = 'Vista_Estudiante.php';
+                }
+            });
+        }
+    });
+})();

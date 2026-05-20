@@ -17,12 +17,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Cargamos los datos exclusivos de su aula
     cargarDatosAula(idMaestro);
 
-    // 3. NUEVO: Configurar el envío del formulario de la ventana emergente
+    // 3. Configurar el envío del formulario de la ventana emergente (Crear Alumno)
     const formNuevo = document.getElementById('form-nuevo-alumno');
     if(formNuevo) {
         formNuevo.addEventListener('submit', guardarNuevoAlumno);
     }
+
+    // 4. Configurar el envío del formulario de edición (Editar Alumno)
+    const formEditar = document.getElementById('form-editar-alumno');
+    if(formEditar) {
+        formEditar.addEventListener('submit', guardarEditarAlumno);
+    }
+
+    // 5. NUEVO: Configurar el envío del formulario de borrado (Eliminar Alumno)
+    const formEliminar = document.getElementById('form-eliminar-alumno');
+    if(formEliminar) {
+        formEliminar.addEventListener('submit', guardarEliminarAlumno);
+    }
+
+    // 6. NUEVO: Escuchar en tiempo real lo que se escribe en la confirmación de borrado
+    const inputConfirm = document.getElementById('delete-modal-confirmacion');
+    if(inputConfirm) {
+        inputConfirm.addEventListener('input', (e) => {
+            const btnEliminar = document.getElementById('btn-confirmar-eliminar');
+            if(e.target.value === 'ELIMINAR') {
+                btnEliminar.disabled = false;
+                btnEliminar.style.cursor = 'pointer';
+                btnPinStyle(btnEliminar, true);
+            } else {
+                btnEliminar.disabled = true;
+                btnEliminar.style.cursor = 'not-allowed';
+                btnPinStyle(btnEliminar, false);
+            }
+        });
+    }
 });
+
+// Función interna auxiliar para cambiar dinámicamente el estilo del botón borrar
+function btnPinStyle(btn, activar) {
+    if(activar) {
+        btn.style.opacity = '1';
+        btn.style.boxShadow = '0 4px 12px rgba(239, 68, 68, 0.4)';
+    } else {
+        btn.style.opacity = '0.5';
+        btn.style.boxShadow = 'none';
+    }
+}
 
 async function cargarDatosAula(idMaestro) {
     try {
@@ -37,23 +77,21 @@ async function cargarDatosAula(idMaestro) {
         const data = await response.json();
 
         if (data.success) {
-            // 1. Nombre del salón y código de aula
+            window.alumnosActuales = data.alumnos;
+
             document.getElementById('panel-title').textContent = `Panel - ${data.aula_nombre}`;
             document.getElementById('class-code').textContent = data.aula_codigo;
             document.getElementById('student-count').innerHTML = `<i class="fa-solid fa-users"></i> Students (${data.alumnos.length})`;
 
-            // 2. Renderizar lista de alumnos (Ranking por puntos)
             const container = document.getElementById('student-list-container');
-            container.innerHTML = ''; // Limpiamos mensaje de carga
+            container.innerHTML = ''; 
 
             if (data.alumnos.length > 0) {
                 data.alumnos.forEach((alumno, index) => {
-                    // Asignamos el color de la copa según su posición en el salón
                     let rankClass = "bronze"; 
                     if (index === 0) rankClass = "gold";
                     else if (index === 1) rankClass = "silver";
 
-                    // MODIFICACIÓN: Estructuramos el PIN al lado del nombre (zona morada)
                     container.innerHTML += `
                         <div class="student-item">
                             <div class="student-info">
@@ -85,21 +123,14 @@ async function cargarDatosAula(idMaestro) {
                 container.innerHTML = '<p style="text-align:center; color: #999; padding: 20px;">No students registered in this class yet.</p>';
             }
         } else {
-            // Si el maestro no tiene ningún salón asignado todavía
             document.getElementById('student-list-container').innerHTML = `
-                <p style="text-align:center; color: #d32f2f; padding: 20px; font-weight:bold;">
-                    ${data.message}
-                </p>
+                <p style="text-align:center; color: #d32f2f; padding: 20px; font-weight:bold;">${data.message}</p>
             `;
         }
     } catch (error) {
         console.error("Error al cargar datos del docente:", error);
     }
 }
-
-// --------------------------------------------------------
-// NUEVAS FUNCIONES PARA EL PIN Y EL MODAL
-// --------------------------------------------------------
 
 function togglePin(idAlumno, btnElement) {
     const pinInput = document.getElementById(`pin-${idAlumno}`);
@@ -109,25 +140,24 @@ function togglePin(idAlumno, btnElement) {
         pinInput.type = 'text';
         icon.classList.remove('fa-eye-slash');
         icon.classList.add('fa-eye');
-        btnElement.style.color = '#4CAF50'; // Verde
+        btnElement.style.color = '#4CAF50'; 
     } else {
         pinInput.type = 'password';
         icon.classList.remove('fa-eye');
         icon.classList.add('fa-eye-slash');
-        btnElement.style.color = '#94a3b8'; // Gris
+        btnElement.style.color = '#94a3b8'; 
     }
 }
 
+// --- MODAL CREAR ALUMNO ---
 function agregarAlumno() {
     const form = document.getElementById('form-nuevo-alumno');
     if(form) form.reset();
     
-    // Autogenerar PIN aleatorio de 4 dígitos
     const pinAleatorio = String(Math.floor(1000 + Math.random() * 9000));
     const pinInput = document.getElementById('modal-pin');
     if(pinInput) pinInput.value = pinAleatorio;
     
-    // Mostrar la ventana emergente
     const modal = document.getElementById('modal-alumno');
     if(modal) {
         modal.style.display = 'flex';
@@ -168,20 +198,135 @@ async function guardarNuevoAlumno(e) {
 
         if (data.success) {
             cerrarModal();
-            cargarDatosAula(idMaestro); // Recarga la lista dinámicamente
+            cargarDatosAula(idMaestro); 
         } else {
             alert("Error: " + data.message);
         }
     } catch (error) {
         console.error("Error al guardar alumno:", error);
-        alert("Ocurrió un error al intentar guardar al alumno.");
     }
 }
 
-// --------------------------------------------------------
-// FUNCIONES UTILITARIAS DE LA INTERFAZ
-// --------------------------------------------------------
+// --- MODAL EDITAR ALUMNO ---
+function editStudent(idAlumno) {
+    if (!window.alumnosActuales) return;
+    const alumno = window.alumnosActuales.find(a => parseInt(a.id_alumno) === parseInt(idAlumno));
 
+    if (alumno) {
+        document.getElementById('edit-modal-id').value = alumno.id_alumno;
+        document.getElementById('edit-modal-nombre').value = alumno.nombre_display;
+        document.getElementById('edit-modal-pin').value = alumno.pin;
+        document.getElementById('edit-modal-puntos').value = alumno.puntos_totales;
+
+        document.getElementById('modal-editar-alumno').style.display = 'flex';
+        document.getElementById('edit-modal-nombre').focus();
+    }
+}
+
+function cerrarModalEditar() {
+    document.getElementById('modal-editar-alumno').style.display = 'none';
+}
+
+async function guardarEditarAlumno(e) {
+    e.preventDefault();
+
+    const idMaestro = localStorage.getItem('usuario_id');
+    const idAlumno = document.getElementById('edit-modal-id').value;
+    const nombre = document.getElementById('edit-modal-nombre').value.trim();
+    const pin = document.getElementById('edit-modal-pin').value.trim();
+    const puntos = document.getElementById('edit-modal-puntos').value.trim();
+
+    if (!/^\d{4}$/.test(pin)) {
+        alert("El PIN debe ser estrictamente de 4 dígitos numéricos.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('id_alumno', idAlumno);
+    formData.append('nombre_alumno', nombre);
+    formData.append('pin_alumno', pin);
+    formData.append('puntos_alumno', puntos);
+
+    try {
+        const response = await fetch('logic/editar_alumno.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("¡Cambios guardados con éxito!");
+            cerrarModalEditar();
+            cargarDatosAula(idMaestro); 
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (error) {
+        console.error("Error al editar alumno:", error);
+    }
+}
+
+// --- MODAL ELIMINAR ALUMNO ---
+function deleteStudent(idAlumno) {
+    if (!window.alumnosActuales) return;
+    const alumno = window.alumnosActuales.find(a => parseInt(a.id_alumno) === parseInt(idAlumno));
+
+    if (alumno) {
+        // Rellenamos el modal con los datos del alumno a borrar
+        document.getElementById('delete-modal-id').value = alumno.id_alumno;
+        document.getElementById('delete-modal-nombre-texto').textContent = alumno.nombre_display;
+        
+        // Reseteamos el campo de texto y el estado del botón
+        const inputConfirm = document.getElementById('delete-modal-confirmacion');
+        inputConfirm.value = '';
+        
+        const btnEliminar = document.getElementById('btn-confirmar-eliminar');
+        btnEliminar.disabled = true;
+        btnEliminar.style.cursor = 'not-allowed';
+        btnPinStyle(btnEliminar, false);
+
+        // Desplegamos el modal flotante
+        document.getElementById('modal-eliminar-alumno').style.display = 'flex';
+        inputConfirm.focus();
+    }
+}
+
+function cerrarModalEliminar() {
+    document.getElementById('modal-eliminar-alumno').style.display = 'none';
+}
+
+async function guardarEliminarAlumno(e) {
+    e.preventDefault();
+
+    const idMaestro = localStorage.getItem('usuario_id');
+    const idAlumno = document.getElementById('delete-modal-id').value;
+
+    const formData = new FormData();
+    formData.append('id_alumno', idAlumno);
+
+    try {
+        const response = await fetch('logic/eliminar_alumno.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("Student completely deleted.");
+            cerrarModalEliminar();
+            cargarDatosAula(idMaestro); // Refrescamos la lista de inmediato
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (error) {
+        console.error("Error al eliminar alumno:", error);
+        alert("Ocurrió un error en el servidor al intentar borrar al alumno.");
+    }
+}
+
+// --- FUNCIONES UTILITARIAS ---
 function copyCode() {
     const codeText = document.getElementById('class-code').textContent;
     if(codeText === '---') return;
@@ -189,14 +334,6 @@ function copyCode() {
     navigator.clipboard.writeText(codeText).then(() => {
         alert("Class code copied to clipboard: " + codeText);
     });
-}
-
-function editStudent(id) {
-    alert("Function to edit student " + id + " under construction...");
-}
-
-function deleteStudent(id) {
-    alert("Function to delete student " + id + " under construction...");
 }
 
 function cerrarSesion() {
