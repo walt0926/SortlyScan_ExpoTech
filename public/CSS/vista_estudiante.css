@@ -194,17 +194,6 @@ body {
     gap: 8px;
 }
 
-.ranking-container h3 {
-    font-family: 'Baloo 2', sans-serif;
-    font-weight: 700;
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    color: var(--brand-dark);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
 .ranking-container h3 i { 
     color: var(--brand-cyan); 
 }
@@ -236,6 +225,7 @@ body {
     gap: 12px;
 }
 
+/* MODIFICADO: Estilo base adaptado para el 4° lugar en adelante */
 .rank-icon {
     width: 36px;
     height: 36px;
@@ -243,14 +233,27 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #ffffff;
-    background-color: rgba(10, 26, 11, 0.05);
+    background-color: #f1f5f9;
+    color: #6b7280;
+    font-size: 0.95rem;
+    font-weight: bold;
 }
 
-/* Colores planos específicos para los medallistas */
-.gold { background-color: #FFC107; }
-.silver { background-color: #9E9E9E; }
-.bronze { background-color: #CD7F32; }
+/* MODIFICADO: Nuevos colores vibrantes y trofeos blancos uniformes */
+.gold { 
+    background-color: #facc15; 
+    color: #ffffff; 
+    box-shadow: 0 2px 8px rgba(250, 204, 21, 0.4);
+}
+.silver { 
+    background-color: #94a3b8; 
+    color: #ffffff; 
+    box-shadow: 0 2px 8px rgba(148, 163, 184, 0.4);
+}
+.bronze { 
+    background-color: #f28030; 
+    color: #ffffff; 
+}
 
 .name {
     font-family: 'Nunito', sans-serif;

@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
         formEditar.addEventListener('submit', guardarEditarAlumno);
     }
 
-    // 5. NUEVO: Configurar el envío del formulario de borrado (Eliminar Alumno)
+    // 5. Configurar el envío del formulario de borrado (Eliminar Alumno)
     const formEliminar = document.getElementById('form-eliminar-alumno');
     if(formEliminar) {
         formEliminar.addEventListener('submit', guardarEliminarAlumno);
     }
 
-    // 6. NUEVO: Escuchar en tiempo real lo que se escribe en la confirmación de borrado
+    // 6. Escuchar en tiempo real lo que se escribe en la confirmación de borrado
     const inputConfirm = document.getElementById('delete-modal-confirmacion');
     if(inputConfirm) {
         inputConfirm.addEventListener('input', (e) => {
@@ -88,14 +88,38 @@ async function cargarDatosAula(idMaestro) {
 
             if (data.alumnos.length > 0) {
                 data.alumnos.forEach((alumno, index) => {
-                    let rankClass = "bronze"; 
-                    if (index === 0) rankClass = "gold";
-                    else if (index === 1) rankClass = "silver";
+                    
+                    let rankClass = "";
+                    let inlineStyle = "";
+                    let rankContent = "";
+
+                    // CONFIGURACIÓN DE COLORES PERSONALIZADOS REAJUSTADA
+                    if (index === 0) {
+                        rankClass = "gold";
+                        // 1er Puesto: Color Oro Amarillo Vibrante con icono blanco
+                        inlineStyle = "background-color: #facc15; color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(250, 204, 21, 0.4);";
+                        rankContent = '<i class="fa-solid fa-trophy"></i>';
+                    } else if (index === 1) {
+                        rankClass = "silver";
+                        // 2do Puesto: Fondo plata más oscuro (#94a3b8) y trofeo blanco
+                        inlineStyle = "background-color: #94a3b8; color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(148, 163, 184, 0.4);";
+                        rankContent = '<i class="fa-solid fa-trophy"></i>';
+                    } else if (index === 2) {
+                        rankClass = "bronze";
+                        // 3er Puesto: Color Naranja original (#f28030) con icono blanco
+                        inlineStyle = "background-color: #f28030; color: white; display: flex; align-items: center; justify-content: center;";
+                        rankContent = '<i class="fa-solid fa-trophy"></i>';
+                    } else {
+                        rankClass = "";
+                        // 4to Puesto en adelante: Círculos grises neutros con números
+                        inlineStyle = "background-color: #f1f5f9; color: #6b7280; font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; justify-content: center;";
+                        rankContent = `${index + 1}`;
+                    }
 
                     container.innerHTML += `
                         <div class="student-item">
                             <div class="student-info">
-                                <div class="rank-icon ${rankClass}"><i class="fa-solid fa-trophy"></i></div>
+                                <div class="rank-icon ${rankClass}" style="${inlineStyle}">${rankContent}</div>
                                 <div style="flex-grow: 1;">
                                     <div style="display: flex; align-items: center; gap: 15px;">
                                         <h4 style="margin: 0;">${alumno.nombre_display}</h4>
@@ -273,11 +297,9 @@ function deleteStudent(idAlumno) {
     const alumno = window.alumnosActuales.find(a => parseInt(a.id_alumno) === parseInt(idAlumno));
 
     if (alumno) {
-        // Rellenamos el modal con los datos del alumno a borrar
         document.getElementById('delete-modal-id').value = alumno.id_alumno;
         document.getElementById('delete-modal-nombre-texto').textContent = alumno.nombre_display;
         
-        // Reseteamos el campo de texto y el estado del botón
         const inputConfirm = document.getElementById('delete-modal-confirmacion');
         inputConfirm.value = '';
         
@@ -286,7 +308,6 @@ function deleteStudent(idAlumno) {
         btnEliminar.style.cursor = 'not-allowed';
         btnPinStyle(btnEliminar, false);
 
-        // Desplegamos el modal flotante
         document.getElementById('modal-eliminar-alumno').style.display = 'flex';
         inputConfirm.focus();
     }
@@ -316,7 +337,7 @@ async function guardarEliminarAlumno(e) {
         if (data.success) {
             alert("Student completely deleted.");
             cerrarModalEliminar();
-            cargarDatosAula(idMaestro); // Refrescamos la lista de inmediato
+            cargarDatosAula(idMaestro); 
         } else {
             alert("Error: " + data.message);
         }
