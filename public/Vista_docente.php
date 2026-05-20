@@ -292,7 +292,7 @@
         formData.append('id_maestro_directo', '<?php echo isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : (isset($_SESSION["usuario"]) ? $_SESSION["usuario"] : ""); ?>');
         
         const divCodigo = Array.from(document.querySelectorAll('*')).find(el => /SORT\d+/.test(el.innerText));
-        const codigoExtraido = divCodigo ? divCodigo.innerText.match(/SORT\d+/)[0] : '';
+        const codigoExtraido = document.getElementById("class-code").textContent;
         formData.append('codigo_aula_interfaz', codigoExtraido);
         
         const BACKEND_URL = '../usuarios/import_students.php';
