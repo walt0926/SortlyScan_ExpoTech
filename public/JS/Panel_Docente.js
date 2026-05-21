@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Colocamos saludo inicial
+    // Saludo inicial
     document.getElementById('teacher-welcome').textContent = `Hello, ${nombreMaestro}! General overview of your classroom.`;
 
-    // 2. Cargamos los datos exclusivos de su aula
+    // 2. Carga de los datos exclusivos del aula
     cargarDatosAula(idMaestro);
 
-    // 3. Configurar el envío del formulario de la ventana emergente (Crear Alumno)
+    // 3. Envío del formulario de la ventana emergente (Crear Alumno)
     const formNuevo = document.getElementById('form-nuevo-alumno');
     if(formNuevo) {
         formNuevo.addEventListener('submit', guardarNuevoAlumno);
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formEliminar.addEventListener('submit', guardarEliminarAlumno);
     }
 
-    // NUEVO: Configurar el formulario de ajustes de perfil del maestro
+    // Configurar el formulario de ajustes de perfil del maestro
     const formAjustes = document.getElementById('form-ajustes-maestro');
     if(formAjustes) {
         formAjustes.addEventListener('submit', guardarAjustesMaestro);
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Función interna auxiliar para cambiar dinámicamente el estilo del botón borrar
+// Función interna para cambiar dinámicamente el estilo del botón borrar
 function btnPinStyle(btn, activar) {
     if(activar) {
         btn.style.opacity = '1';
@@ -85,7 +85,7 @@ async function cargarDatosAula(idMaestro) {
         if (data.success) {
             window.alumnosActuales = data.alumnos;
 
-            // NUEVO: Mapeo completo global de variables de perfil del maestro
+            // Mapeo completo global de variables de perfil del maestro
             window.perfilMaestro = {
                 aula_nombre: data.aula_nombre,
                 aula_codigo: data.aula_codigo,
@@ -110,22 +110,22 @@ async function cargarDatosAula(idMaestro) {
                     // CONFIGURACIÓN DE COLORES PERSONALIZADOS REAJUSTADA
                     if (index === 0) {
                         rankClass = "gold";
-                        // 1er Puesto: Color Oro Amarillo Vibrante con icono blanco
+                        // 1er Puesto:
                         inlineStyle = "background-color: #facc15; color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(250, 204, 21, 0.4);";
                         rankContent = '<i class="fa-solid fa-trophy"></i>';
                     } else if (index === 1) {
                         rankClass = "silver";
-                        // 2do Puesto: Fondo plata más oscuro (#94a3b8) y trofeo blanco
+                        // 2do Puesto:
                         inlineStyle = "background-color: #94a3b8; color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(148, 163, 184, 0.4);";
                         rankContent = '<i class="fa-solid fa-trophy"></i>';
                     } else if (index === 2) {
                         rankClass = "bronze";
-                        // 3er Puesto: Color Naranja original (#f28030) con icono blanco
+                        // 3er Puesto:
                         inlineStyle = "background-color: #f28030; color: white; display: flex; align-items: center; justify-content: center;";
                         rankContent = '<i class="fa-solid fa-trophy"></i>';
                     } else {
                         rankClass = "";
-                        // 4to Puesto en adelante: Círculos grises neutros con números
+                        // 4to Puesto en adelante:
                         inlineStyle = "background-color: #f1f5f9; color: #6b7280; font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; justify-content: center;";
                         rankContent = `${index + 1}`;
                     }
@@ -170,7 +170,7 @@ async function cargarDatosAula(idMaestro) {
     }
 }
 
-// --- NUEVO: CONTROL INTERACTIVO DE AJUSTES MAESTRO ---
+// CONTROL INTERACTIVO DE AJUSTES MAESTRO
 function abrirModalAjustesMaestro() {
     if (!window.perfilMaestro) return;
 
@@ -212,7 +212,7 @@ async function guardarAjustesMaestro(e) {
         if (data.success) {
             alert("¡Tu perfil ha sido actualizado con éxito!");
             
-            // Sincronizamos localStorage inmediatamente sin forzar cierres de sesión
+            // Sincronizar localStorage inmediatamente sin forzar cierres de sesión
             localStorage.setItem('usuario_nombre', nombre);
             document.getElementById('teacher-welcome').textContent = `Hello, ${nombre}! General overview of your classroom.`;
             
@@ -243,7 +243,7 @@ function togglePin(idAlumno, btnElement) {
     }
 }
 
-// --- MODAL CREAR ALUMNO ---
+// CREAR ALUMNO
 function agregarAlumno() {
     const form = document.getElementById('form-nuevo-alumno');
     if(form) form.reset();
@@ -301,7 +301,7 @@ async function guardarNuevoAlumno(e) {
     }
 }
 
-// --- MODAL EDITAR ALUMNO ---
+// EDITAR ALUMNO
 function editStudent(idAlumno) {
     if (!window.alumnosActuales) return;
     const alumno = window.alumnosActuales.find(a => parseInt(a.id_alumno) === parseInt(idAlumno));
@@ -361,7 +361,7 @@ async function guardarEditarAlumno(e) {
     }
 }
 
-// --- MODAL ELIMINAR ALUMNO ---
+// ELIMINAR ALUMNO
 function deleteStudent(idAlumno) {
     if (!window.alumnosActuales) return;
     const alumno = window.alumnosActuales.find(a => parseInt(a.id_alumno) === parseInt(idAlumno));
@@ -417,7 +417,7 @@ async function guardarEliminarAlumno(e) {
     }
 }
 
-// --- FUNCIONES UTILITARIAS ---
+// FUNCIONES UTILITARIAS
 function copyCode() {
     const codeText = document.getElementById('class-code').textContent;
     if(codeText === '---') return;

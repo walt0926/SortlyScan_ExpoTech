@@ -36,7 +36,7 @@ try {
 
     $password_hash = password_hash($pass_docente, PASSWORD_DEFAULT);
 
-    // 3. Iniciar Transacción (Todo o Nada)
+    // 3. Iniciar Transacción
     $pdo->beginTransaction();
 
     // Crear el usuario con el username elegido

@@ -41,7 +41,7 @@ try {
         if (!$stmt_codigo->fetch()) $es_unico = true;
     }
 
-    // Insertar el salón (id_maestro queda como NULL gracias al paso cero)
+    // Insertar el salón
     $stmt_insert = $pdo->prepare("
         INSERT INTO Salones (id_mined, id_maestro, nombre_salon, codigo_aula) 
         VALUES (:cct, NULL, :nombre, :codigo)

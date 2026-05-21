@@ -30,7 +30,7 @@ try {
         throw new Exception("El PIN debe constar estrictamente de 4 dígitos numéricos.");
     }
 
-    // 4. Buscamos el ID del salón asignado a este maestro
+    // 4. Buscar el ID del salón asignado a este maestro
     $stmt_salon = $pdo->prepare("SELECT id_salon FROM Salones WHERE id_maestro = :id LIMIT 1");
     $stmt_salon->execute(array(':id' => $id_maestro));
     $salon = $stmt_salon->fetch(PDO::FETCH_ASSOC);
@@ -41,7 +41,7 @@ try {
 
     $id_salon = $salon['id_salon'];
 
-    // 5. Insertamos al nuevo alumno en la tabla Alumnos
+    // 5. Insertar al nuevo alumno en la tabla Alumnos
     // (puntos_totales tiene DEFAULT 0 en la BD, no es necesario enviarlo)
     $stmt_insert = $pdo->prepare("
         INSERT INTO Alumnos (id_salon, nombre_display, pin) 
@@ -67,7 +67,7 @@ try {
     );
 }
 
-// Despejamos buffer y enviamos JSON limpio
+// Despejar buffer y enviamos JSON limpio
 ob_clean();
 echo json_encode($respuesta);
 exit;
