@@ -25,10 +25,10 @@ async function ejecutarPeticion(archivoPHP, datos) {
 
 /**
  * LOGIN STAFF (Maestros y Directores)
- * Valida las credenciales contra la base de datos MySQL
+ * Valida las credenciales contra la base de datos
  */
 async function validarLoginStaff(rol) {
-    // Obtenemos los elementos del DOM basándonos en tus HTML
+    // Obtenemos los elementos del DOM basándonos en el HTML
     const inputUsuario = document.getElementById('user-staff');
     const inputPass = document.getElementById('pass-staff');
     const inputCCT = document.getElementById('cct-input'); // <-- NUEVO: Buscamos el input del CCT
@@ -59,7 +59,7 @@ async function validarLoginStaff(rol) {
         return;
     }
 
-    // --- Ejecución de la petición al archivo PHP ---
+    // Ejecución de la petición al archivo PHP
     const data = await ejecutarPeticion('login_staff.php', { 
         identificador: usuario, 
         pass: password, 

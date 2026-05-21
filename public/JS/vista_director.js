@@ -14,9 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarDashboard();
 });
 
-// ==========================================
 // 1. CARGAR DATOS DEL DASHBOARD
-// ==========================================
 async function cargarDashboard() {
     try {
         // REGLA: Usamos fetch con credentials para mantener la sesión de PHP si es necesario
@@ -70,9 +68,7 @@ async function cargarDashboard() {
     }
 }
 
-// ==========================================
 // 2. CREAR NUEVA CLASE
-// ==========================================
 async function crearClase() {
     const nombre = document.getElementById('nombre-clase').value;
     if (!nombre) return alert("Por favor, ingresa el nombre de la clase");
@@ -103,9 +99,7 @@ async function crearClase() {
     }
 }
 
-// ==========================================
 // 3. ASIGNAR DOCENTE A CLASE
-// ==========================================
 async function asignarDocente() {
     const claseId = document.getElementById('select-clases').value;
     const nombre = document.getElementById('nombre-docente').value;
@@ -143,9 +137,7 @@ async function asignarDocente() {
     }
 }
 
-// ==========================================
 // 4. CERRAR SESIÓN
-// ==========================================
 function cerrarSesion() {
     // Aquí podrías agregar un fetch a logout.php si quieres destruir la sesión en servidor
     localStorage.clear();

@@ -118,7 +118,7 @@ async function cargarDatosDashboard(idDirector) {
     }
 }
 
-// --- AJUSTES DEL DIRECTOR ---
+// AJUSTES DEL DIRECTOR
 function abrirModalAjustes() {
     if (!window.perfilDirector) return;
 
@@ -165,7 +165,7 @@ async function guardarAjustesDirector(e) {
     }
 }
 
-// --- ACCIÓN: VER ALUMNOS DEL SALÓN ---
+// ACCIÓN: VER ALUMNOS DEL SALÓN
 async function verAlumnos(idSalon, nombreSalon) {
     document.getElementById('txt-modal-aula-nombre').textContent = nombreSalon;
     const container = document.getElementById('lista-alumnos-clase');
@@ -201,7 +201,7 @@ async function verAlumnos(idSalon, nombreSalon) {
 }
 function cerrarModalAlumnos() { document.getElementById('modal-ver-alumnos').style.display = 'none'; }
 
-// --- ACCIÓN: EDITAR SALÓN Y MAESTRO ---
+// ACCIÓN: EDITAR SALÓN Y MAESTRO
 function abrirModalEditarSalon(idSalon) {
     if(!window.salonesActuales) return;
     const salon = window.salonesActuales.find(s => parseInt(s.id_salon) === parseInt(idSalon));
@@ -247,7 +247,7 @@ async function guardarEditarSalon(e) {
     }
 }
 
-// --- ACCIÓN: ELIMINAR SALÓN COMPLETAMENTE ---
+// ACCIÓN: ELIMINAR SALÓN COMPLETAMENTE
 function abrirModalEliminarSalon(idSalon, nombreSalon) {
     document.getElementById('del-salon-id').value = idSalon;
     document.getElementById('del-salon-nombre-text').textContent = nombreSalon;
@@ -287,7 +287,7 @@ async function guardarEliminarSalon(e) {
     }
 }
 
-// --- ACCIONES BASE ---
+// ACCIONES BASE
 async function crearClase() {
     const idDirector = localStorage.getItem('usuario_id');
     const nombreClase = document.getElementById('nombre-clase').value.trim();

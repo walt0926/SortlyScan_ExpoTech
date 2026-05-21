@@ -2,7 +2,7 @@
 
 /**
  * MOTOR DE PETICIONES
- * El puente principal entre el navegador y tus archivos PHP en la carpeta logic/
+ * Este es el puente principal entre el navegador y archivos PHP en la carpeta logic/
  */
 async function ejecutarPeticion(archivoPHP, datos) {
     try {
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         labelClase.innerText = localStorage.getItem('clase_nombre') || 'Clase';
     }
 
-    // Si existe el select de alumnos, cargarlos de inmediato
+    // Si existe el select de alumnos, se cargan de inmediato
     if (document.getElementById('lista-alumnos')) {
         cargarAlumnos();
     }

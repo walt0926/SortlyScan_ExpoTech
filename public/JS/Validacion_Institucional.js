@@ -27,20 +27,20 @@ async function procesarAcceso() {
         const params = new URLSearchParams();
         params.append('cct', cctInput);
 
-        // Intentamos contactar al archivo con el error tipográfico 'validad'
+        // Contactamos al archivo (No toquen el error tepográfico "Validad")
         const response = await fetch('logic/validad_institucion.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: params
         });
 
-        // Verificamos si la respuesta es exitosa (HTTP 200)
+        // Verificamos si la respuesta es exitosa
         if (!response.ok) {
             alert(`Error del servidor: ${response.status} ${response.statusText}\nVerifica que el archivo public/logic/validad_institucion.php existe.`);
             return;
         }
 
-        // Intentamos leer el JSON
+        // Leer el JSON
         const data = await response.json();
 
         if (data.success) {
@@ -58,7 +58,7 @@ async function procesarAcceso() {
     }
 }
 
-// Función para maestros (usada en la misma pantalla)
+// Función para maestros
 async function mostrarLoginMaestro() {
     window.location.href = 'iniciodesesion_Maestro.php'
 }
